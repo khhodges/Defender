@@ -57,6 +57,7 @@
     <Content Include="scripts\app\users.js" />
     <Content Include="styles\images\avatar.png" />
     <Content Include="styles\images\background-picture.png" />
+    <Content Include="styles\images\btn-next-static.png" />
     <Content Include="styles\images\camera.png" />
     <Content Include="styles\images\chat.gif" />
     <Content Include="styles\images\default-image.jpg" />
