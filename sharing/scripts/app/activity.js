@@ -50,7 +50,7 @@ app.Activity = (function () {
 				});
 			
 			$activityPicture[0].style.display = activity.Picture ? 'block' : 'none';			
-			if (!app.helper.checkSimulator) {
+			if (!app.helper.checkSimulator()) {
 				window.plugins.toast.showShortTop("Downloading ...")
 			}
 			//app.mobileApp.showLoading();
@@ -96,7 +96,7 @@ app.Activity = (function () {
 				comment.UserId = app.Users.currentUser.get('data').Id;
 				comment.ActivityId = app.Activity.activity().Id;
                 
-				if (!app.helper.checkSimulator) {
+				if (!app.helper.checkSimulator()) {
 					window.plugins.toast.showShortTop("Updating Comments ...")
 				}
 				comments.sync();
@@ -166,9 +166,9 @@ app.Activity = (function () {
 			}
 			var title = app.Users.currentUser.data.DisplayName;
 			var link = thePictureUrl;
-			if (!app.helper.checkSimulator) {
+			if (!app.helper.checkSimulator()) {
 			    window.plugins.toast.showLongBottom("Share options now being loaded for, " + message + ", " + title + ", " + link + ", please wait...");
-			    window.plugins.socialsharing.share("The following posting is shared by " + title + ": " + message + ", " + link + "...", title, link);
+			    app.shareEmail("The following posting is shared by " + title + ": " + message + ", " + link, link);
 			} else {
 			    app.showAlert("Share options now being loaded for, " + message + ", " + title + ", " + link + ", please wait...");
 			}

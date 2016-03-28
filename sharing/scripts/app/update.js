@@ -167,7 +167,8 @@ app.Update = (function () {
 			onSelectChange: onSelectChange,
 			update: update,
 			showImage: pickImage,
-			crop: crop
+			crop: crop,
+            userData: dataSource
 		};
 	}()
 	);

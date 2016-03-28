@@ -211,7 +211,7 @@ app.Activities = (function () {
 				app.showAlert("First take a photo with your camera and then add a message to match!", "Informational");
 			}
 			if (validator.validate() && (selected !== undefined)) {				
-				if (!app.helper.checkSimulator) {
+				if (!app.helper.checkSimulator()) {
 					app.notify.showShortTop("Uploading image... please wait");
 					//window.plugins.toast.showShortTop("Uploading image ...")
 				}

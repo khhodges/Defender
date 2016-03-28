@@ -31,10 +31,10 @@ app.Signup = (function () {
 		
 		var defaultAvatar = function () {
 			var picture = document.getElementById("avatarImage");
-			app.helper.convertToDataURL("styles/images/logo1.jpg", function (base64Img) {
+			app.helper.convertToDataURL("styles/images/icon.png", function (base64Img) {
 				everlive.Files.create({
 										  Filename: Math.random().toString(36).substring(2, 15) + ".jpg",
-										  ContentType: "image/jpeg",
+										  ContentType: "image/png",
 										  base64: base64Img
 									  }).then(function (promise) {
 										  imageId = promise.result.Id;
@@ -106,7 +106,7 @@ app.Signup = (function () {
 											  BirthDate: new Date()
 										  });
 			kendo.bind($('#signup-form'), dataSource, kendo.mobile.ui);
-			if (!app.helper.checkSimulator) {
+			if (!app.helper.checkSimulator()) {
 				window.plugins.toast.showLongBottom("Enter all field and then add your own Avatar by using your camera to upload a selfie...");
 			}
 		};
@@ -149,7 +149,7 @@ app.Signup = (function () {
 
 		var addImage = function () {
 			var success = function (data) {
-				if (!app.helper.checkSimulator) {
+				if (!app.helper.checkSimulator()) {
 					window.plugins.toast.showShortTop("Uploading image ...");
 					everlive.Files.create({
 											  Filename: Math.random().toString(36).substring(2, 15) + ".jpg",

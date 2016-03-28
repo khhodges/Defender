@@ -268,7 +268,7 @@ var app = (function (win) {
 	    },
 
 		showShortTop: function (m) {
-			if (!this.checkSimulator) {
+		    if (!app.helper.checkSimulator()) {
 				window.plugins.toast.showShortTop(m);
 			} else {
 				showAlert(m, "Toast");
@@ -327,7 +327,7 @@ var app = (function (win) {
 		},
 
 		cancelAll: function () {
-			if (!this.checkSimulator()) {
+		    if (!app.helper.checkSimulator()) {
 				cordova.plugins.notification.local.cancelAll(function () {
 					alert('ok, all cancelled')
 				});
@@ -335,7 +335,7 @@ var app = (function (win) {
 		},
 
 		getScheduledNotificationIDs: function () {
-			if (!this.checkSimulator()) {
+		    if (!app.helper.checkSimulator()) {
 				cordova.plugins.notification.local.getScheduledIds(function (scheduledIds) {
 					navigator.notification.alert(scheduledIds.join(', '), null, 'Scheduled Notification ID\'s', 'Close');
 				})
@@ -343,7 +343,7 @@ var app = (function (win) {
 		},
 
 		notify: function (payload) {
-			if (!this.checkSimulator()) {
+		    if (!app.helper.checkSimulator()) {
 				cordova.plugins.notification.local.schedule(payload, function () {
 					console.log('scheduled')
 				});
@@ -409,7 +409,7 @@ var app = (function (win) {
 	});
 
 	var cropImage = function (image) {
-		if (!app.helper.checkSimulator) {
+		if (!app.helper.checkSimulator()) {
 			window.plugins.toast.showShortTop("Croping image ...");
 		}
 		var sx, sy, starterWidth, starterHeight, dx, dy, canvasWidth, canvasHeight;
@@ -436,7 +436,7 @@ var app = (function (win) {
 	}
 
 	var createImage = function (baseImage) {
-		if (!app.helper.checkSimulator) {
+		if (!app.helper.checkSimulator()) {
 			window.plugins.toast.showShortTop("Uploading image ...");
 		}
 		app.everlive.Files.create({
@@ -453,7 +453,7 @@ var app = (function (win) {
 		takePicture2(console.log("Callback"));
 	}
 	var takePicture2 = function (callback) {
-		if (!app.helper.checkSimulator) {
+		if (!app.helper.checkSimulator()) {
 			window.plugins.toast.showShortTop("Using camera ...");
 		}
 		navigator.camera.getPicture(function (imageURI) {

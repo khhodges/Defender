@@ -50,6 +50,7 @@
     <Content Include="scripts\app\comments.js" />
     <Content Include="scripts\app\common.js" />
     <Content Include="scripts\app\identity-provider.js" />
+    <Content Include="scripts\app\social.js" />
     <Content Include="scripts\app\login.js" />
     <Content Include="scripts\app\settings.js" />
     <Content Include="scripts\app\signup.js" />
