@@ -42,6 +42,7 @@ app.Users = (function () {
 
         var currentUser = kendo.observable({ data: null });
         var usersData;
+        var adminData;
         var currentUserData;
 
 
@@ -58,23 +59,39 @@ app.Users = (function () {
                 currentUser.set('data', currentUserData);
 
                 // Get the data about all registered users
+                //var query = new Everlive.Query();
+               // query.where().eq('Role', '316436d0-ed61-11e5-a994-2317f931f3bf');
+
                 return app.everlive.Users.get();
             })
             .then(function (data) {
 
                 usersData = new kendo.data.ObservableArray(data.result);
             })
+            .then(function () {
+                // Get the data about all registered users
+                var query = new Everlive.Query();
+                query.where().eq('Role', '316436d0-ed61-11e5-a994-2317f931f3bf');
+
+                return app.everlive.Users.get(query);
+            })
+            .then(function (data) {
+
+                adminData = new kendo.data.ObservableArray(data.result);
+            })
             .then(null,
                   function (err) {
                       app.showError(err.message);
-                  }
-            );
+                  })
         };
 
         return {
             load: loadUsers,
             users: function () {
                 return usersData;
+            },
+            admin: function () {
+                return adminData;
             },
             currentUser: currentUser,
            // usersData: usersDataSource,

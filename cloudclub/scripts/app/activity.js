@@ -107,6 +107,12 @@ app.Activity = (function () {
 				document.getElementById("three").style.visibility = "hidden";
 				document.getElementById("four").style.visibility = "hidden";
 				document.getElementById("five").style.visibility = "hidden";
+			    //update Likes
+			    // Adding new activity to Activities model
+				var activities = app.Activities.activities;
+				var activity = activities.getByUid(activityUid);
+				activity.Likes.push(comment.UserId);
+				activities.sync();
 			}
 		};
 		var addComment = function () {

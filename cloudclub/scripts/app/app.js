@@ -215,12 +215,12 @@ var app = (function (win) {
 			return kendo.toString(new Date(dateString), 'MMM dd, yyyy');
 		},
 
-		// Date formatter. Return likes count format
+		// Like formatter. Return likes count format
 		formatLikes: function (likesArray, text) {
 			if (likesArray !== undefined) {
-				return kendo.toString('Total Viewers: ' + likesArray.length);
+				return kendo.toString('Total Likes: ' + likesArray.length);
 			} else {
-				return kendo.toString('Total Viewers: 0');
+			    return kendo.toString('Total Likes: 0');
 			}
 		},
 

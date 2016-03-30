@@ -47,7 +47,12 @@ app.Activities = (function () {
 				Likes: {
 						field: 'Likes',
 						defaultValue: []
-					}
+				    },
+				Location: {
+				        field: 'Location',
+                        defaultValue:[]
+				    }
+
 			},
 			CreatedAtFormatted: function () {
 				return app.helper.formatDate(this.get('CreatedAt'));

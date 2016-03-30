@@ -7,11 +7,11 @@
         </div>
     </div>
 
-    <ul id="users-list-view" class="users-list-view" data-bind="source: users" data-template="users-template" data-role="listview" data-
+    <ul id="users-list-view" class="users-list-view" data-bind="source: admin" data-template="users-template" data-role="listview" data-
         ></ul>
 
 </div>
 
 <script id="users-template" type="text/x-kendo-template">
-    <div data-bind="attr: { class: isSelectedClass }">#: Username #</div>
+    <div data-bind="attr: { class: isSelectedClass }">#: Role # - #: DisplayName #</div>
 </script>
