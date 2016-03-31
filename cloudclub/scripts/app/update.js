@@ -1,5 +1,5 @@
 /**
- * update view model
+ * update user avatar and view model
  */
 var app = app || {};
 

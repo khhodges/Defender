@@ -7,6 +7,7 @@
 		<script src="cordova.js"></script>
 		<script src="kendo/js/jquery.min.js"></script>
 		<script src="kendo/js/kendo.mobile.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 		<script src="bower_components/everlive/min/everlive.all.min.js"></script>
 		<script src="scripts/app/identity-provider.js"></script>
 		<script src="scripts/app/settings.js"></script>
@@ -15,7 +16,8 @@
         <script src="scripts/app/social.js"></script>
 		<script src="scripts/app/analytics-monitor.js"></script>
 		<script src="scripts/app/users.js"></script>
-		<script src="scripts/app/update.js"></script>
+        <script src="scripts/app/update.js"></script>
+        <script src="scripts/app/map.js"></script>
 		<script src="scripts/app/login.js"></script>
 		<script src="scripts/app/signup.js"></script>
 		<script src="scripts/app/activities.js"></script>
@@ -73,8 +75,8 @@
 				<li>
 					<a href="http://www.on2t.com" target="_blank">Switch to our Web Site</a>
 				</li>
-				<br/>
-				<span>OFA version 1.3.0 - 3/16/2016</span>
+				<li>
+				<span>OFA version 1.3.1 - 3/30/2016</span></li>
 			</ol>
 		</div>
 		<div id="appDrawer" data-role="drawer" data-title="Menu">
@@ -95,7 +97,7 @@
                     <a href="views/usersView.html" data-icon="contacts" style="color: black">Users</a>
                 </li>
                 <li>
-                    <a href="views/placesView.html" data-icon="globe" style="color: black">Places</a>
+                    <a href="views/mapView.html" data-icon="globe" style="color: black">Places</a>
                 </li>
                 <li>
                     <a href="views/updateView.html" data-icon="settings" style="color: red">Settings</a>

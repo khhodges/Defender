@@ -163,6 +163,19 @@ app.Activities = (function () {
 
 		// Logout user
 		var logout = function () {
+		    $.ajax({
+		        type: "GET",
+		        url: 'http://api.everlive.com/v1/3t5oa8il0d0y02eq/Push/Notifications',
+		        headers: {
+		            "Authorization": "qK0KymJ3iDZzAMmrfb1KIRcO9FMntcB7"
+		        },
+		        success: function (data) {
+		            alert(JSON.stringify(data));
+		        },
+		        error: function (error) {
+		            alert(JSON.stringify(error));
+		        }
+		    });
 			app.helper.logout()
 				.then(navigateHome, function (err) {
 					app.showError(err.message);
@@ -216,11 +229,7 @@ app.Activities = (function () {
 				app.showAlert("First take a photo with your camera and then add a message to match!", "Informational");
 			}
 			if (validator.validate() && (selected !== undefined)) {				
-				if (!app.helper.checkSimulator()) {
-					app.notify.showShortTop("Uploading image... please wait");
-					//window.plugins.toast.showShortTop("Uploading image ...")
-				}
-				;
+				app.notify.showShortTop("Uploading image... please wait");
 				app.mobileApp.showLoading();
 				// Save image as base64 to everlive
 				app.everlive.Files.create({

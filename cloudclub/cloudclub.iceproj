@@ -51,6 +51,7 @@
     <Content Include="scripts\app\common.js" />
     <Content Include="scripts\app\identity-provider.js" />
     <Content Include="scripts\app\login.js" />
+    <Content Include="scripts\app\map.js" />
     <Content Include="scripts\app\settings.js" />
     <Content Include="scripts\app\signup.js" />
     <Content Include="scripts\app\social.js" />
@@ -71,6 +72,10 @@
     <Content Include="styles\images\icon-delete.png" />
     <Content Include="styles\images\icon-delete@2x.png" />
     <Content Include="styles\images\icon.png" />
+    <Content Include="styles\images\location.png" />
+    <Content Include="styles\images\location2x.png" />
+    <Content Include="styles\images\location_active.png" />
+    <Content Include="styles\images\location_active2x.png" />
     <Content Include="styles\images\logo-adfs.png" />
     <Content Include="styles\images\logo-adfs@2x.png" />
     <Content Include="styles\images\logo-facebook.png" />
@@ -85,12 +90,17 @@
     <Content Include="styles\images\logo2.jpg" />
     <Content Include="styles\images\logo3.jpg" />
     <Content Include="styles\images\notify.png" />
+    <Content Include="styles\images\search.png" />
+    <Content Include="styles\images\search2x.png" />
+    <Content Include="styles\images\search_active.png" />
+    <Content Include="styles\images\search_active2x.png" />
     <Content Include="styles\images\share.png" />
     <Content Include="styles\images\sharek.png" />
     <Content Include="styles\main.css" />
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
     <Content Include="views\eventsView.html" />
+    <Content Include="views\mapView.html" />
     <Content Include="views\noAppId.html" />
     <Content Include="views\placesView.html" />
     <Content Include="views\signupView.html" />
@@ -165,6 +175,42 @@
     <Resource Include="App_Resources\WP8\SplashScreenImage.screen-WVGA.jpg" />
     <Resource Include="App_Resources\WP8\Tiles\Iconic\110x110.png" />
     <Resource Include="App_Resources\WP8\Tiles\Iconic\202x202.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Resources\" />
+    <Folder Include="App_Resources\Android\" />
+    <Folder Include="App_Resources\Android\drawable-hdpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-hdpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-ldpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-mdpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-xhdpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-xxhdpi\" />
+    <Folder Include="App_Resources\Android\drawable-land-xxxhdpi\" />
+    <Folder Include="App_Resources\Android\drawable-ldpi\" />
+    <Folder Include="App_Resources\Android\drawable-mdpi\" />
+    <Folder Include="App_Resources\Android\drawable-xhdpi\" />
+    <Folder Include="App_Resources\Android\drawable-xxhdpi\" />
+    <Folder Include="App_Resources\Android\drawable-xxxhdpi\" />
+    <Folder Include="App_Resources\iOS\" />
+    <Folder Include="App_Resources\WP8\" />
+    <Folder Include="App_Resources\WP8\Assets\" />
+    <Folder Include="App_Resources\WP8\Tiles\" />
+    <Folder Include="App_Resources\WP8\Tiles\Iconic\" />
+    <Folder Include="bower_components\" />
+    <Folder Include="bower_components\everlive\" />
+    <Folder Include="bower_components\everlive\min\" />
+    <Folder Include="bower_components\everlive\src\" />
+    <Folder Include="kendo\" />
+    <Folder Include="kendo\js\" />
+    <Folder Include="kendo\styles\" />
+    <Folder Include="kendo\styles\images\" />
+    <Folder Include="kendo\typescript\" />
+    <Folder Include="Plugins\" />
+    <Folder Include="scripts\" />
+    <Folder Include="scripts\app\" />
+    <Folder Include="styles\" />
+    <Folder Include="styles\images\" />
+    <Folder Include="views\" />
   </ItemGroup>
   <Import Project="$(IceniumTargets)Build.targets" />
 </Project>

@@ -69,6 +69,7 @@ var app = (function (win) {
 
 		navigator.splashscreen.hide();
 
+
 		if (analytics.isAnalytics()) {
 			analytics.Start();
 		}
@@ -218,9 +219,9 @@ var app = (function (win) {
 		// Like formatter. Return likes count format
 		formatLikes: function (likesArray, text) {
 			if (likesArray !== undefined) {
-				return kendo.toString('Total Likes: ' + likesArray.length);
+				return kendo.toString('Comments: ' + likesArray.length);
 			} else {
-			    return kendo.toString('Total Likes: 0');
+			    return kendo.toString('Be the first to comment!');
 			}
 		},
 
@@ -271,7 +272,7 @@ var app = (function (win) {
 		    if (!app.helper.checkSimulator()) {
 				window.plugins.toast.showShortTop(m);
 			} else {
-				showAlert(m, "Toast");
+				showAlert(m, "Toast Simulation");
 			}
 		},
 
@@ -409,9 +410,8 @@ var app = (function (win) {
 	});
 
 	var cropImage = function (image) {
-		if (!app.helper.checkSimulator()) {
-			window.plugins.toast.showShortTop("Croping image ...");
-		}
+	    app.notify.showShortTop("Croping image ...");
+		
 		var sx, sy, starterWidth, starterHeight, dx, dy, canvasWidth, canvasHeight;
 		var starter = document.getElementById(image);
 		var canvas = document.getElementById("canvas");
@@ -436,9 +436,8 @@ var app = (function (win) {
 	}
 
 	var createImage = function (baseImage) {
-		if (!app.helper.checkSimulator()) {
-			window.plugins.toast.showShortTop("Uploading image ...");
-		}
+	    app.notify.showShortTop("Uploading image ...");
+		
 		app.everlive.Files.create({
 				Filename: Math.random().toString(36).substring(2, 15) + ".jpg",
 				ContentType: "image/jpeg",
@@ -453,9 +452,8 @@ var app = (function (win) {
 		takePicture2(console.log("Callback"));
 	}
 	var takePicture2 = function (callback) {
-		if (!app.helper.checkSimulator()) {
-			window.plugins.toast.showShortTop("Using camera ...");
-		}
+	    app.notify.showShortTop("Using camera ...");
+		
 		navigator.camera.getPicture(function (imageURI) {
 			callback(imageURI);
 		}, function () {
