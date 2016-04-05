@@ -7,19 +7,13 @@ var app = app || {};
 app.Places = (function () {
     'use strict'
 
-    var everlive = new Everlive(appSettings.everlive.appId);
+    //var everlive = new Everlive(appSettings.everlive.appId);
 
     var placesDataSource = new kendo.data.DataSource({
-        transport: {
-            read: {
-                url: "https://api.everlive.com/v1/" + appSettings.everlive.appId + "/Places",
-                dataType: "json"
-            }
-        },
+        type:'everlive',
+        typeName: 'Places',
         schema: {
-            data: function (response) {
-                return response.Result;
-            }
+            model: placesDataModel
         }
     });
 

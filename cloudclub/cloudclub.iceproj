@@ -89,7 +89,9 @@
     <Content Include="styles\images\logo1.jpg" />
     <Content Include="styles\images\logo2.jpg" />
     <Content Include="styles\images\logo3.jpg" />
+    <Content Include="styles\images\notify-backup.png" />
     <Content Include="styles\images\notify.png" />
+    <Content Include="styles\images\notify_.png" />
     <Content Include="styles\images\search.png" />
     <Content Include="styles\images\search2x.png" />
     <Content Include="styles\images\search_active.png" />

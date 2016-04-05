@@ -216,13 +216,22 @@ var app = (function (win) {
 			return kendo.toString(new Date(dateString), 'MMM dd, yyyy');
 		},
 
-		// Like formatter. Return likes count format
+	    // Like formatter. Return likes count format
 		formatLikes: function (likesArray, text) {
-			if (likesArray !== undefined) {
-				return kendo.toString('Comments: ' + likesArray.length);
-			} else {
-			    return kendo.toString('Be the first to comment!');
-			}
+		    if (likesArray !== undefined) {
+		        return kendo.toString('Comments: ' + likesArray.length);
+		    } else {
+		        return kendo.toString('Be the first to comment!');
+		    }
+		},
+
+	    // Geopoint formatter. Return lat/long  format
+		formatGeopoint: function (geopoint) {
+		    if (geopoint !== undefined && geopoint !== null) {
+		        return kendo.toString('Lat/Long: ' + geopoint.length);
+		    } else {
+		        return kendo.toString('Location unknown!');
+		    }
 		},
 
 		// Current user logout

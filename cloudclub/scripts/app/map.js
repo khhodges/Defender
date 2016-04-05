@@ -6,20 +6,51 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-
     var placesViewModel = (function () {
-        var map,
-        geocoder
-
-
+        var map, geocoder
+        var placeModel = {
+            fields: {
+                place: {
+                    field: 'Place',
+                    defaultValue: ''
+                },
+                url: {
+                    field: 'Website',
+                    defaultValue: 'www.on2t.com'
+                },
+                marker: {
+                    field: 'Location',
+                    defaultValue: []
+                },
+                text: {
+                    field: 'Description',
+                    defaultValue: 'Empty'
+                }
+            }
+        };
+        var placesDataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            schema: {
+                model: placeModel
+            },
+            transport: {
+                typeName: 'Places'
+            }
+        });
         var LocationViewModel = kendo.data.ObservableObject.extend({
             _lastMarker: null,
             _isLoading: false,
-
             address: "",
             isGoogleMapsInitialized: false,
             hideSearch: false,
-
+            locatedAtFormatted: function (marker) {
+                var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+                marker.Mark = new google.maps.Marker({
+                    map: map,
+                    position: position
+                });
+                return (marker.latitude+"/"+marker.longitude);
+            },
             onNavigateHome: function () {
                 var that = this,
                     position;
@@ -38,7 +69,7 @@ app.Places = (function () {
                     },
                     function (error) {
                         //default map coordinates
-                        position = new google.maps.LatLng(43.459336, -80.462494);
+                        position = new google.maps.LatLng(0,0);
                         map.panTo(position);
 
                         that._isLoading = false;
@@ -53,7 +84,6 @@ app.Places = (function () {
                     }
                 );
             },
-
             onSearchAddress: function () {
                 var that = this;
 
@@ -73,7 +103,6 @@ app.Places = (function () {
                         that._putMarker(results[0].geometry.location);
                     });
             },
-
             toggleLoading: function () {
                 if (this._isLoading) {
                     kendo.mobile.application.showLoading();
@@ -81,7 +110,6 @@ app.Places = (function () {
                     kendo.mobile.application.hideLoading();
                 }
             },
-
             _putMarker: function (position) {
                 var that = this;
 
@@ -94,35 +122,8 @@ app.Places = (function () {
                     position: position
                 });
             },
-
+            places: placesDataSource
         });
-
-
-        var placeModel = {
-            id: 'Id',
-            fields: {
-                Place: {
-                    field: 'Place',
-                    defaultValue: ''
-                },
-                CreatedAt: {
-                    field: 'CreatedAt',
-                    defaultValue: new Date()
-                }
-            }
-        };
-
-        var placesDataSource = new kendo.data.DataSource({
-            type: 'everlive',
-            schema: {
-                model: placeModel
-            },
-            transport: {
-                typeName: 'Places'
-            },
-            sort: { field: 'CreatedAt', dir: 'desc' }
-        });
-
         return {
             initLocation: function () {
                 var mapOptions,
@@ -135,7 +136,7 @@ app.Places = (function () {
                 app.Places.locationViewModel.set("isGoogleMapsInitialized", true);
 
                 mapOptions = {
-                    zoom: 15,
+                    zoom: 11,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     zoomControl: true,
                     zoomControlOptions: {
@@ -162,7 +163,6 @@ app.Places = (function () {
 
                 });
             },
-
             show: function () {
                 if (!app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
                     return;
@@ -171,17 +171,12 @@ app.Places = (function () {
                 //resize the map in case the orientation has been changed while showing other tab
                 google.maps.event.trigger(map, "resize");
             },
-
             hide: function () {
                 //hide loading mask if user changed the tab as it is only relevant to location tab
                 kendo.mobile.application.hideLoading();
             },
-            places: placesDataSource,
             locationViewModel: new LocationViewModel()
         };
-
     }());
-
     return placesViewModel;
-
 }());

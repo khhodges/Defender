@@ -8,7 +8,6 @@ var app = app || {};
 app.Activities = (function () {
 	'use strict'
 	var $enterEvent, $newEventText, validator, selected, $baseImage;
-	
 	var init = function () {
 		validator = $('#enterEvent').kendoValidator().data('kendoValidator');
 		$enterEvent = $('#enterEvent');	
@@ -16,12 +15,11 @@ app.Activities = (function () {
 		$newEventText.on('keydown', app.helper.autoSizeTextarea);
 		validator.hideMessages();
 	};
-	
+    //Remove
 	var showTitle = function() {
 		var title = document.getElementById("navbarTitle").InnerTEXT;
 		title = activities.User().DisplayName;
-	}
-	
+	}	
 	// Activities model
 	var activitiesModel = (function () {
 		var activityModel = {
@@ -148,19 +146,16 @@ app.Activities = (function () {
 			activities: activitiesDataSource
 		};
 	}());
-
 	// Activities view model
 	var activitiesViewModel = (function () {
 		// Navigate to activityView When some activity is selected
 		var activitySelected = function (e) {
 			app.mobileApp.navigate('views/activityView.html?uid=' + e.data.uid);
 		};
-
 		// Navigate to app home
 		var navigateHome = function () {
 			app.mobileApp.navigate('#welcome');
 		};
-
 		// Logout user
 		var logout = function () {
 		    $.ajax({
@@ -182,7 +177,6 @@ app.Activities = (function () {
 					navigateHome();
 				});
 		};
-
 		var crop = function () {
 			var sx, sy, starterWidth, starterHeight, dx, dy, canvasWidth, canvasHeight;
 			var starter = document.getElementById("picture");
@@ -221,8 +215,7 @@ app.Activities = (function () {
 				activities.sync();
 				app.mobileApp.hideLoading();
 			}
-		};
-		
+		};		
 		var saveImageActivity = function () {
 			// Validating of the required fields
 			if (selected === undefined || !$baseImage) {
@@ -268,22 +261,19 @@ app.Activities = (function () {
 				$enterEvent.style.display = 'block';
 				document.getElementById('addButton').innerText = "Cancel";
 			}
-		};
-		
+		};		
 		var success = function (imageURI) {
 			selected = imageURI;
 			var picture = document.getElementById("picture");
 			picture.src = selected;
 		}
-
 		var error = function () {
 			app.showError("No selection was detected.");			
 			$enterEvent.style.display = 'none';
 			validator.hideMessages();
 			document.getElementById('addButton').innerText = "Add Event";
 			document.getElementById('newEventText').value = "";
-		};
-		
+		};	
 		var pickImage = function (e) {
 			$enterEvent = document.getElementById('enterEvent');
 			app.mobileApp.navigate('#view-all-activities');
@@ -305,8 +295,7 @@ app.Activities = (function () {
 												correctOrientation: true
 											});
 			}
-		};
-		
+		};		
 		return {
 			init: init,
 			activities: activitiesModel.activities,
@@ -318,6 +307,5 @@ app.Activities = (function () {
 			crop: crop
 		};
 	}());
-
 	return activitiesViewModel;
 }());
