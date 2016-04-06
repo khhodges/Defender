@@ -282,7 +282,7 @@ var app = (function (win) {
 	    },
 
 		showShortTop: function (m) {
-		        if (analytics.isAnalytics) {
+		        if (analytics.isAnalytics()) {
 		            analytics.TrackFeature('Toast.'+ m.substring(0,10));
 		    if (!app.helper.checkSimulator()) {
 		        window.plugins.toast.showShortTop(m);

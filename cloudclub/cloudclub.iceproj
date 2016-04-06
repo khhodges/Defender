@@ -91,15 +91,16 @@
     <Content Include="styles\images\logo1.jpg" />
     <Content Include="styles\images\logo2.jpg" />
     <Content Include="styles\images\logo3.jpg" />
+    <Content Include="styles\images\notify.png">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="styles\images\notify-backup.png" />
-    <Content Include="styles\images\notify.png" />
     <Content Include="styles\images\notify_.png" />
     <Content Include="styles\images\search.png" />
     <Content Include="styles\images\search2x.png" />
     <Content Include="styles\images\search_active.png" />
     <Content Include="styles\images\search_active2x.png" />
     <Content Include="styles\images\share.png" />
-    <Content Include="styles\images\sharek.png" />
     <Content Include="styles\main.css" />
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
