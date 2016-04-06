@@ -1,5 +1,5 @@
 /**
- * Comments view model
+ * Members view model
  */
 
 var app = app || {};
