@@ -151,6 +151,10 @@ var app = (function (win) {
 	};
 
 	var AppHelper = {
+	    isAnalytics: function(){
+	        analytics.isAnalytics();
+	    },
+
 		checkSimulator: function () {
 			if (window.navigator.simulator === true) {
 				return true;
@@ -278,8 +282,11 @@ var app = (function (win) {
 	    },
 
 		showShortTop: function (m) {
+		        if (analytics.isAnalytics) {
+		            analytics.TrackFeature('Toast.'+ m.substring(0,10));
 		    if (!app.helper.checkSimulator()) {
-				window.plugins.toast.showShortTop(m);
+		        window.plugins.toast.showShortTop(m);
+		        }
 			} else {
 				showAlert(m, "Toast Simulation");
 			}
