@@ -11,7 +11,6 @@
     "com.phonegap.plugins.PushPlugin@3.0.6",
     "com.telerik.feedback@2.0.0",
     "com.telerik.plugin.eqatecanalytics",
-    "cordova-plugin-admobpro@2.9.9",
     "nl.x-services.plugins.socialsharing@5.0.10",
     "nl.x-services.plugins.toast@2.4.0",
     "org.apache.cordova.camera",
