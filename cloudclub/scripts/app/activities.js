@@ -14,6 +14,7 @@ app.Activities = (function () {
 		$newEventText = $('#newEventText');
 		$newEventText.on('keydown', app.helper.autoSizeTextarea);
 		validator.hideMessages();
+		$(document.body).css("visibility", "visible");
 	};
     //Remove
 	var showTitle = function() {

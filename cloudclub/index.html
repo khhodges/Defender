@@ -30,6 +30,11 @@
 	</head>
 
 	<body id="friendsApp">
+        <script>
+        //initially hiding the body so that the ugly body before the css rendering doesn't show up for users
+        //body visibility set back to 'visible' on the data-show method of the first view, home.
+        $(document.body).css("visibility", "hidden");
+        </script>
 		<div data-role="layout" data-id="default">
 			<!--View content will render here-->
 		</div>

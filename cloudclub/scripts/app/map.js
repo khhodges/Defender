@@ -6,8 +6,49 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
+
+    /**
+     * The CenterControl adds a control to the map that recenters the map on
+     * Chicago.
+     * This constructor takes the control DIV as an argument.
+     * @constructor
+     */
+    function CenterControl(controlDiv, map) {
+
+
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '15px';
+        controlUI.style.marginRight = '15px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to recenter the map';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '12px';
+        controlText.style.lineHeight = '20px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Go Home';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function () {
+            app.Places.locationViewModel.onNavigateHome();
+        });
+    }
+
     var placesViewModel = (function () {
-        var map, geocoder
+        var map, geocoder,locality, home
         var placeModel = {
             fields: {
                 place: {
@@ -47,7 +88,12 @@ app.Places = (function () {
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
                 marker.Mark = new google.maps.Marker({
                     map: map,
-                    position: position
+                    position: position,
+                    icon: {
+                    url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                    anchor: new google.maps.Point(10, 10),
+                    scaledSize: new google.maps.Size(10, 17)
+                }
                 });
                 return (marker.latitude+"/"+marker.longitude);
             },
@@ -63,6 +109,8 @@ app.Places = (function () {
                         position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         map.panTo(position);
                         that._putMarker(position);
+                        home=position;
+                        locality = position;
 
                         that._isLoading = false;
                         that.toggleLoading();
@@ -75,8 +123,7 @@ app.Places = (function () {
                         that._isLoading = false;
                         that.toggleLoading();
 
-                        navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
-                            function () { }, "Location failed", 'OK');
+                        app.notify.showShortTop("Unable to determine current location. Cannot connect to GPS satellite.");
                     },
                     {
                         timeout: 30000,
@@ -85,13 +132,11 @@ app.Places = (function () {
                 );
             },
             onPlaceSearch: function () {
-                var locality;
-                locality = new google.maps.LatLng(-33.8665, 151.1956);
                 // Specify location, radius and place types for your Places API search.
                 var request = {
                     location: locality,
-                    radius: '500',
-                    types: ['store']
+                    radius: '5500',
+                    types: ['cafe', 'restaurant']
                 };
 
                 // Create the PlaceService and send the request.
@@ -131,14 +176,14 @@ app.Places = (function () {
                     },
                     function (results, status) {
                         if (status !== google.maps.GeocoderStatus.OK) {
-                            app.notify.showShortTop("Unable to find that address.",
-                                function () { }, "Search failed", 'OK');
-
+                            app.notify.showShortTop("Unable to find that address.");
                             return;
                         }
-
+                        
                         map.panTo(results[0].geometry.location);
+                        //bounds
                         that._putMarker(results[0].geometry.location);
+                        locality = results[0].geometry.location;
                     });
             },
             toggleLoading: function () {
@@ -160,53 +205,70 @@ app.Places = (function () {
                     position: position
                 });
             },
-            places: placesDataSource
+            places: placesDataSource,
+            currentLocation:home
         });
         return {
             initLocation: function () {
-                var mapOptions,
-                    streetView;
-
+                //common variables 
                 if (typeof google === "undefined") {
                     return;
                 }
+                var placesId = [];
+                var allLatlng = [];
+                var allPlaces = [];
+                var placesNames = [];
+                var infoWindow = null;
+                var pos, userCords, streetView, tempPlaceHolder = [];
 
-                app.Places.locationViewModel.set("isGoogleMapsInitialized", true);
-
-                mapOptions = {
-                    zoom: 11,
+                var mapOptions = {
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     zoomControl: true,
                     zoomControlOptions: {
                         position: google.maps.ControlPosition.LEFT_BOTTOM
                     },
-
                     mapTypeControl: false,
                     streetViewControl: false,
-                    scroolwheel: false
-                };
+                    scroolwheel: false,
+                    zoom: 5,
+                    center: new google.maps.LatLng(37, -100),
+                    panCtrl: false,
+                    zoomCtrl: true,
+                    zoomCtrlOptions: {
+                        style: google.maps.ZoomControlStyle.LARGE,
+                        position: google.maps.ControlPosition.RIGHT_CENTER
+                    },
+                    scaleControl: false
+                }
 
+                infoWindow = new google.maps.InfoWindow({
+                    content: "holding ..."
+                })
+
+                //Fire up
+                app.Places.locationViewModel.set("isGoogleMapsInitialized", true);
                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
                 geocoder = new google.maps.Geocoder();
                 app.Places.locationViewModel.onNavigateHome.apply(app.Places.locationViewModel, []);
-
                 streetView = map.getStreetView();
-
+                // Create the DIV to hold the control and call the CenterControl()
+                // constructor passing in this DIV.
+                var centerControlDiv = document.createElement('div');
+                var centerControl = new CenterControl(centerControlDiv, map);
+                centerControlDiv.index = 1;
+                map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
                 google.maps.event.addListener(streetView, 'visible_changed', function () {
-
                     if (streetView.getVisible()) {
                         app.Places.locationViewModel.set("hideSearch", true);
                     } else {
                         app.Places.locationViewModel.set("hideSearch", false);
                     }
-
                 });
             },
             show: function () {
                 if (!app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
                     return;
                 }
-
                 //resize the map in case the orientation has been changed while showing other tab
                 google.maps.event.trigger(map, "resize");
             },

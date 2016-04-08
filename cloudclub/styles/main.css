@@ -17,7 +17,7 @@
 }
 .map-tools > div {
     position: relative;
-    text-align: center;
+    left:0px;
     height: 100%;
 }
 
@@ -33,19 +33,21 @@
     margin: 0;
     background-position: center center;
     background-repeat: no-repeat;
+    background-size:contain;
 }
 .map-tools .map-tools-button:before {
     content: "";
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     top: 50%;
     left: 50%;
-    margin-top: -20px;
+    margin-top: -15px;
     margin-left: -20px;
     display: block;
     background-position: center center;
     background-repeat: no-repeat;
+    background-size:contain;
 }
 .map-tools .map-tools-button.home {
     left: 0;
@@ -53,16 +55,21 @@
 .map-tools .map-tools-button.search {
     right: 0;
 }
+.map-tools .map-tools-button.place {
+    right: 40px;
+}
 .map-tools .map-tools-button.home:before { background-image: url(../styles/images/location.png); }
 .map-tools .map-tools-button.home:active:before { background-image: url(../styles/images/location_active.png); }
 .map-tools .map-tools-button.search:before { background-image: url(../styles/images/search.png); }
 .map-tools .map-tools-button.search:active:before { background-image: url(../styles/images/search_active.png); }
+.map-tools .map-tools-button.place:before { background-image: url(../styles/images/icon.png); }
+.map-tools .map-tools-button.place:active:before { background-image: url(../styles/images/icon.png); }
 
 .map-tools input[type=search].map-tools-input {
     height: 100%;
-    width: 65%;
-    margin: 1em 0;
-    padding: 0.5em 1em;
+    width: 54%;
+    margin: 0;
+    padding: 0;
 }
 .km-wp .map-tools input[type=search].map-tools-input {
     width: 50%;
@@ -149,6 +156,26 @@
 }
 
 .km-drawer .km-content
+{
+	background-color: #fcfcfc;
+}
+.km-locate-button:after,
+.km-locate-button:before
+{
+	content: '\e016';
+}
+
+.km-locate .km-content
+{
+	background-color: #fcfcfc;
+}
+.km-find-button:after,
+.km-find-button:before
+{
+	content: '\e0e9';
+}
+
+.km-find .km-content
 {
 	background-color: #fcfcfc;
 }
