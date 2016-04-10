@@ -269,6 +269,10 @@ var app = (function (win) {
 
 	var NotifyHelper = {
 
+	    openBrowser:  function (url) {
+	        window.open(url, "_blank");
+	    },
+
 	    broadcast: function () {
 	        var activity = app.Activity.activity();
 	        app.everlive.push.notifications.create({ Message: activity.Text },

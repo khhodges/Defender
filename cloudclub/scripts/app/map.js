@@ -267,8 +267,8 @@ app.Places = (function () {
                     mapTypeControl: false,
                     streetViewControl: false,
                     scroolwheel: false,
-                    zoom: 13,
-                    center: new google.maps.LatLng(37, -100),
+                    zoom: 14,
+                    center: new google.maps.LatLng(0,0),
                     panCtrl: false,
                     zoomCtrl: true,
                     zoomCtrlOptions: {
