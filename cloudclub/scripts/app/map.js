@@ -183,8 +183,8 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.setContent('<div><strong>' + '<a href=\'' +
-                  result.website + 'target=\'_blank\'  \'location=yes,closebuttoncaption=Done\' >' + result.name + '</a></strong><br>' +
+                                infoWindow.setContent('<div><strong>' + '<a id="addButton" class="nav-button" data-align="right" data-role="button" data-click="app.notify.openBrowser(\''+
+                  result.website + ')\"><u>'+ result.name + '</u></a></strong><br>' +
                   'Phone: ' + result.formatted_phone_number + '<br>' +
                   result.formatted_address + '<br>No reviews or stars.</div>');
                             }

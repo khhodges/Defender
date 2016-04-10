@@ -269,9 +269,9 @@ var app = (function (win) {
 
 	var NotifyHelper = {
 
-	    openBrowser:  function (url) {
-	        window.open(url, "_blank");
-	    },
+	   // openBrowser:  function (url) {
+	     //   window.open(url, "_blank", "_blank", "location=yes", "closebuttoncaption=done");
+	    //},
 
 	    broadcast: function () {
 	        var activity = app.Activity.activity();
