@@ -53,8 +53,10 @@
     <Content Include="scripts\app\local.js" />
     <Content Include="scripts\app\identity-provider.js" />
     <Content Include="scripts\app\login.js" />
-    <Content Include="scripts\app\map - Copy.js" />
     <Content Include="scripts\app\map.js" />
+    <Content Include="scripts\app\places.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="scripts\app\settings.js" />
     <Content Include="scripts\app\signup.js" />
     <Content Include="scripts\app\social.js" />

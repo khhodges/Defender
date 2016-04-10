@@ -6,17 +6,12 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-
+    var infoWindow, markers, place;
     /**
      * The CenterControl adds a control to the map that recenters the map on
-     * Chicago.
-     * This constructor takes the control DIV as an argument.
-     * @constructor
+     * current location.
      */
     function CenterControl(controlDiv, map) {
-
-
-
         // Set CSS for the control border.
         var controlUI = document.createElement('div');
         controlUI.style.backgroundColor = '#fff';
@@ -38,7 +33,7 @@ app.Places = (function () {
         controlText.style.lineHeight = '20px';
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Go Home';
+        controlText.innerHTML = 'Restart';
         controlUI.appendChild(controlText);
 
         // Setup the click event listeners: simply set the map to Chicago.
@@ -46,7 +41,6 @@ app.Places = (function () {
             app.Places.locationViewModel.onNavigateHome();
         });
     }
-
     var placesViewModel = (function () {
         var map, geocoder,locality, home
         var placeModel = {
@@ -83,6 +77,7 @@ app.Places = (function () {
             _isLoading: false,
             address: "",
             isGoogleMapsInitialized: false,
+            markers: [],
             hideSearch: false,
             locatedAtFormatted: function (marker) {
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
@@ -100,9 +95,14 @@ app.Places = (function () {
             onNavigateHome: function () {
                 var that = this,
                     position;
-
                 that._isLoading = true;
                 that.toggleLoading();
+                markers = app.Places.locationViewModel.markers;
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                markers = [];
+                app.Places.locationViewModel.markers = new Array;
 
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
@@ -131,34 +131,73 @@ app.Places = (function () {
                     }
                 );
             },
+            clearMap: // Deletes all markers in the array by removing references to them.
+                function deleteMarkers() {
+                    setMapOnAll(null);
+                    markers = [];
+                    app.Places.locationViewModel.markers = new Array;
+                },
             onPlaceSearch: function () {
-                // Specify location, radius and place types for your Places API search.
-                var request = {
-                    location: locality,
-                    radius: '5500',
-                    types: ['cafe', 'restaurant']
-                };
-
                 // Create the PlaceService and send the request.
                 // Handle the callback with an anonymous function.
                 var service = new google.maps.places.PlacesService(map);
-                service.nearbySearch(request, function (results, status) {
+                
+                // Specify location, radius and place types for your Places API search.
+                var request = {
+                    location: locality,
+                    bounds: map.getBounds(),
+                    keyword: ['cafe', 'restaurant']
+                };
+
+                
+                service.radarSearch(request, function (results, status) {
                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                         map.panTo(results[0].geometry.location);
                         for (var i = 0; i < results.length; i++) {
-                            var place = results[i];
-
-                            // If the request succeeds, draw the place location on
-                            // the map as a marker, and register an event to handle a
-                            // click on the marker.
-                            var marker = new google.maps.Marker({
-                                map: map,
-                                position: place.geometry.location
-                            });
-                            marker.addListener('click', toggleBounce);
+                            place = results[i];
+                            addMarker(place)
                         }
                     }
                 });
+
+                function addMarker(place) {
+                    // If the request succeeds, draw the place location on
+                    // the map as a marker, and register an event to handle a
+                    // click on the marker.
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: place.geometry.location,
+                        icon: {
+                            url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                            anchor: new google.maps.Point(10, 10),
+                            scaledSize: new google.maps.Size(10, 17)
+                        }
+                    });
+
+                    app.Places.locationViewModel.markers.push(marker);
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        service.getDetails(place, function (result, status) {
+                            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                                console.error(status);
+                                return;
+                            }
+                            if (result.reviews === undefined || result.reviews === undefined) {
+                                infoWindow.setContent('<div><strong>' + '<a href=\'' +
+                  result.website + 'target=\'_blank\'  \'location=yes,closebuttoncaption=Done\' >' + result.name + '</a></strong><br>' +
+                  'Phone: ' + result.formatted_phone_number + '<br>' +
+                  result.formatted_address + '<br>No reviews or stars.</div>');
+                            }
+                            else {
+                                infoWindow.setContent('<div><strong>' + '<a href=\'' +
+              result.website + 'target=\'_blank\' \'location=yes,closebuttoncaption=Done\' >' + result.name + '</a></strong><br>' +
+              'Phone: ' + result.formatted_phone_number + '<br>' +
+              result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</div>');
+                            }
+                            infoWindow.open(map, marker);
+                        });
+                    });
+                };
                 function toggleBounce() {
                     if (this.getAnimation() !== null) {
                         this.setAnimation(null);
@@ -214,11 +253,9 @@ app.Places = (function () {
                 if (typeof google === "undefined") {
                     return;
                 }
-                var placesId = [];
-                var allLatlng = [];
-                var allPlaces = [];
-                var placesNames = [];
-                var infoWindow = null;
+
+                infoWindow = new google.maps.InfoWindow();
+
                 var pos, userCords, streetView, tempPlaceHolder = [];
 
                 var mapOptions = {
@@ -230,7 +267,7 @@ app.Places = (function () {
                     mapTypeControl: false,
                     streetViewControl: false,
                     scroolwheel: false,
-                    zoom: 5,
+                    zoom: 13,
                     center: new google.maps.LatLng(37, -100),
                     panCtrl: false,
                     zoomCtrl: true,
@@ -240,10 +277,6 @@ app.Places = (function () {
                     },
                     scaleControl: false
                 }
-
-                infoWindow = new google.maps.InfoWindow({
-                    content: "holding ..."
-                })
 
                 //Fire up
                 app.Places.locationViewModel.set("isGoogleMapsInitialized", true);
