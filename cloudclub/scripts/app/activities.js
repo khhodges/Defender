@@ -223,7 +223,7 @@ app.Activities = (function () {
 				app.showAlert("First take a photo with your camera and then add a message to match!", "Informational");
 			}
 			if (validator.validate() && (selected !== undefined)) {				
-				app.notify.showShortTop("Uploading image... please wait");
+				app.notify.showShortTop("Activities.Uploading image... please wait");
 				app.mobileApp.showLoading();
 				// Save image as base64 to everlive
 				app.everlive.Files.create({

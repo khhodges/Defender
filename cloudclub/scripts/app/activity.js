@@ -51,7 +51,7 @@ app.Activity = (function () {
 			
 			$activityPicture[0].style.display = activity.Picture ? 'block' : 'none';			
 			
-			    app.notify.showShortTop("Checking for Comments ...")
+			    app.notify.showShortTop("Activity.Checking for Comments ...")
 			
 			//app.mobileApp.showLoading();
 			app.Comments.comments.filter({
@@ -71,7 +71,8 @@ app.Activity = (function () {
 				appSettings.messages.removeActivityConfirm,
 				'Delete Activity',
 				function (confirmed) {
-					if (confirmed === true || confirmed === 1) {
+				    if (confirmed === true || confirmed === 1) {
+				        app.notify.showShortTop("Activity.removed");
 						activities.remove(activity);
 						activities.one('sync', function () {
 							app.mobileApp.navigate('#:back');

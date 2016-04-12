@@ -72,13 +72,21 @@ app.Places = (function () {
                 typeName: 'Places'
             }
         });
+        var viewModelSearch = kendo.observable({
+            selectedProduct: null, products: appSettings.products
+        });
+        viewModelSearch.selectedProduct = viewModelSearch.products[7];
+        //kendo.bind($("#searchList"), app.Places.locationViewModel.viewModelSearch);
         var LocationViewModel = kendo.data.ObservableObject.extend({
             _lastMarker: null,
             _isLoading: false,
             address: "",
+            find: "hotels",
             isGoogleMapsInitialized: false,
             markers: [],
             hideSearch: false,
+            products: viewModelSearch.products,
+            selectedProduct: viewModelSearch.selectedProduct,
             locatedAtFormatted: function (marker) {
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
                 marker.Mark = new google.maps.Marker({
@@ -123,7 +131,7 @@ app.Places = (function () {
                         that._isLoading = false;
                         that.toggleLoading();
 
-                        app.notify.showShortTop("Unable to determine current location. Cannot connect to GPS satellite.");
+                        app.notify.showShortTop("Map.Unable to determine current location. Cannot connect to GPS satellite.");
                     },
                     {
                         timeout: 30000,
@@ -146,7 +154,7 @@ app.Places = (function () {
                 var request = {
                     location: locality,
                     bounds: map.getBounds(),
-                    keyword: ['cafe', 'restaurant']
+                    keyword: app.Places.locationViewModel.products[$("#searchList option:selected").val() - 1].list
                 };
 
                 
@@ -183,16 +191,14 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.setContent('<div><strong>' + '<a id="addButton" class="nav-button" data-align="right" data-role="button" data-click="app.notify.openBrowser(\''+
-                  result.website + ')\"><u>'+ result.name + '</u></a></strong><br>' +
-                  'Phone: ' + result.formatted_phone_number + '<br>' +
-                  result.formatted_address + '<br>No reviews or stars.</div>');
+                                infoWindow.setContent('<div><span onclick="test(\''+ result.website +'\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+              'Phone: ' + result.formatted_phone_number + '<br>' +
+              result.formatted_address +'<br>No reviews or stars.</div>');
                             }
                             else {
-                                infoWindow.setContent('<div><strong>' + '<a href=\'' +
-              result.website + 'target=\'_blank\' \'location=yes,closebuttoncaption=Done\' >' + result.name + '</a></strong><br>' +
+                                infoWindow.setContent('<div><span onclick="test(\''+ result.website +'\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
               'Phone: ' + result.formatted_phone_number + '<br>' +
-              result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</div>');
+              result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
                             }
                             infoWindow.open(map, marker);
                         });
@@ -215,7 +221,7 @@ app.Places = (function () {
                     },
                     function (results, status) {
                         if (status !== google.maps.GeocoderStatus.OK) {
-                            app.notify.showShortTop("Unable to find that address.");
+                            app.notify.showShortTop("Map.Unable to find that address.");
                             return;
                         }
                         
@@ -268,7 +274,7 @@ app.Places = (function () {
                     streetViewControl: false,
                     scroolwheel: false,
                     zoom: 14,
-                    center: new google.maps.LatLng(0,0),
+                    center: new google.maps.LatLng(0,-20),
                     panCtrl: false,
                     zoomCtrl: true,
                     zoomCtrlOptions: {

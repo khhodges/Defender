@@ -3,13 +3,23 @@
  */
 
 var appSettings = {
+    products: [{ "id": 1, "name": "Banks ", "list": ["bank", "atm"] },
+                       { "id": 2, "name": "Business ", "list": ["travel_agency", "roofing_contractor", "plumber", "painter", "locksmith", "lawyer", "laundry", "insurance_agency", "florist", "electrician", "car_wash", "car_repair", "car_dealer", "book_store", "bicycle_store", "beauty_salon", "accounting"] },
+                       { "id": 3, "name": "Community ", "list": ["synagogue", "post_office", "police", "park", "museum", "mosque", "local_government_office", "hindu_temple", "funeral_home", "fire_station", "courthouse", "city_hall", "church", "cemetery", "amusement_park"] },
+                       { "id": 4, "name": "Education ", "list": ["university", "school", "library", "art_gallery", "aquarium"] },
+                       { "id": 5, "name": "Entertainment ", "list": ["zoo", "stadium", "night_club", "movie_theater", "movie_rental", "casino", "bowling_alley"] },
+                       { "id": 6, "name": "Groceries ", "list": ["grocery_or_supermarket", "bakery"] },
+                       { "id": 7, "name": "Health ", "list": ["veterinary_care", "spa", "physiotherapist", "hospital", "hair_care", "gym", "doctor", "dentist"] },
+                       { "id": 8, "name": "Restaurant ", "list": ["restaurant", "meal_takeaway", "meal_delivery", "liquor_store", "convenience_store", "cafe", "bar"] },
+                       { "id": 9, "name": "Store ", "list": ["store", "shopping_mall", "shoe_store", "pharmacy", "pet_store", "jewelry_store", "home_goods_store", "hardware_store", "furniture_store", "electronics_store", "department_store", "clothing_store"] },
+                       { "id": 10, "name": "Travel ", "list": ["transit_station", "train_station", "taxi_stand", "subway_station", "storage", "rv_park", "real_estate_agency", "parking", "moving_company", "lodging", "gas_station", "embassy", "car_rental", "campground", "bus_station", "airport"] }],
 
     everlive: {
         appId: '3t5oa8il0d0y02eq', // Put your Backend Services API key here
         scheme: 'http'
     },
     views: {
-        init: '#initView',
+        init: '#welcome',
         noAppId: 'views/noAppIdView.html',
         signUp: 'views/signupView.html',
         users: 'views/usersView.html',

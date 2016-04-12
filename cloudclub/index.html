@@ -1,109 +1,110 @@
 ﻿<!DOCTYPE html>
 <html>
-
-	<head>
-		<title></title>
-		<meta charset="utf-8" />
-		<script src="cordova.js"></script>
-		<script src="kendo/js/jquery.min.js"></script>
-		<script src="kendo/js/kendo.mobile.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8dnz0UDs1aoCLVZcC6UAPSn3eSXyYh8&libraries=places"></script>
-		<script src="bower_components/everlive/min/everlive.all.min.js"></script>
-		<script src="scripts/app/identity-provider.js"></script>
-		<script src="scripts/app/settings.js"></script>
-		<script src="scripts/app/app.js"></script>
-        <script src="scripts/app/common.js"></script>
-        <script src="scripts/app/social.js"></script>
-		<script src="scripts/app/analytics-monitor.js"></script>
-		<script src="scripts/app/users.js"></script>
-        <script src="scripts/app/update.js"></script>
-        <script src="scripts/app/map.js"></script>
-		<script src="scripts/app/login.js"></script>
-		<script src="scripts/app/signup.js"></script>
-		<script src="scripts/app/activities.js"></script>
-		<script src="scripts/app/activity.js"></script>
-		<script src="scripts/app/comments.js"></script>
-		<link href="http://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-		<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
-		<link href="styles/main.css" rel="stylesheet">
-	</head>
-
-	<body id="friendsApp">
-        <script>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8dnz0UDs1aoCLVZcC6UAPSn3eSXyYh8&libraries=places"></script>
+    <script src="bower_components/everlive/min/everlive.all.min.js"></script>
+    <script src="scripts/app/identity-provider.js"></script>
+    <script src="scripts/app/settings.js"></script>
+    <script src="scripts/app/app.js"></script>
+    <script src="scripts/app/common.js"></script>
+    <script src="scripts/app/social.js"></script>
+    <script src="scripts/app/analytics-monitor.js"></script>
+    <script src="scripts/app/users.js"></script>
+    <script src="scripts/app/update.js"></script>
+    <script src="scripts/app/map.js"></script>
+    <script src="scripts/app/login.js"></script>
+    <script src="scripts/app/signup.js"></script>
+    <script src="scripts/app/activities.js"></script>
+    <script src="scripts/app/activity.js"></script>
+    <script src="scripts/app/comments.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body id="friendsApp">
+    <script>
         //initially hiding the body so that the ugly body before the css rendering doesn't show up for users
         //body visibility set back to 'visible' on the data-show method of the first view, home.
         $(document.body).css("visibility", "hidden");
-        </script>
-		<div data-role="layout" data-id="default">
-			<!--View content will render here-->
-		</div>
-		<!--WELCOME VIEW -->
-		<div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.Login" data-init="app.Login.init" data-show="app.Login.show">
-			<div data-role="header"></div>
-			<h2 class="app-name">
-				Friends <small>Loyality Application</small>
-			</h2>
-			<form id="login-form">
-				<ul data-role="listview" data-style="inset">
-					<li class="username">
-						<input type="text" id="loginUsername" placeholder="username" required validationMessage="Username is required!">
-					</li>
-					<li class="password">
-						<input type="password" id="loginPassword" placeholder="password" required validationMessage="Password is required!">
-					</li>
-				</ul>
-			</form>
-			<ol class="group-wrp">
-				<li>
-					<span id="login" data-role="touch" data-bind="events: { tap: login }">
-						<a data-role="button" class="btn btn-login">Loyalty Club Members</a>
-					</span>
-				</li>
-				<li class="oauth cf" hidden>
-					<span id="loginWithFacebook" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithFacebook }">
-						<a data-role="button" class="btn btn-facebook hide-text">Facebook</a>
-					</span>
-					<span id="loginWithGoogle" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithGoogle }">
-						<a data-role="button" class="btn btn-google hide-text">Google</a>
-					</span>
-					<span id="loginWithLiveID" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithLiveID }">
-						<a data-role="button" class="btn btn-windows hide-text">LiveID</a>
-					</span>
-					<span id="loginWithADSF" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithADSF }">
-						<a data-role="button" class="btn btn-adfs hide-text">ADFS</a>
-					</span>
-				</li>
-				<li class="signup">
-					<p>Get your own account below</p>
-					<a data-role="button" href="views/signupView.html" class="btn">Register for savings</a>
-				</li>
-				<li>
-                    <a id="addButton" class="nav-button" data-align="right" data-role="button" data-click="app.notify.showShortTop('http://www.on2t.com')"><u>Visit our web site</u></a><br/>
-					
-				</li>
-				<li>
-				<span>OFA version 1.3.2 - 4/8/2016</span></li>
-			</ol>
-		</div>
-		<div id="appDrawer" data-role="drawer" data-title="Menu">
-			<header data-role="header">
-				<div data-role="navbar">
-					<span data-role="view-title"></span>
-					<a class="nav-button" data-align="left" data-role="backbutton" data-click="app.Activities.logout">Logout</a>
-				</div>
-			</header>
-			<ul id="navigation-container" data-role="listview">
-				<li>
-					<a href="views/activitiesView.html" data-icon="home" style="color: black">See Activities</a>
-				</li>
-                <li>
-                    <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places</a>
+    </script>
+    <div data-role="layout" data-id="default">
+        <!--View content will render here-->
+    </div>
+    <!--WELCOME VIEW -->
+    <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.Login" data-init="app.Login.init" data-show="app.Login.show">
+        <div data-role="header"></div>
+        <h2 class="app-name">
+            Friends <small>Loyality Application</small>
+        </h2>
+        <form id="login-form">
+            <ul data-role="listview" data-style="inset">
+                <li class="username">
+                    <input type="text" id="loginUsername" placeholder="username" required validationMessage="Username is required!">
                 </li>
-                <li>
-                    <a href="views/updateView.html" data-icon="settings" style="color: black">Change Settings</a>
+                <li class="password">
+                    <input type="password" id="loginPassword" placeholder="password" required validationMessage="Password is required!">
                 </li>
-			</ul>
-		</div>
-	</body>
-
+            </ul>
+        </form>
+        <ol class="group-wrp">
+            <li>
+                <span id="login" data-role="touch" data-bind="events: { tap: login }">
+                    <a data-role="button" class="btn btn-login">Loyalty Club Members</a>
+                </span>
+            </li>
+            <li class="oauth cf" hidden>
+                <span id="loginWithFacebook" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithFacebook }">
+                    <a data-role="button" class="btn btn-facebook hide-text">Facebook</a>
+                </span>
+                <span id="loginWithGoogle" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithGoogle }">
+                    <a data-role="button" class="btn btn-google hide-text">Google</a>
+                </span>
+                <span id="loginWithLiveID" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithLiveID }">
+                    <a data-role="button" class="btn btn-windows hide-text">LiveID</a>
+                </span>
+                <span id="loginWithADSF" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithADSF }">
+                    <a data-role="button" class="btn btn-adfs hide-text">ADFS</a>
+                </span>
+            </li>
+            <li class="signup">
+                <p data-model="app.Places.locationViewModel" data-bind="value: find"></p>
+                <a data-role="button" href="views/signupView.html" class="btn">Register for savings</a>
+            </li>
+            <li>
+                <button class="button" id="openExternalInAppBrowser">Visit our Web Site</button>
+            </li>
+            <li>
+                <span>OFA version 1.3.5 - 4/12/2016</span>
+            </li>
+        </ol>
+    </div>
+    <div id="appDrawer" data-role="drawer" data-title="Menu" >
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout">Logout</a>
+            </div>
+        </header>
+        <ul id="navigation-container" data-role="listview" >
+            <li>
+                <a href="views/activitiesView.html" data-icon="home" style="color: black">See Activities</a>
+            </li>
+            <li>
+                <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places (Choose below)</a>
+            </li>
+            <li>
+                <select id="searchList" data-value-field="id" data-text-field="name" data-bind="value: selectedProduct, source: products" ></select>
+            </li>
+            <li>
+                <a href="views/updateView.html" data-icon="settings" style="color: black">Change Settings</a>
+            </li>
+            <li></li>
+        </ul>
+    </div>
+</body>
 </html>

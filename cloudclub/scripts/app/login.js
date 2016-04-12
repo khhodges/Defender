@@ -21,6 +21,7 @@ app.Login = (function () {
         var isAnalytics = analytics.isAnalytics();
 
         var init = function () {
+            kendo.bind($("#searchList"), app.Places.locationViewModel.products);
 
             if (!app.isKeySet(appSettings.everlive.appId)) {
                 app.mobileApp.navigate('views/noAppId.html', 'fade');
@@ -67,7 +68,7 @@ app.Login = (function () {
             app.everlive.Users.login(username, password)
             .then(function () {
                 // EQATEC analytics monitor - track login type
-                if (isAnalytics) {
+                if (isAnalytics && !app.helper.checkSimulator()) {
                     analytics.TrackFeature('Login.Regular');
                 }
                 

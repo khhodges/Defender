@@ -25,11 +25,16 @@
     };
 
     app.logout = function () {
-        navigator.notification.confirm('This will logout you, are your sure?', function (buttonIndex) {
+        navigator.notification.confirm('Are your sure?', function (buttonIndex) {
             if (buttonIndex === 1) {
+                app.notify.showShortTop("User.Logout Confirmed");
                 appConsole.clear();
                 app.everlive.Users.logout();
                 app.navigateToView(app.config.views.init);
+            } else {
+
+                app.mobileApp.navigate('views/activitiesView.html');
+                app.notify.showShortTop("User.Logout Un-Click");
             }
         }, "Logout", ["OK", "Cancel"]);
     };

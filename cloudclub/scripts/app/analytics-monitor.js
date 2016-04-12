@@ -15,7 +15,6 @@
         // Handy shortcuts to the analytics api
         var factory = win.plugins.EqatecAnalytics.Factory;
         var monitor = win.plugins.EqatecAnalytics.Monitor;
-
         // Create the monitor instance using the unique product key for platform-friends-hybrid
         var productId = appSettings.eqatec.productKey;
         var version = appSettings.eqatec.version || '1.0.0.0';

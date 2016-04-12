@@ -150,7 +150,7 @@ app.Signup = (function () {
 		var addImage = function () {
 			var success = function (data) {
 				if (!app.helper.checkSimulator()) {
-				    app.notify.showShortTop("Uploading image ...");
+				    app.notify.showShortTop("Image.Uploading image ...");
 					everlive.Files.create({
 											  Filename: Math.random().toString(36).substring(2, 15) + ".jpg",
 											  ContentType: "image/jpeg",
