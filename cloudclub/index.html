@@ -54,10 +54,10 @@
         <ol class="group-wrp">
             <li>
                 <span id="login" data-role="touch" data-bind="events: { tap: login }">
-                    <a data-role="button" class="btn btn-login">Loyalty Club Members</a>
+                    <a data-role="button" class="btn btn-login">Club Member Login</a>
                 </span>
             </li>
-            <li class="oauth cf" hidden>
+            <li class="oauth cf" hidden >
                 <span id="loginWithFacebook" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithFacebook }">
                     <a data-role="button" class="btn btn-facebook hide-text">Facebook</a>
                 </span>
@@ -72,14 +72,14 @@
                 </span>
             </li>
             <li class="signup">
-                <p data-model="app.Places.locationViewModel" data-bind="value: find"></p>
-                <a data-role="button" href="views/signupView.html" class="btn">Register for savings</a>
+                <a data-role="button" href="views/signupView.html" class="oauth-item">Register</a>
+                <a data-role="button" href="views/mapView.html" class="oauth-item">Continue</a>
             </li>
             <li>
-                <button class="button" id="openExternalInAppBrowser">Visit our Web Site</button>
+                <button data-role="button" class="oauth-item" id="openExternalInAppBrowser">Visit our Web Site</button>
             </li>
             <li>
-                <span>OFA version 1.3.6a - 4/13/2016</span>
+                <span>OFA version 1.3.6d - 4/13/2016</span>
             </li>
         </ol>
     </div>
@@ -87,7 +87,7 @@
         <header data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
-                <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout">Logout</a>
+                <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout" data-bind="visible: isOnline">Logout</a>
             </div>
         </header>
         <ul id="navigation-container" data-role="listview" >

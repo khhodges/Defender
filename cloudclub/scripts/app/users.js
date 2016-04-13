@@ -93,7 +93,17 @@ app.Users = (function () {
             admin: function () {
                 return adminData;
             },
-            currentUser: currentUser,
+            isOnline: function (){
+                if (currentUser.data === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            clearUsersData: function(){
+                currentUser.data = null;
+                usersData = null;
+            },            currentUser: currentUser,
            // usersData: usersDataSource,
             onUserSelected: onUserSelected,
             handleSendAction: handleSendAction

@@ -27,11 +27,17 @@
     app.logout = function () {
         navigator.notification.confirm('Are your sure?', function (buttonIndex) {
             if (buttonIndex === 1) {
+                app.everlive.Users.logout();
+                app.Users.clearUserData();
                 app.notify.showShortTop("User.Logout Confirmed");
                 appConsole.clear();
-                app.everlive.Users.logout();
+                navigator.app.exitApp();
                 app.navigateToView(app.config.views.init);
                 app.mobileApp.navigate('#welcome');
+                var modalView = e.sender.element.closest("[data-role=modalview]").data("kendoMobileModalView");
+                modalView.close();
+                modalView = document.getElementById("view-all-activities");
+                modalView.close();
             } else {
 
                 app.mobileApp.navigate('views/activitiesView.html');

@@ -257,9 +257,9 @@ var app = (function (win) {
 		},
 
 		// Current user logout
-		logout: function () {
-			return el.Users.logout();
-		},
+//		logout: function () {
+	//		return el.Users.logout();
+		//},
 
 		autoSizeTextarea: function () {
 			var rows = $(this).val().split('\n');

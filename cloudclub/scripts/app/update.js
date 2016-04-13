@@ -86,6 +86,11 @@ app.Update = (function () {
 		var show = function () {
 			analytics.TrackFeature('Update.Show');
 			$updateInfo.prop('rows', 1);
+			if (app.Users.currentUser.data === null) {
+			    app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+			    app.mobileApp.navigate(('#welcome'));
+			    return;
+			}
 
 			dataSource = kendo.observable({
 											  Username: app.Users.currentUser.data.Username,
