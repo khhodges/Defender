@@ -19,7 +19,7 @@ var appSettings = {
         scheme: 'http'
     },
     views: {
-        init: '#welcome',
+        init: 'index.html',
         noAppId: 'views/noAppIdView.html',
         signUp: 'views/signupView.html',
         users: 'views/usersView.html',

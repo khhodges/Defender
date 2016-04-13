@@ -31,6 +31,7 @@
                 appConsole.clear();
                 app.everlive.Users.logout();
                 app.navigateToView(app.config.views.init);
+                app.mobileApp.navigate('#welcome');
             } else {
 
                 app.mobileApp.navigate('views/activitiesView.html');
