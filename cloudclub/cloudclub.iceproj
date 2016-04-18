@@ -33,6 +33,7 @@
     <Content Include="cordova.wp8.js" />
     <Content Include="Errors.html" />
     <Content Include="index.html" />
+    <Content Include="Index1.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
     <Content Include="kendo\styles\images\back.png" />
@@ -114,6 +115,7 @@
     <Content Include="views\placesView.html" />
     <Content Include="views\signupView.html" />
     <Content Include="views\updateView.html" />
+    <Content Include="views\listView.html" />
     <Content Include="views\usersView.html" />
   </ItemGroup>
   <ItemGroup>

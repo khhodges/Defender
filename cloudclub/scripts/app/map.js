@@ -6,7 +6,7 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-    var infoWindow, markers, place;
+    var infoWindow, markers, place, result, service, here, request, lat1, lng1;
     /**
      * The CenterControl adds a control to the map that recenters the map on
      * current location.
@@ -33,16 +33,18 @@ app.Places = (function () {
         controlText.style.lineHeight = '20px';
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Restart';
+        controlText.innerHTML = 'List';
         controlUI.appendChild(controlText);
+
 
         // Setup the click event listeners: simply set the map to Chicago.
         controlUI.addEventListener('click', function () {
-            app.Places.locationViewModel.onNavigateHome();
+            //app.Places.locationViewModel.onNavigateHome();
+            app.mobileApp.navigate('views/listView.html');
         });
     }
     var placesViewModel = (function () {
-        var map, geocoder,locality, home
+        var map, geocoder, locality, home
         var placeModel = {
             fields: {
                 place: {
@@ -81,9 +83,10 @@ app.Places = (function () {
             _lastMarker: null,
             _isLoading: false,
             address: "",
-            find: "hotels",
+            find: "pizza",
             isGoogleMapsInitialized: false,
             markers: [],
+            details: [],
             hideSearch: false,
             products: viewModelSearch.products,
             selectedProduct: viewModelSearch.selectedProduct,
@@ -93,12 +96,12 @@ app.Places = (function () {
                     map: map,
                     position: position,
                     icon: {
-                    url: 'http://maps.gstatic.com/mapfiles/circle.png',
-                    anchor: new google.maps.Point(10, 10),
-                    scaledSize: new google.maps.Size(10, 17)
-                }
+                        url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                        anchor: new google.maps.Point(10, 10),
+                        scaledSize: new google.maps.Size(10, 17)
+                    }
                 });
-                return (marker.latitude+"/"+marker.longitude);
+                return (marker.latitude + "/" + marker.longitude);
             },
             onNavigateHome: function () {
                 var that = this,
@@ -111,21 +114,26 @@ app.Places = (function () {
                 }
                 markers = [];
                 app.Places.locationViewModel.markers = new Array;
+                app.Places.locationViewModel.details = new Array;
+                //if (document.getElementById("place-list-view") !== null && document.getElementById("place-list-view").innerHTML !== null) {
+                //    document.getElementById("place-list-view").innerHTML = "<strong> Cleared</strong>";
+                //}
 
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
                         position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         map.panTo(position);
                         that._putMarker(position);
-                        home=position;
+                        home = position;
                         locality = position;
-
+                        lat1 = position.lat();
+                        lng1 = position.lng();
                         that._isLoading = false;
                         that.toggleLoading();
                     },
                     function (error) {
                         //default map coordinates
-                        position = new google.maps.LatLng(0,0);
+                        position = new google.maps.LatLng(0, 0);
                         map.panTo(position);
 
                         that._isLoading = false;
@@ -141,33 +149,79 @@ app.Places = (function () {
             },
             clearMap: // Deletes all markers in the array by removing references to them.
                 function deleteMarkers() {
-                    setMapOnAll(null);
+                    markers = app.Places.locationViewModel.markers;
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setMap(null);
+                    }
+
                     markers = [];
                     app.Places.locationViewModel.markers = new Array;
+                    app.Places.locationViewModel.details = new Array;
+                    //if (document.getElementById("place-list-view") !== null && document.getElementById("place-list-view").innerHTML !== null) {
+                    //    document.getElementById("place-list-view").innerHTML = "<strong> Cleared</strong>";
+                    //}
                 },
             onPlaceSearch: function () {
+                markers = app.Places.locationViewModel.markers;
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                markers = [];
+                app.Places.locationViewModel.markers = new Array;
+                app.Places.locationViewModel.details = new Array;
+                //if (document.getElementById("place-list-view") !== null && document.getElementById("place-list-view").innerHTML !== null) {
+                //    document.getElementById("place-list-view").innerHTML = "<strong> Cleared</strong>";
+                //}
                 // Create the PlaceService and send the request.
                 // Handle the callback with an anonymous function.
-                var service = new google.maps.places.PlacesService(map);
-                var here = map.getBounds();
-                var searchList = app.Places.locationViewModel.products[$("#searchList option:selected").val() - 1].list;
-                for (var i = 0; i < searchList.length; i++) {
-                    // Specify location, radius and place types for your Places API search.
-                    var request = {
-                        location: locality,
-                        bounds: here,
-                        keyword:searchList[i]
-                    };                
-                    service.radarSearch(request, function (results, status) {
-                        if (status == google.maps.places.PlacesServiceStatus.OK) {
-                            map.panTo(results[0].geometry.location);
-                            for (var i = 0; i < results.length; i++) {
-                                place = results[i];
-                                addMarker(place)
+                service = new google.maps.places.PlacesService(map);
+                here = map.getBounds();
+                //var searchList = app.Places.locationViewModel.products[$("#searchList option:selected").val() - 1].search;
+                //for (var i = 0; i < searchList.length; i++) {
+                // Specify location, radius and place types for your Places API search.
+                request = {
+                    location: locality,
+                    bounds: here,
+                    keyword: app.Places.locationViewModel.find
+                };
+                service.nearbySearch(request, function (results, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        map.panTo(results[0].geometry.location);
+                        for (var i = 0; i < results.length; i++) {
+                            place = results[i];
+                            var lat2 = place.geometry.location.lat();
+                            var lng2 = place.geometry.location.lng();
+                            var R = 6371; // km
+                            var dLat = (lat2 - lat1) * Math.PI / 180;
+                            var dLon = (lng2 - lng1) * Math.PI / 180;
+                            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                            var c = 2 * Math.asin(Math.sqrt(a));
+                            var d = R * c;
+                            place.distance = d.toFixed(2);
+                            if (app.isNullOrEmpty(place.rating)) {
+                                place.rating = "??";
                             }
+
+                            //if (app.isNullOrEmpty(place.price_level)) {
+                            //    place.price_level = 1;
+                            //}
+                            addMarker(place);
+                            app.Places.locationViewModel.details.push(place);
+                            // service.getDetails(place, function (result, status) {
+                            //    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                            //        console.error(status);
+                            //        return;
+                            //    };
+
+                            //    app.Places.locationViewModel.details.push(result);
+
+                            //})
                         }
-                    });
-                }
+                    }
+                });
+
 
                 function addMarker(place) {
                     // If the request succeeds, draw the place location on
@@ -192,12 +246,12 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.setContent('<div><span onclick="test(\''+ result.website +'\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
               'Phone: ' + result.formatted_phone_number + '<br>' +
-              result.formatted_address +'<br>No reviews or stars.</div>');
+              result.formatted_address + '<br>No reviews or stars.</div>');
                             }
                             else {
-                                infoWindow.setContent('<div><span onclick="test(\''+ result.website +'\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
               'Phone: ' + result.formatted_phone_number + '<br>' +
               result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
                             }
@@ -225,7 +279,7 @@ app.Places = (function () {
                             app.notify.showShortTop("Map.Unable to find that address.");
                             return;
                         }
-                        
+
                         map.panTo(results[0].geometry.location);
                         //bounds
                         that._putMarker(results[0].geometry.location);
@@ -252,7 +306,7 @@ app.Places = (function () {
                 });
             },
             places: placesDataSource,
-            currentLocation:home
+            currentLocation: home
         });
         return {
             initLocation: function () {
@@ -275,7 +329,7 @@ app.Places = (function () {
                     streetViewControl: false,
                     scroolwheel: false,
                     zoom: 14,
-                    center: new google.maps.LatLng(0,-20),
+                    center: new google.maps.LatLng(0, -20),
                     panCtrl: false,
                     zoomCtrl: true,
                     zoomCtrlOptions: {
@@ -316,7 +370,13 @@ app.Places = (function () {
                 //hide loading mask if user changed the tab as it is only relevant to location tab
                 kendo.mobile.application.hideLoading();
             },
-            locationViewModel: new LocationViewModel()
+            locationViewModel: new LocationViewModel(),
+            listShow: function () {
+                $("#place-list-view").kendoMobileListView({
+                    dataSource: app.Places.locationViewModel.details,
+                    template: "<div data-role='touch' data-bind='events: { tap: partnerSelected }'><div style='font-size:20px;'><span><strong>#: name # </strong> <small><br /> #: vicinity # - #: distance # Klm, #: rating # Stars </small></span></div>"
+                });
+            },
         };
     }());
     return placesViewModel;

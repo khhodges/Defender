@@ -397,7 +397,22 @@ input[type='week']
 }
 #friendsApp .btn-login
 {
-	background-color: #e91e63;
+	background-color: #cf393a;
+}
+#friendsApp .btn-register
+{
+	background-color: #39ae2a;
+    color:white;
+}
+#friendsApp .btn-continue
+{
+	background-color: #e4a830;
+    color:white;
+}
+#friendsApp .btn-view
+{
+	background-color: #000000;
+    color:white;
 }
 #friendsApp .signup-view .btn-signup,
 #friendsApp .update-view .btn-update,

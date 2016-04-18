@@ -156,7 +156,7 @@ var app = (function (win) {
 	var AppHelper = {
 	    openExternalInAppBrowser: function () {
 	        app.notify.showShortTop("url.on2t");
-	        var winB = window.open("http://www.on2t.com", "_blank");
+	        var winB = window.open("http://www.on2t.com/mobile", "_blank");
             app.notify.showShortTop()
 	        winB.addEventListener("loadstop", function () {
 	            winB.executeScript({ code: "alert( 'Click the X button to return to the App' );" });

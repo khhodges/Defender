@@ -1,0 +1,13 @@
+<div id="place-list" class="view place-list" data-role="view" data-model="app.Places" data-show="app.Places.listShow">
+    <div data-role="header">
+        <div data-role="navbar">
+            List
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button" data-badge="2"></a>
+            <a id="addButton" class="nav-button" data-align="right" data-role="button" href="views/mapView.html">map</a>
+        </div>
+    </div>
+    <ul id="place-list-view" ></ul>
+</div>
+<script id="place-template" type="text/x-kendo-template">
+    <ui data-bind="attr: { class: isSelectedClass }"><span><strong>#: name # </strong> <small>#: distance # Klm, #: rating # Stars <br /> #: vicinity #</small></span></ui>
+</script>

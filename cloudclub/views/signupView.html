@@ -1,56 +1,48 @@
 <div data-role="view" id="signup" data-layout="default" class="signup-view" data-model="app.Signup" data-init="app.Signup.init" data-show="app.Signup.show" data-hide="app.Signup.hide">
-	<div data-role="header">
-		<div data-role="navbar">
-			Membership
-			<a class="nav-button nav-button-icon nav-button-back-d hide-text" data-align="left" data-role="backbutton" href="#welcome">Back</a>
-		</div>
-	</div>
-	<script>
-		//$("#zoom_mw").elevateZoom({zoomWindowPosition: 7, cursor: "crosshair"});
-	</script>
-	<form id="signUp">
-		<ul id="signup-form" data-role="listview" data-style="inset">
-			<li>
-				<input type="text" id="signupName" data-bind="value: DisplayName" placeholder="Full Name" required>
-			</li>
-			<li>
-				<input type="email" id="signupEmail" data-bind="value: Email" placeholder="email">
-			</li>
-			<li>
-				<input type="text" id="signupUsername" data-bind="value: Username" placeholder="username" required>
-			</li>
-			<li>
-				<input type="password" id="signupPassword" data-bind="value: Password" placeholder="password" required>
-			</li>
-		</ul>
-		<input style="visibility:hidden" type="date" id="signupBirthDatePicker" data-bind="value: BirthDate">
-		<select style="visibility:hidden" id="signupGenderPicker" data-bind="value: Gender" onchange="app.Signup.onSelectChange(this)">
-			<option value="0" selected>gender</option>
-			<option value="1">Male</option>
-			<option value="2">Female</option>
-		</select>
-		<textarea id="signupInfo" style="visibility:hidden" data-bind="value: About"></textarea>
-	</form>
-
-	<div style="padding:25px; margin: -110px 0px 20px 0px">
-		<div id="signupBtnWrp" class="signup-btn-wrp disabled" style="padding:0px; margin: 0px 0px 20px 0px">
-			<a class="btn btn-signup" data-role="button" data-bind="click: signup">Register</a>
-		</div>
-		<table hidden>
-			<tr>
-				<td span="2">
-					<div class="cover">
-						<div id="avatarImage" style="background-image: url(styles/images/logo2.jpg); " class="video-thumbnail"></div>
-					</div>
-				</td>
-				<td >
-					<a class="btn" data-align="right" data-role="button" data-bind="click: pickImage" style="margin: 20px; padding:10px">
-						Add a Selfie!
-					</a>
-				</td>
-			</tr>
-		</table>
-		<span>Free Membership notifies you on favourite local activities, see what others say, find discounts, provide feedback, order star-rated specials, book ahead, avoid delay, earn discounts and see offers you would otherwise miss. You can manage your Loyalty Account and review your points whenever you log in. <br/><b> The Loyalty Club </b></span>
-	</div>
-
+    <div data-role="header">
+        <div data-role="navbar">
+            Registration
+            <a class="nav-button nav-button-icon nav-button-back-d hide-text" data-align="left" data-role="backbutton" href="#welcome">Back</a>
+        </div>
+    </div>
+    <table align="center">
+        <tr>
+            <td>
+                <div id="collapsible" data-style="inset" data-role="collapsible" data-animation="false">
+                    <h2 data-style="inset">User Notes</h2>
+                    <p>Add your home Zip Code to register for notifications and use location services while on the move. See local activities and local discounts with what others say. Join or start a conversation about local business concern. Find offers, contact school, provide feedback, order ahead, get reminded, see confirmations, avoid delay and busy times, earn discounts and never miss an events. Manage your time and review your activities whenever and wherever you want. As a community, content and usage is a shared responsibility that cannot be guatanteed by any single party.</p>
+                    <p>                    <input type="checkbox" id="approve" value="true" required>I agree.<p/>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <form id="signUp">
+        <ul id="signup-form" data-role="listview" data-style="inset">
+            <li>
+                <input type="text" id="signupName" data-bind="value: DisplayName" placeholder="Full Name" required>
+            </li>
+            <li>
+                <input type="email" id="signupEmail" data-bind="value: Email" placeholder="email" required>
+            </li>
+            <li>
+                <input type="text" id="signupEmail" data-bind="value: ZipCode" placeholder="zipcode">
+            </li>
+            <li>
+                <input type="text" id="signupUsername" data-bind="value: Username" placeholder="username" required>
+            </li>
+            <li>
+                <input type="password" id="signupPassword" data-bind="value: Password" placeholder="password" required>
+            </li>
+        </ul>
+    </form>
+    <div id="signupBtnWrp" class="signup-btn-wrp disabled">
+        <a class="btn btn-signup" data-role="button" data-bind="click: signup">Register</a>
+    </div>
+    <table align="center">
+        <tr>
+            <td><br/>                
+                <a href="mailto:support@on2t.com?Subject=Registration" target="_top"><b>Contact Cloud Club</b></a>
+            </td>
+        </tr>
+    </table>
 </div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+        var foo = {
+            onViewInit: function (e) {
+                console.log(e);
+            },
+
+            onViewShow: function (e) {
+                console.log(e);
+            }
+        };
+    </script>
+
+    <div data-role="view" data-model="foo" data-bind="events: { init: onViewInit, show: onViewShow }">
+        <span data-bind=" text:bar">
+        </span>
+    </div>
+</body>
+</html>

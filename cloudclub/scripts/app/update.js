@@ -88,7 +88,7 @@ app.Update = (function () {
 			$updateInfo.prop('rows', 1);
 			if (app.Users.currentUser.data === null) {
 			    app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
-			    app.mobileApp.navigate(('#welcome'));
+			    app.mobileApp.navigate('#welcome');
 			    return;
 			}
 

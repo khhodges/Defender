@@ -3,6 +3,7 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
@@ -51,13 +52,13 @@
                 </li>
             </ul>
         </form>
-        <ol class="group-wrp">
+        <ul class="group-wrp">
             <li>
                 <span id="login" data-role="touch" data-bind="events: { tap: login }">
                     <a data-role="button" class="btn btn-login">Club Member Login</a>
                 </span>
             </li>
-            <li class="oauth cf" hidden >
+            <li class="oauth cf" hidden>
                 <span id="loginWithFacebook" class="oauth-item" data-role="touch" data-bind="events: { tap: loginWithFacebook }">
                     <a data-role="button" class="btn btn-facebook hide-text">Facebook</a>
                 </span>
@@ -71,40 +72,49 @@
                     <a data-role="button" class="btn btn-adfs hide-text">ADFS</a>
                 </span>
             </li>
-            <li class="signup">
-                <a data-role="button" href="views/signupView.html" class="oauth-item">Register</a>
-                <a data-role="button" href="views/mapView.html" class="oauth-item">Continue</a>
-            </li>
-            <li>
-                <button data-role="button" class="oauth-item" id="openExternalInAppBrowser">Visit our Web Site</button>
-            </li>
-            <li>
-                <span>OFA version 1.3.6d - 4/13/2016</span>
-            </li>
-        </ol>
-    </div>
-    <div id="appDrawer" data-role="drawer" data-title="Menu" >
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout" data-bind="visible: isOnline">Logout</a>
-            </div>
-        </header>
-        <ul id="navigation-container" data-role="listview" >
-            <li>
-                <a href="views/activitiesView.html" data-icon="home" style="color: black">See Activities</a>
-            </li>
-            <li>
-                <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places (Choose below)</a>
-            </li>
-            <li>
-                <select id="searchList" data-value-field="id" data-text-field="name" data-bind="value: selectedProduct, source: products" ></select>
-            </li>
-            <li>
-                <a href="views/updateView.html" data-icon="settings" style="color: black">Change Settings</a>
-            </li>
-            <li></li>
         </ul>
-    </div>
+        <div class="group-wrp">
+            <table style="width:100%">
+                <tr style="width:100%">
+                    <td style="width:50%">
+                        <a data-role="button" href="views/signupView.html" class="btn-register">Register</a>
+                    </td>
+                    <td style="width:50%">
+                        <a data-role="button" href="views/mapView.html" class="btn-continue km-widget km-button">Continue</a>
+                    </td>
+                </tr>
+            </table><br />
+            <button data-role="button" class="btn-view" id="openExternalInAppBrowser">Visit our Web Site</button>
+
+            <br />
+            <span>OFA version 1.4.1 - 4/18/2016</span>
+
+        </div>
+        </div>
+        <div id="appDrawer" data-role="drawer" data-title="Menu">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                    <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout" data-bind="visible: isOnline">Logout</a>
+                </div>
+            </header>
+            <ul id="navigation-container" data-role="listview">
+                <li>
+                    <a href="views/activitiesView.html" data-icon="home" style="color: black">See Activities</a>
+                </li>
+                <li>
+                    <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places</a>
+                </li>
+                <li>
+                    <a href="views/listView.html" data-icon="favorites" style="color: black">List Places</a>
+                </li>
+                <li>
+                    <a href="views/updateView.html" data-icon="settings" style="color: black">Change Settings</a>
+                </li>
+                <li>
+                    <a href="views/localView.html" data-icon="settings" style="color: black">Local Map</a>
+                </li>
+            </ul>
+        </div>
 </body>
 </html>
