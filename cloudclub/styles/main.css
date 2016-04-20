@@ -1,3 +1,22 @@
+.place-list-view li {
+    padding: 0;
+    border: 0 none;
+    color: #e84c3d;
+}
+
+.place-list-view li div {
+    padding: .7em;
+    border: 1px solid rgba(0, 0, 0, .1);
+  border-width: 0 0 10px 0;
+}
+
+.place-list-view li .listview-selected,
+.listview-selected {
+    border-color: #1a77b6;
+    background-color: #3598db;
+    color: #fff;
+    height:200px;
+}
 /* LOCATION VIEW STYLES */
 .map {
     position: absolute;
@@ -398,6 +417,7 @@ input[type='week']
 #friendsApp .btn-login
 {
 	background-color: #cf393a;
+    border-radius:3px;
 }
 #friendsApp .btn-register
 {
@@ -413,6 +433,7 @@ input[type='week']
 {
 	background-color: #000000;
     color:white;
+    margin-bottom:15px;
 }
 #friendsApp .signup-view .btn-signup,
 #friendsApp .update-view .btn-update,

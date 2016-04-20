@@ -19,8 +19,8 @@ app.Places = (function () {
         controlUI.style.borderRadius = '3px';
         controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '15px';
-        controlUI.style.marginRight = '15px';
+        controlUI.style.marginTop = '10px';
+        controlUI.style.marginRight = '10px';
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click to recenter the map';
         controlDiv.appendChild(controlUI);
@@ -96,9 +96,10 @@ app.Places = (function () {
                     map: map,
                     position: position,
                     icon: {
-                        url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                        url: 'styles/images/icon.png',
                         anchor: new google.maps.Point(10, 10),
-                        scaledSize: new google.maps.Size(10, 17)
+                        scaledSize: new google.maps.Size(30, 30),
+                        title:viewModelSearch.selectedProduct
                     }
                 });
                 return (marker.latitude + "/" + marker.longitude);
@@ -203,7 +204,8 @@ app.Places = (function () {
                             if (app.isNullOrEmpty(place.rating)) {
                                 place.rating = "??";
                             }
-
+                            place.isSelected = false;
+                            place.isSelectedClass = "";
                             //if (app.isNullOrEmpty(place.price_level)) {
                             //    place.price_level = 1;
                             //}
@@ -231,9 +233,19 @@ app.Places = (function () {
                         map: map,
                         position: place.geometry.location,
                         icon: {
+                            //url: 'http://maps.google.com/mapfiles/ms/micons/restaurant.png',
+                            ////url: 'http://maps.gstatic.com/mapfiles/10_blue.png',
+                            ////url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                            //// This marker is 20 pixels wide by 32 pixels high.
+                            //size: new google.maps.Size(6*place.rating, 6*place.rating),
+                            //// The origin for this image is (0, 0).
+                            //origin: new google.maps.Point(0, 0),
+                            //// The anchor for this image is the base of the flagpole at (0, 32).
+                            //anchor: new google.maps.Point(0, 32),
+                            //title:'pizza'
                             url: 'http://maps.gstatic.com/mapfiles/circle.png',
-                            anchor: new google.maps.Point(10, 10),
-                            scaledSize: new google.maps.Size(10, 17)
+                            anchor: new google.maps.Point(3 * place.rating, 5 * place.rating),
+                            scaledSize: new google.maps.Size(6 * place.rating, 10 * place.rating)
                         }
                     });
 
@@ -350,7 +362,7 @@ app.Places = (function () {
                 var centerControlDiv = document.createElement('div');
                 var centerControl = new CenterControl(centerControlDiv, map);
                 centerControlDiv.index = 1;
-                map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
+                map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
                 google.maps.event.addListener(streetView, 'visible_changed', function () {
                     if (streetView.getVisible()) {
                         app.Places.locationViewModel.set("hideSearch", true);
@@ -374,8 +386,31 @@ app.Places = (function () {
             listShow: function () {
                 $("#place-list-view").kendoMobileListView({
                     dataSource: app.Places.locationViewModel.details,
-                    template: "<div data-role='touch' data-bind='events: { tap: partnerSelected }'><div style='font-size:20px;'><span><strong>#: name # </strong> <small><br /> #: vicinity # - #: distance # Klm, #: rating # Stars </small></span></div>"
+                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # <br/> #: distance # m, #: rating # Stars</div>"
                 });
+            },
+            onSelected: function (e) {
+                if (!e.dataItem) {
+                    return;
+                }
+                var isSelected = e.dataItem.get("isSelected");
+                var newState = isSelected ? false : true;
+                e.dataItem.set("isSelected", newState);
+                if (newState === true) {
+                    e.dataItem.set("isSelectedClass","listview-selected")
+                } else {
+                    e.dataItem.set("isSelectedClass","")
+                }
+                //$("#popup").kendoPopup({
+                //    anchor: $("#place-list-view"),
+                //    origin: "top right",
+                //    position: "top center",
+                //    collision: "fit",
+                //    adjustSize: {
+                //        width: 25,
+                //        height: 25
+                //    }
+                //}).data("kendoPopup").open();
             },
         };
     }());

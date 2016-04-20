@@ -103,7 +103,8 @@ app.Users = (function () {
             clearUsersData: function(){
                 currentUser.data = null;
                 usersData = null;
-            },            currentUser: currentUser,
+            },
+            currentUser: currentUser,
            // usersData: usersDataSource,
             onUserSelected: onUserSelected,
             handleSendAction: handleSendAction

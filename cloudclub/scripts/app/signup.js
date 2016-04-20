@@ -256,7 +256,26 @@ app.Signup = (function () {
 			signup: defaultAvatar,
 			addImage: addImage,
 			pickImage: addImage,
-			resetImage: resetImage
+			resetImage: resetImage,
+			submit: function () {
+			    if (!this.email) {
+			        navigator.notification.alert("Email address is required.");
+			        return;
+			    }
+			    $.ajax({
+			        type: "POST",
+			        url: "http://api.everlive.com/v1/" + appSettings.everlive.appId + "/Users/resetpassword",
+			        contentType: "application/json",
+			        data: JSON.stringify({ Email: this.email }),
+			        success: function () {
+			            navigator.notification.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+			            window.location.href = "#welcome";
+			        },
+			        error: function (result) {
+			            navigator.notification.alert("Unfortunately, an error occurred resetting your password. " + result.responseText)
+			        }
+			    });
+			}
 		};
 	}()
 	);

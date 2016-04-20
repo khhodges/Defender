@@ -74,7 +74,7 @@
             </li>
         </ul>
         <div class="group-wrp">
-            <table style="width:100%">
+            <table style="width:100%; margin-top:15px">
                 <tr style="width:100%">
                     <td style="width:50%">
                         <a data-role="button" href="views/signupView.html" class="btn-register">Register</a>
@@ -87,10 +87,31 @@
             <button data-role="button" class="btn-view" id="openExternalInAppBrowser">Visit our Web Site</button>
 
             <br />
-            <span>OFA version 1.4.1 - 4/18/2016</span>
+            <a href="#password">Forgot password?</a><br/>
+            <span>OFA version 1.4.1 - 4/18/2016</span><br />
+            <a href="tel:+19548398525">Call us on +1.954-839-8525</a>
 
         </div>
         </div>
+    <div data-role="view" id="password" data-title="Reset Password" data-model="app.Signup">
+        <div data-role="navbar">
+            <a href="#welcome" data-align="left" data-role="button">Return</a>
+            <span data-role="view-title"></span>
+        </div>
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>
+                        Email Address:
+                        <input type="email" name="email" data-bind="value: email">
+                    </label>
+                </li>
+                <li>
+                    <button style="width: 100%" data-role="button" data-bind="click: submit">Reset</button>
+                </li>
+            </ul>
+        </form>
+    </div>
         <div id="appDrawer" data-role="drawer" data-title="Menu">
             <header data-role="header">
                 <div data-role="navbar">
@@ -106,14 +127,14 @@
                     <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places</a>
                 </li>
                 <li>
-                    <a href="views/listView.html" data-icon="favorites" style="color: black">List Places</a>
+                    <a href="views/listView.html" data-icon="favorites" style="color: black">Favorite Places</a>
                 </li>
                 <li>
                     <a href="views/updateView.html" data-icon="settings" style="color: black">Change Settings</a>
                 </li>
-                <li>
-                    <a href="views/localView.html" data-icon="settings" style="color: black">Local Map</a>
-                </li>
+                <!--<li hidden>
+                    <a hidden href="views/localView.html" data-icon="settings" style="color: black">Local Map</a>
+                </li>-->
             </ul>
         </div>
 </body>

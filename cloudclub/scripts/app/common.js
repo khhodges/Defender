@@ -25,23 +25,24 @@
     };
 
     app.logout = function () {
-        navigator.notification.confirm('Are your sure?', function (buttonIndex) {
-            if (buttonIndex === 1) {
-                app.everlive.Users.logout();
-                app.Users.clearUserData();
+        navigator.notification.confirm('Are you sure?', function (buttonIndex) {
+            if (buttonIndex === 1 || buttonIndex === true) {
+                app.everlive.Users.logout().then(function(){
+                    app.Users.currentUser = null;
+                    app.Users.usersData = null;
                 app.notify.showShortTop("User.Logout Confirmed");
-                appConsole.clear();
+                //appConsole.clear();
                 navigator.app.exitApp();
-                app.navigateToView(app.config.views.init);
-                app.mobileApp.navigate('#welcome');
-                var modalView = e.sender.element.closest("[data-role=modalview]").data("kendoMobileModalView");
-                modalView.close();
-                modalView = document.getElementById("view-all-activities");
-                modalView.close();
-            } else {
-
-                app.mobileApp.navigate('views/activitiesView.html');
-                app.notify.showShortTop("User.Logout Un-Click");
+                //app.navigateToView(app.config.views.init);
+                //app.mobileApp.navigate('#welcome');
+                //var modalView = e.sender.element.closest("[data-role=modalview]").data("kendoMobileModalView");
+                //modalView.close();
+                //modalView = document.getElementById("view-all-activities");
+                //modalView.close();
+                }, function() {
+                    app.mobileApp.navigate('views/activitiesView.html');
+                    app.notify.showShortTop("User.Logout Un-Click");
+                })
             }
         }, "Logout", ["OK", "Cancel"]);
     };

@@ -62,7 +62,12 @@ app.Update = (function () {
 		// Executed after update view initialization
 		// init form validator
 		var init = function () {
-			// Get a reference to our sensitive element
+		    // Get a reference to our sensitive element
+		    if (app.Users.currentUser === null) {
+		        app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+		        app.mobileApp.navigate('#welcome');
+		        return;
+		    }
 			updateImage = document.getElementById("updateImage");
 			picture = document.getElementById("picture");
 			$updateForm = $('#update');
