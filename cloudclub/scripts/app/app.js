@@ -154,6 +154,30 @@ var app = (function (win) {
     };
 
     var AppHelper = {
+        // Logout user
+        logout: function () {
+            app.helper.doLogout()
+				.then(function (lo) {
+				    app.notify.showShortTop("You are logged out.");
+				    app.Users.currentUser.data = null;
+				    app.helper.navigateHome();
+				},
+                function (err) {
+                    app.notify.showShortTop("You are not loggon on: " + err.message);
+                    app.Users.currentUser.data = null;
+				    app.helper.navigateHome();
+				});
+        },
+         //Current user logout
+        doLogout: function () {
+            var lo = el.Users.logout();
+            return lo;
+        },
+        // Navigate to app home
+        navigateHome: function () {
+            app.mobileApp.navigate('#welcome');
+        },
+
         openExternalInAppBrowser: function () {
             var winB = window.open("http://www.on2t.com/mobile", "_blank");
             app.notify.showShortTop("url.on2t Click 'Done' or 'X' to return to the App");
@@ -255,10 +279,7 @@ var app = (function (win) {
             }
         },
 
-        // Current user logout
-        //		logout: function () {
-        //		return el.Users.logout();
-        //},
+
 
         autoSizeTextarea: function () {
             var rows = $(this).val().split('\n');
@@ -294,6 +315,16 @@ var app = (function (win) {
 				function (data) {
 				    var createdAt = app.formatDate(data.result.CreatedAt);
 				    app.notify.showShortTop("Notification created: " + createdAt);
+				    //update notification assets Activity reference and status
+                    //everlive = el
+				    var data = el.data('Notifications');
+				    data.create({ 'Reference': activity.Id, 'Status':true },
+                        function (data) {
+                            app.notify.showShortTop(data.message);
+                        },
+                        function (error) {
+                            app.notify.showShortTop(error.message);
+                        });
 				},
 				function (error) {
 				    app.showError(JSON.stringify(error));
@@ -562,7 +593,10 @@ var app = (function (win) {
         fileHelp: fileHelper,
         takePicture: takePicture,
         saveImage: createImage,
-        simplify: simplify
+        simplify: simplify,
+        isOnline: function () {
+            return app.Users.isOnline();
+        }
         /*,
                 printList: printList*/
     };

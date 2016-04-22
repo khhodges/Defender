@@ -6,7 +6,7 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-    var infoWindow, markers, place, result, service, here, request, lat1, lng1;
+    var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12;
     /**
      * The CenterControl adds a control to the map that recenters the map on
      * current location.
@@ -97,8 +97,8 @@ app.Places = (function () {
                     position: position,
                     icon: {
                         url: 'styles/images/icon.png',
-                        anchor: new google.maps.Point(10, 10),
-                        scaledSize: new google.maps.Size(30, 30),
+                        anchor: new google.maps.Point(20, 38),
+                        scaledSize: new google.maps.Size(40, 40),
                         title:viewModelSearch.selectedProduct
                     }
                 });
@@ -170,15 +170,10 @@ app.Places = (function () {
                 markers = [];
                 app.Places.locationViewModel.markers = new Array;
                 app.Places.locationViewModel.details = new Array;
-                //if (document.getElementById("place-list-view") !== null && document.getElementById("place-list-view").innerHTML !== null) {
-                //    document.getElementById("place-list-view").innerHTML = "<strong> Cleared</strong>";
-                //}
                 // Create the PlaceService and send the request.
                 // Handle the callback with an anonymous function.
                 service = new google.maps.places.PlacesService(map);
                 here = map.getBounds();
-                //var searchList = app.Places.locationViewModel.products[$("#searchList option:selected").val() - 1].search;
-                //for (var i = 0; i < searchList.length; i++) {
                 // Specify location, radius and place types for your Places API search.
                 request = {
                     location: locality,
@@ -186,8 +181,10 @@ app.Places = (function () {
                     keyword: app.Places.locationViewModel.find
                 };
                 service.nearbySearch(request, function (results, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        map.panTo(results[0].geometry.location);
+                    if (status == google.maps.places.PlacesServiceStatus.OK ) {
+                        //if length = 0 offer search by country or search by region
+                        
+                        //map.panTo(results[0].geometry.location);
                         for (var i = 0; i < results.length; i++) {
                             place = results[i];
                             var lat2 = place.geometry.location.lat();
@@ -199,17 +196,18 @@ app.Places = (function () {
                                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                                     Math.sin(dLon / 2) * Math.sin(dLon / 2);
                             var c = 2 * Math.asin(Math.sqrt(a));
-                            var d = R * c;
+                            var d = R * c/1.61; // converted to miles
                             place.distance = d.toFixed(2);
                             if (app.isNullOrEmpty(place.rating)) {
                                 place.rating = "??";
                             }
                             place.isSelected = false;
                             place.isSelectedClass = "";
-                            //if (app.isNullOrEmpty(place.price_level)) {
-                            //    place.price_level = 1;
-                            //}
+                            if (app.isNullOrEmpty(place.price_level)) {
+                                place.price_level = 0;
+                            }
                             addMarker(place);
+                            place.priceString = '$$$$$$$'.substring(0, place.price_level);
                             app.Places.locationViewModel.details.push(place);
                             // service.getDetails(place, function (result, status) {
                             //    if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -222,6 +220,10 @@ app.Places = (function () {
                             //})
                         }
                     }
+                    else {                        
+                        // Do Place search
+                        app.notify.showShortTop("Nothing was found in the area shown.");
+                    }
                 });
 
 
@@ -229,6 +231,8 @@ app.Places = (function () {
                     // If the request succeeds, draw the place location on
                     // the map as a marker, and register an event to handle a
                     // click on the marker.
+                    var markerUrl = 'http://maps.gstatic.com/mapfiles/circle.png';
+                    if (place.rating < 3) markerUrl = 'http://maps.gstatic.com/mapfiles/10_blue.png';
                     var marker = new google.maps.Marker({
                         map: map,
                         position: place.geometry.location,
@@ -243,13 +247,18 @@ app.Places = (function () {
                             //// The anchor for this image is the base of the flagpole at (0, 32).
                             //anchor: new google.maps.Point(0, 32),
                             //title:'pizza'
-                            url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                            url: markerUrl,
                             anchor: new google.maps.Point(3 * place.rating, 5 * place.rating),
                             scaledSize: new google.maps.Size(6 * place.rating, 10 * place.rating)
                         }
                     });
-
+                    
+                    
                     app.Places.locationViewModel.markers.push(marker);
+                    //extend the bounds to include each marker's position
+                    allBounds.extend(marker.position);
+                    //now fit the map to the newly inclusive bounds
+                    map.fitBounds(allBounds);
 
                     google.maps.event.addListener(marker, 'click', function () {
                         service.getDetails(place, function (result, status) {
@@ -267,6 +276,7 @@ app.Places = (function () {
               'Phone: ' + result.formatted_phone_number + '<br>' +
               result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
                             }
+                            place.details = infoWindow.Content;
                             infoWindow.open(map, marker);
                         });
                     });
@@ -284,11 +294,11 @@ app.Places = (function () {
 
                 geocoder.geocode(
                     {
-                        'address': that.get("address")
+                        'address': that.get("map-address")
                     },
                     function (results, status) {
                         if (status !== google.maps.GeocoderStatus.OK) {
-                            app.notify.showShortTop("Map.Unable to find that address.");
+                            app.notify.showShortTop("Map.Unable to find anything.");
                             return;
                         }
 
@@ -328,6 +338,8 @@ app.Places = (function () {
                 }
 
                 infoWindow = new google.maps.InfoWindow();
+                //create empty LatLngBounds object
+                allBounds = new google.maps.LatLngBounds();
 
                 var pos, userCords, streetView, tempPlaceHolder = [];
 
@@ -340,7 +352,7 @@ app.Places = (function () {
                     mapTypeControl: false,
                     streetViewControl: false,
                     scroolwheel: false,
-                    zoom: 14,
+                    zoom: theZoom,
                     center: new google.maps.LatLng(0, -20),
                     panCtrl: false,
                     zoomCtrl: true,
@@ -384,9 +396,10 @@ app.Places = (function () {
             },
             locationViewModel: new LocationViewModel(),
             listShow: function () {
+                //var price = '$$$$$'.substring(1, app.Places.locationViewModel.details.price_level);
                 $("#place-list-view").kendoMobileListView({
                     dataSource: app.Places.locationViewModel.details,
-                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # <br/> #: distance # m, #: rating # Stars</div>"
+                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # <br/> #: distance # m, #: rating # Stars, #: priceString # </div>"
                 });
             },
             onSelected: function (e) {

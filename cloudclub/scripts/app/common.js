@@ -24,28 +24,58 @@
         app.mobileApp.navigate(view);
     };
 
-    app.logout = function () {
-        navigator.notification.confirm('Are you sure?', function (buttonIndex) {
-            if (buttonIndex === 1 || buttonIndex === true) {
-                app.everlive.Users.logout().then(function(){
-                    app.Users.currentUser = null;
-                    app.Users.usersData = null;
-                app.notify.showShortTop("User.Logout Confirmed");
-                //appConsole.clear();
-                navigator.app.exitApp();
-                //app.navigateToView(app.config.views.init);
-                //app.mobileApp.navigate('#welcome');
-                //var modalView = e.sender.element.closest("[data-role=modalview]").data("kendoMobileModalView");
-                //modalView.close();
-                //modalView = document.getElementById("view-all-activities");
-                //modalView.close();
-                }, function() {
-                    app.mobileApp.navigate('views/activitiesView.html');
-                    app.notify.showShortTop("User.Logout Un-Click");
-                })
-            }
-        }, "Logout", ["OK", "Cancel"]);
-    };
+    //app.logout = function () {
+    //        if (!app.Users.isOnline()) {
+    //            Everlive.$.Users.login('Mary', // username
+    //                'mary') // password
+    //                .then(function (data) {
+    //                    alert("Access token: " + data.result.access_token);
+    //                    el.Users.logout().then(function () {
+    //                        alert('Successful logout');
+    //                    }, // success
+    //                    function () {
+    //                        alert('Failed logout');
+    //                    });
+    //                });
+    //            //app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+    //            //app.mobileApp.navigate('#welcome');
+    //            //return;
+    //        } else{
+
+    //    navigator.notification.confirm('Are you sure?', function (buttonIndex) {
+    //        if (buttonIndex === 1 || buttonIndex === true) {
+    //            app.everlive.Users.logout().then(function () 
+    //            {
+    //                app.Users.currentUser = null;
+    //                app.Users.usersData = null;
+    //                app.notify.showShortTop("User.Logout Confirmed");
+    //                ////appConsole.clear();
+    //                //if (app.Users.isNullOrEmpty) {
+    //                //    app.notify.showShortTop('User.AppExit. Please start again');
+    //                //    navigator.app.exitApp();
+    //                //} else {
+    //                //    app.mobileApp.navigate('#welcome');
+    //                //}
+    //            }),
+            
+
+
+    //                //app.navigateToView(app.config.views.init);
+    //                //app.mobileApp.navigate('#welcome');
+    //                //var modalView = e.sender.element.closest("[data-role=modalview]").data("kendoMobileModalView");
+    //                //modalView.close();
+    //                //modalView = document.getElementById("view-all-activities");
+    //                //modalView.close();
+            
+    //            function () {
+    //                app.mobileApp.navigate('views/activitiesView.html');
+    //                app.notify.showShortTop("User.Logout Un-Click");
+    //            }
+    //        }
+    //    }, "Logout", ["OK", "Cancel"]);
+    //};
+
+
 
     app.getYear = function () {
         return new Date().getFullYear();

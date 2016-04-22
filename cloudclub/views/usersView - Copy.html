@@ -1,0 +1,16 @@
+<div id="place-list" class="view place-list" data-role="view" data-model="app.Places.locationViewModel" data-title="Places">
+    <div data-role="header">
+        <div data-role="navbar">
+            Place list
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button" data-badge="2"></a>
+            <a id="addButton" class="nav-button" data-align="right" data-role="button" href="mapView.html">Map</a>
+        </div>
+    </div>
+
+    <ul id="places-list-view" class="places-list-view" data-bind="source: markers" data-template="place-template" data-role="listview" ></ul>
+
+</div>
+
+<script id="place-template" type="text/x-kendo-template">
+    <div data-bind="attr: { class: isSelectedClass }">JSON.stringify(#: markers #)</div>
+</script>

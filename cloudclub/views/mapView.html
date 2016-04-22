@@ -1,0 +1,113 @@
+   <!--Location View-->
+<div id="tabstrip-location"
+     data-role="view"
+     data-title="Location"
+     data-init="app.Places.initLocation"
+     data-show="app.Places.show"
+     data-hide="app.Places.hide"
+     data-model="app.Places.locationViewModel"
+     data-stretch="true">
+    <style>
+
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #origin-input,
+        #destination-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            margin-top:50px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 200px;
+        }
+
+            #origin-input:focus,
+            #destination-input:focus {
+                border-color: #4d90fe;
+            }
+
+        #mode-selector {
+            color: #fff;
+            background-color: #4d90fe;
+            margin-left: 12px;
+            padding: 5px 11px 0px 11px;
+        }
+
+            #mode-selector label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+            }
+    </style>
+        <script>
+
+            function test(url) {
+                app.notify.showShortTop("Url.Map Search " + url);
+                if (url === null || url === undefined || url.length < 10) {
+                    app.notify.showShortTop(url + " this website is unavailable!");
+                } else {
+                    window.open(url, "_blank");
+                }
+            };
+
+        </script>
+        <div data-role="header">
+            <div data-role="navbar" id="navbarTitle">
+                <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button" data-badge="0"></a>
+
+                <!--<select style="font-size:small; left=50px;" id="searchList" data-align="right" data-value-field="id" data-text-field="search" data-bind="value: selectedProduct, source: products"></select>-->
+                <!--<select style="font-size:small;" id="searchItem" data-align="right" data-value-field="id" data-text-field="name" data-bind="source: products[0].list"></select>-->
+                <!--<a data-role="button" data-align="left" data-icon="search" data-bind="click: onPlaceSearch"></a>-->
+                <input id="map-address" style="margin-right:8px" type="search" data-bind="value: find" data-align="right" placeholder="Search for ..." />
+                <a data-role="button" data-align="right" data-icon="search" data-bind="click: onPlaceSearch"></a>
+            </div>
+        </div>
+
+    <input id="origin-input" class="controls" type="text"
+           placeholder="Enter an origin location">
+
+    <input id="destination-input" class="controls" type="text"
+           placeholder="Enter a destination location">
+
+    <div hidden id="mode-selector" class="controls">
+        <input type="radio" name="type" id="changemode-walking">
+        <label for="changemode-walking">Walking</label>
+
+        <input type="radio" name="type" id="changemode-transit">
+        <label for="changemode-transit">Transit</label>
+
+        <input type="radio" name="type" id="changemode-driving" checked="checked">
+        <label for="changemode-driving">Driving</label>
+    </div>
+        <div id="map-canvas" class="map" data-bind="visible: isGoogleMapsInitialized"></div>
+
+        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
+            <h3>Location requires internet connection to display the map.</h3>
+        </div>
+
+        <div id="map-search-wrap" class="map-tools" data-bind="visible: isGoogleMapsInitialized, invisible: hideSearch">
+            <div>
+                <ul hidden id="places-listview" data-role="listview" data-template="placesTemplate" data-bind="source: places"></ul>
+            </div>
+        </div>
+</div>
+
+<!-- Places ListView Template -->
+<script type="text/x-kendo-template" id="placesTemplate">
+    <ui hidden>
+        <span>#: app.Places.locationViewModel.locatedAtFormatted(marker) #</span>
+    </ui>
+
+</script>

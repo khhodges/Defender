@@ -33,7 +33,7 @@
     <Content Include="cordova.wp8.js" />
     <Content Include="Errors.html" />
     <Content Include="index.html" />
-    <Content Include="Index1.html" />
+    <Content Include="Index3.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
     <Content Include="kendo\styles\images\back.png" />

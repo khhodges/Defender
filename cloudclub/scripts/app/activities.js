@@ -9,6 +9,17 @@ app.Activities = (function () {
 	'use strict'
 	var $enterEvent, $newEventText, validator, selected, $baseImage;
 	var init = function () {
+	    try {
+	        if (!app.Users.isOnline()) {
+	            app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+	            app.mobileApp.navigate('#welcome');
+	            return;
+	        }
+	    } catch (e) {
+	        app.notify.showShortTop('User.Direction. Please login to access these features.' + e.message);
+	        app.mobileApp.navigate('#welcome');
+	        return;
+	    }
 		validator = $('#enterEvent').kendoValidator().data('kendoValidator');
 		$enterEvent = $('#enterEvent');	
 		$newEventText = $('#newEventText');
@@ -16,11 +27,19 @@ app.Activities = (function () {
 		validator.hideMessages();
 		$(document.body).css("visibility", "visible");
 	};
-    //Remove
-	var showTitle = function() {
-		var title = document.getElementById("navbarTitle").InnerTEXT;
-		title = activities.User().DisplayName;
-	}	
+	var show = function () {
+	    try {
+	        if (!app.Users.isOnline()) {
+	            app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+	            app.mobileApp.navigate('#welcome');
+	            return;
+	        }
+	    } catch (e) {
+	        app.notify.showShortTop('User.Direction. Please login to access these features.' + e.message);
+	        app.mobileApp.navigate('#welcome');
+	        return;
+	    }
+	};
 	// Activities model
 	var activitiesModel = (function () {
 		var activityModel = {
@@ -157,27 +176,6 @@ app.Activities = (function () {
 		var navigateHome = function () {
 			app.mobileApp.navigate('#welcome');
 		};
-		// Logout user
-		var logout = function () {
-		    $.ajax({
-		        type: "GET",
-		        url: 'http://api.everlive.com/v1/3t5oa8il0d0y02eq/Push/Notifications',
-		        headers: {
-		            "Authorization": "qK0KymJ3iDZzAMmrfb1KIRcO9FMntcB7"
-		        },
-		        success: function (data) {
-		            alert(JSON.stringify(data));
-		        },
-		        error: function (error) {
-		            alert(JSON.stringify(error));
-		        }
-		    });
-			app.helper.logout()
-				.then(navigateHome, function (err) {
-					app.showError(err.message);
-					navigateHome();
-				});
-		};
 		var crop = function () {
 			var sx, sy, starterWidth, starterHeight, dx, dy, canvasWidth, canvasHeight;
 			var starter = document.getElementById("picture");
@@ -301,10 +299,9 @@ app.Activities = (function () {
 			init: init,
 			activities: activitiesModel.activities,
 			activitySelected: activitySelected,
-			logout: logout,
 			addActivity: pickImage,
 			saveActivity: saveImageActivity,
-			show: showTitle,
+			show: show,
 			crop: crop
 		};
 	}());

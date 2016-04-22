@@ -94,7 +94,7 @@ app.Users = (function () {
                 return adminData;
             },
             isOnline: function (){
-                if (currentUser.data === null) {
+                if (currentUser === null || currentUser.data === null) {
                     return false;
                 } else {
                     return true;

@@ -3,6 +3,7 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline';">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
@@ -88,7 +89,7 @@
 
             <br />
             <a href="#password">Forgot password?</a><br/>
-            <span>OFA version 1.4.1 - 4/18/2016</span><br />
+            <span>OFA version 1.4.4 - 4/22/2016</span><br />
             <a href="tel:+19548398525">Call us on +1.954-839-8525</a>
 
         </div>
@@ -116,7 +117,7 @@
             <header data-role="header">
                 <div data-role="navbar">
                     <span data-role="view-title"></span>
-                    <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.logout" data-bind="visible: isOnline">Logout</a>
+                    <a class="nav-button" data-align="left" data-role="button" data-click="app.helper.logout" >Logout</a>
                 </div>
             </header>
             <ul id="navigation-container" data-role="listview">
