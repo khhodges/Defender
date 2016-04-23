@@ -6,7 +6,7 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-    var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12;
+    var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12, infoContent;
     /**
      * The CenterControl adds a control to the map that recenters the map on
      * current location.
@@ -90,7 +90,7 @@ app.Places = (function () {
             hideSearch: false,
             products: viewModelSearch.products,
             selectedProduct: viewModelSearch.selectedProduct,
-            locatedAtFormatted: function (marker) {
+            locatedAtFormatted: function (marker, text) {
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
                 marker.Mark = new google.maps.Marker({
                     map: map,
@@ -101,10 +101,17 @@ app.Places = (function () {
                         scaledSize: new google.maps.Size(40, 40),
                         title:viewModelSearch.selectedProduct
                     }
+                    //TO DO: add popup
+
+                });
+                google.maps.event.addListener(marker.Mark, 'click', function () {
+                    infoWindow.setContent(text);
+                        infoWindow.open(map, marker.Mark);                    
                 });
                 return (marker.latitude + "/" + marker.longitude);
             },
             onNavigateHome: function () {
+                //find present location, clear markers and set up members as icons
                 var that = this,
                     position;
                 that._isLoading = true;
@@ -116,15 +123,11 @@ app.Places = (function () {
                 markers = [];
                 app.Places.locationViewModel.markers = new Array;
                 app.Places.locationViewModel.details = new Array;
-                //if (document.getElementById("place-list-view") !== null && document.getElementById("place-list-view").innerHTML !== null) {
-                //    document.getElementById("place-list-view").innerHTML = "<strong> Cleared</strong>";
-                //}
-
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
                         position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         map.panTo(position);
-                        that._putMarker(position);
+                        //that._putMarker(position); //TO DO: hide or show present location marker
                         home = position;
                         locality = position;
                         lat1 = position.lat();
@@ -134,7 +137,7 @@ app.Places = (function () {
                     },
                     function (error) {
                         //default map coordinates
-                        position = new google.maps.LatLng(0, 0);
+                        position = new google.maps.LatLng(0, -20);
                         map.panTo(position);
 
                         that._isLoading = false;
@@ -203,6 +206,7 @@ app.Places = (function () {
                             }
                             place.isSelected = false;
                             place.isSelectedClass = "";
+                            place.visibility = "hidden";
                             if (app.isNullOrEmpty(place.price_level)) {
                                 place.price_level = 0;
                             }
@@ -231,8 +235,10 @@ app.Places = (function () {
                     // If the request succeeds, draw the place location on
                     // the map as a marker, and register an event to handle a
                     // click on the marker.
-                    var markerUrl = 'http://maps.gstatic.com/mapfiles/circle.png';
-                    if (place.rating < 3) markerUrl = 'http://maps.gstatic.com/mapfiles/10_blue.png';
+                    var markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/redcircle.png';//'http://maps.gstatic.com/mapfiles/circle.png';
+                    if (place.rating < 3.5) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/orangecircle.png';
+                    if (place.rating > 4.2) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/greencircle.png';
+
                     var marker = new google.maps.Marker({
                         map: map,
                         position: place.geometry.location,
@@ -249,7 +255,7 @@ app.Places = (function () {
                             //title:'pizza'
                             url: markerUrl,
                             anchor: new google.maps.Point(3 * place.rating, 5 * place.rating),
-                            scaledSize: new google.maps.Size(6 * place.rating, 10 * place.rating)
+                            scaledSize: new google.maps.Size(4 * place.rating, 4 * place.rating)
                         }
                     });
                     
@@ -267,16 +273,17 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
-              'Phone: ' + result.formatted_phone_number + '<br>' +
-              result.formatted_address + '<br>No reviews or stars.</div>');
+                                infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars.</div>');
+                                infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars.</div>';
                             }
                             else {
-                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
-              'Phone: ' + result.formatted_phone_number + '<br>' +
-              result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
+                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
+                                infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>';
                             }
-                            place.details = infoWindow.Content;
+                            place.details = infoContent;
+                            //infoWindow.setContent('<span>Test</span>');
                             infoWindow.open(map, marker);
                         });
                     });
@@ -328,7 +335,7 @@ app.Places = (function () {
                 });
             },
             places: placesDataSource,
-            currentLocation: home
+            homeLocation: home
         });
         return {
             initLocation: function () {
@@ -353,7 +360,7 @@ app.Places = (function () {
                     streetViewControl: false,
                     scroolwheel: false,
                     zoom: theZoom,
-                    center: new google.maps.LatLng(0, -20),
+                    center: new google.maps.LatLng(0, -20),// only blue sea
                     panCtrl: false,
                     zoomCtrl: true,
                     zoomCtrlOptions: {
@@ -364,8 +371,21 @@ app.Places = (function () {
                 }
 
                 //Fire up
+
                 app.Places.locationViewModel.set("isGoogleMapsInitialized", true);
                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer;
+                directionsDisplay.setMap(map);
+                var origin_input = document.getElementById('origin-input');
+                var destination_input = document.getElementById('destination-input');
+                var modes = document.getElementById('mode-selector');
+
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(modes);
+
                 geocoder = new google.maps.Geocoder();
                 app.Places.locationViewModel.onNavigateHome.apply(app.Places.locationViewModel, []);
                 streetView = map.getStreetView();
@@ -399,7 +419,7 @@ app.Places = (function () {
                 //var price = '$$$$$'.substring(1, app.Places.locationViewModel.details.price_level);
                 $("#place-list-view").kendoMobileListView({
                     dataSource: app.Places.locationViewModel.details,
-                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # <br/> #: distance # m, #: rating # Stars, #: priceString # </div>"
+                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # -- #: distance # m, #: rating # Stars, #: priceString # <table ${visibility} style='width:100%; margin-top:15px'><tr style='width:100%'><td style='width:33%'><a data-role='button' href='views/signupView.html' class='btn-register'>Web Site</a></td><td style='width:33%'><a data-role='button' href='views/mapView.html' class='btn-login km-widget km-button'>Short List</a></td><td style='width:33%'><a data-role='button' href='views/mapView.html' class='btn-continue km-widget km-button'>Comment</a></td></tr></table><br /></div>"
                 });
             },
             onSelected: function (e) {
@@ -410,9 +430,11 @@ app.Places = (function () {
                 var newState = isSelected ? false : true;
                 e.dataItem.set("isSelected", newState);
                 if (newState === true) {
-                    e.dataItem.set("isSelectedClass","listview-selected")
+                    e.dataItem.set("isSelectedClass", "listview-selected");
+                    e.dataItem.set("visibility","visible")
                 } else {
-                    e.dataItem.set("isSelectedClass","")
+                    e.dataItem.set("isSelectedClass", "");
+                    e.dataItem.set("visibility", "hidden")
                 }
                 //$("#popup").kendoPopup({
                 //    anchor: $("#place-list-view"),

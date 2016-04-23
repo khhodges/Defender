@@ -13,9 +13,9 @@
 .place-list-view li .listview-selected,
 .listview-selected {
     border-color: #1a77b6;
-    background-color: #3598db;
-    color: #fff;
-    height:200px;
+    background-color: #a3eaf1;
+    color: #000;
+    height:150px;
 }
 /* LOCATION VIEW STYLES */
 .map {
@@ -23,7 +23,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100%;   
+    z-index: 1;
 }
 .map-tools {
     position: absolute;
@@ -418,6 +419,7 @@ input[type='week']
 {
 	background-color: #cf393a;
     border-radius:3px;
+    color:white;
 }
 #friendsApp .btn-register
 {

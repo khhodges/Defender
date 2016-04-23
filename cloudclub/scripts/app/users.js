@@ -10,7 +10,9 @@ app.Users = (function () {
 
             var dataModel = {
                 id: Everlive.idField,
-                isSelected: false,
+                isSelected: function () {
+                    return this.get('isSelected')
+                },
                 isSelectedClass: function () {
                     return this.get('isSelected') ? "listview-selected" : ''
                 }

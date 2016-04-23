@@ -109,6 +109,7 @@
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
     <Content Include="views\eventsView.html" />
+    <Content Include="views\tripView.html" />
     <Content Include="views\localView.html" />
     <Content Include="views\mapView.html" />
     <Content Include="views\noAppId.html" />
