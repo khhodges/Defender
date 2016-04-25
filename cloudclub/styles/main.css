@@ -420,16 +420,24 @@ input[type='week']
 	background-color: #cf393a;
     border-radius:3px;
     color:white;
+    position:relative;
+    z-index: 10;
 }
 #friendsApp .btn-register
 {
 	background-color: #39ae2a;
+    border-radius:3px;
     color:white;
+    position:relative;
+    z-index: 10;
 }
 #friendsApp .btn-continue
 {
 	background-color: #e4a830;
+    border-radius:3px;
     color:white;
+    position:relative;
+    z-index: 10;
 }
 #friendsApp .btn-view
 {

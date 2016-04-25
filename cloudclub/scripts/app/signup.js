@@ -205,11 +205,11 @@ app.Signup = (function () {
 			var source = new Image();
 			var d = document.getElementById("zoom_mw");
 			source.src = d.src;
-			var canvas = document.getElementById("myCanvas");
+			var cropCanvas = document.getElementById("myCanvas");
 			var avatar = document.getElementById("myCanvas");
-			var context = canvas.getContext("2d");
-			canvas.width = source.width;
-			canvas.height = source.height;
+			var context = cropCanvas.getContext("2d");
+			cropCanvas.width = source.width;
+			cropCanvas.height = source.height;
 			if (source.height > source.width) {
 				context.drawImage(source, X, Y, source.height / 2, source.height / 2, 0, 0, source.height, source.height);
 				avatar.style.height = source.height / 2;
@@ -222,7 +222,7 @@ app.Signup = (function () {
 			context.font = size + "px impact";
 			var lineOfText = "Kenneth Hamer-Hodges";
 
-			while (context.measureText(lineOfText).width / canvas.offsetWidth > 1) {
+			while (context.measureText(lineOfText).width / cropCanvas.offsetWidth > 1) {
 				size = size - scale;
 				context.font = size + "px impact";
 				if (size < 30)
@@ -231,9 +231,9 @@ app.Signup = (function () {
 			context.textAlign = 'center';
 			context.fillStyle = 'yellow';
 
-			context.fillText(lineOfText, canvas.width / 2, canvas.height * 0.6);
+			context.fillText(lineOfText, cropCanvas.width / 2, cropCanvas.height * 0.6);
 
-			var imgURI = canvas.toDataURL();
+			var imgURI = cropCanvas.toDataURL();
 
 			setTimeout(function () {
 				var imageA = document.getElementById("avatarImage");
@@ -245,7 +245,7 @@ app.Signup = (function () {
 					imageA.style.height = "auto";
 					imageA.style.width = "100%";
 				}
-				canvas.style.visibility = 'hidden';
+				cropCanvas.style.visibility = 'hidden';
 			}, 200);
 		}
 		return {

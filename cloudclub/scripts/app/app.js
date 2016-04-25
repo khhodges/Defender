@@ -307,6 +307,29 @@ var app = (function (win) {
 
     var NotifyHelper = {
 
+        memorize: function(){
+            //use everlive
+            var data = app.everlive.data('Places');
+
+            //var likedUserId = '790d1f30-b86c-11e5-86a2-6700f56ce9c3'; //user-id';
+
+            var attributes = {
+                "$push": {
+                    "Members": app.Users.currentUser.data.Id //liked - user - id
+                }
+            };
+
+            var filter = {
+                'Id': 'abd03a70-b86b-11e5-98ad-536d62dca0b1'// TO DO! replace this with the current place, if the place does not exist that register the place
+            };
+
+            data.rawUpdate(attributes, filter, function (data) {
+                app.notify.showShortTop("You have sucesfully remembered this place in your favorites list.");
+            }, function (err) {
+                app.notify.showShortTop("You have already endorced this place. Visit your favourites to see the full list.");
+            });
+        },
+
         broadcast: function () {
             var activity = app.Activity.activity();
             app.everlive.push.notifications.create({

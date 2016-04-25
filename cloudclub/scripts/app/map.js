@@ -213,15 +213,6 @@ app.Places = (function () {
                             addMarker(place);
                             place.priceString = '$$$$$$$'.substring(0, place.price_level);
                             app.Places.locationViewModel.details.push(place);
-                            // service.getDetails(place, function (result, status) {
-                            //    if (status !== google.maps.places.PlacesServiceStatus.OK) {
-                            //        console.error(status);
-                            //        return;
-                            //    };
-
-                            //    app.Places.locationViewModel.details.push(result);
-
-                            //})
                         }
                     }
                     else {                        
@@ -235,9 +226,9 @@ app.Places = (function () {
                     // If the request succeeds, draw the place location on
                     // the map as a marker, and register an event to handle a
                     // click on the marker.
-                    var markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/redcircle.png';//'http://maps.gstatic.com/mapfiles/circle.png';
-                    if (place.rating < 3.5) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/orangecircle.png';
-                    if (place.rating > 4.2) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/greencircle.png';
+                    var markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/greencircle.png';//'http://maps.gstatic.com/mapfiles/circle.png';
+                    if (place.rating < 3.5) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/redcircle.png';
+                    if (place.rating > 4.2) markerUrl = 'http://laverre.com/ys-x6/soft/YS-X6-PC-150413/html/orangecircle.png';
 
                     var marker = new google.maps.Marker({
                         map: map,
@@ -273,14 +264,14 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
-              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars.</div>');
+                                infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" data-bind="click: memorize" class="btn-register">Endorse</a></td><td style="width:33%"><a data-role="button" data-click="memorize" class="btn-login km-widget km-button">Memorize</a></td><td style="width:33%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Comment</a></td></tr></table></div>');
                                 infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
-              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars.</div>';
+              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div>';
                             }
                             else {
-                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>');
-                                infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars.</span></div>';
+                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" data-bind="click: memorize" class="btn-register">Endorse</a></td><td style="width:33%"><a data-role="button" data-click="memorize" class="btn-login km-widget km-button">Memorize</a></td><td style="width:33%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Comment</a></td></tr></table></div>');
+                                infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+              'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div>';
                             }
                             place.details = infoContent;
                             //infoWindow.setContent('<span>Test</span>');
@@ -391,17 +382,17 @@ app.Places = (function () {
                 streetView = map.getStreetView();
                 // Create the DIV to hold the control and call the CenterControl()
                 // constructor passing in this DIV.
-                var centerControlDiv = document.createElement('div');
-                var centerControl = new CenterControl(centerControlDiv, map);
-                centerControlDiv.index = 1;
-                map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
-                google.maps.event.addListener(streetView, 'visible_changed', function () {
-                    if (streetView.getVisible()) {
-                        app.Places.locationViewModel.set("hideSearch", true);
-                    } else {
-                        app.Places.locationViewModel.set("hideSearch", false);
-                    }
-                });
+                //var centerControlDiv = document.createElement('div');
+                //var centerControl = new CenterControl(centerControlDiv, map);
+                //centerControlDiv.index = 1;
+                //map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
+                //google.maps.event.addListener(streetView, 'visible_changed', function () {
+                //    if (streetView.getVisible()) {
+                //        app.Places.locationViewModel.set("hideSearch", true);
+                //    } else {
+                //        app.Places.locationViewModel.set("hideSearch", false);
+                //    }
+                //});
             },
             show: function () {
                 if (!app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
@@ -419,7 +410,7 @@ app.Places = (function () {
                 //var price = '$$$$$'.substring(1, app.Places.locationViewModel.details.price_level);
                 $("#place-list-view").kendoMobileListView({
                     dataSource: app.Places.locationViewModel.details,
-                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # -- #: distance # m, #: rating # Stars, #: priceString # <table ${visibility} style='width:100%; margin-top:15px'><tr style='width:100%'><td style='width:33%'><a data-role='button' href='views/signupView.html' class='btn-register'>Web Site</a></td><td style='width:33%'><a data-role='button' href='views/mapView.html' class='btn-login km-widget km-button'>Short List</a></td><td style='width:33%'><a data-role='button' href='views/mapView.html' class='btn-continue km-widget km-button'>Comment</a></td></tr></table><br /></div>"
+                    template: "<div class='${isSelectedClass}'>#: name #<br /> #: vicinity # -- #: distance # m, #: rating # Stars, #: priceString # <table ${visibility} style='width:100%; margin-top:15px'><tr style='width:100%'><td style='width:33%'><a data-role='button' data-bind='click: memorize' class='btn-register'>Endorse</a></td><td style='width:33%'><a data-role='button' data-click='memorize' class='btn-login km-widget km-button'>Memorize</a></td><td style='width:33%'><a data-role='button' href='views/activitiesView.html' class='btn-continue km-widget km-button'>Comment</a></td></tr></table><br /></div>"
                 });
             },
             onSelected: function (e) {
@@ -436,17 +427,10 @@ app.Places = (function () {
                     e.dataItem.set("isSelectedClass", "");
                     e.dataItem.set("visibility", "hidden")
                 }
-                //$("#popup").kendoPopup({
-                //    anchor: $("#place-list-view"),
-                //    origin: "top right",
-                //    position: "top center",
-                //    collision: "fit",
-                //    adjustSize: {
-                //        width: 25,
-                //        height: 25
-                //    }
-                //}).data("kendoPopup").open();
             },
+            memorize: function () {
+                app.notify.memorize();
+            }
         };
     }());
     return placesViewModel;

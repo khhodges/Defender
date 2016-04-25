@@ -7,7 +7,7 @@
      data-hide="app.Places.hide"
      data-model="app.Places.locationViewModel"
      data-stretch="true">
-    <style>
+    <!--<style>
 
         .controls {
             margin-top: 10px;
@@ -50,13 +50,13 @@
                 font-size: 13px;
                 font-weight: 300;
             }
-    </style>
+    </style>-->
         <script>
 
             function test(url) {
                 app.notify.showShortTop("Url.Map Search " + url);
                 if (url === null || url === undefined || url.length < 10) {
-                    app.notify.showShortTop(url + " this website is unavailable!");
+                    app.notify.showShortTop(url + " the client data is missing preventing service connection!");
                 } else {
                     window.open(url, "_blank");
                 }
