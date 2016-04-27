@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}") = "cloudclub", "cloudclub\cloudclub.iceproj", "{003F5D01-C32E-4F2F-8A44-F2E7B1F00008}"
 EndProject

@@ -33,7 +33,6 @@
     <Content Include="cordova.wp8.js" />
     <Content Include="Errors.html" />
     <Content Include="index.html" />
-    <Content Include="Index3.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
     <Content Include="kendo\styles\images\back.png" />
@@ -51,6 +50,7 @@
     <Content Include="scripts\app\app.js" />
     <Content Include="scripts\app\comments.js" />
     <Content Include="scripts\app\common.js" />
+    <Content Include="scripts\js\on2tmap.js" />
     <Content Include="scripts\app\local.js" />
     <Content Include="scripts\app\identity-provider.js" />
     <Content Include="scripts\app\login.js" />
@@ -63,7 +63,7 @@
     <Content Include="scripts\app\social.js" />
     <Content Include="scripts\app\update.js" />
     <Content Include="scripts\app\users.js" />
-    <Content Include="scripts\js\map.js" />
+    <Content Include="scripts\js\on2tmap2.js" />
     <Content Include="sharing.iceproj" />
     <Content Include="styles\images\avatar.png" />
     <Content Include="styles\images\background-picture.png" />
@@ -111,7 +111,7 @@
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
     <Content Include="views\eventsView.html" />
-    <Content Include="views\map.html" />
+    <Content Include="views\on2tView.html" />
     <Content Include="views\tripView.html" />
     <Content Include="views\localView.html" />
     <Content Include="views\mapView.html" />

@@ -7,6 +7,7 @@ var app = app || {};
 app.Places = (function () {
     'use strict'
     var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12, infoContent;
+    var HEAD = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'WebSite\')"><u>Name</u></div><img src="Icon" alt="Logo" height="80" width="80"><p>Text</p><div class="iw-subTitle"><a href="tel:+Phone"><small>Click to Call (+Phone)<br/>Address</small></a></div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Add a Comment</a></td></tr></table><div class="iw-bottom-gradient"></div>';
     /**
      * The CenterControl adds a control to the map that recenters the map on
      * current location.
@@ -47,13 +48,17 @@ app.Places = (function () {
         var map, geocoder, locality, home
         var placeModel = {
             fields: {
-                place: {
+                name: {
                     field: 'Place',
                     defaultValue: ''
                 },
                 url: {
                     field: 'Website',
-                    defaultValue: 'www.on2t.com'
+                    defaultValue: 'www.google.com?search=\' + result.name'
+                },
+                icon: {
+                    field: 'Icon',
+                    defaultValue: ''
                 },
                 marker: {
                     field: 'Location',
@@ -62,7 +67,19 @@ app.Places = (function () {
                 text: {
                     field: 'Description',
                     defaultValue: 'Empty'
-                }
+                },
+                html:{
+                    field: 'Html',
+                    defaultValue: ''
+                },
+                address:{
+                    field: 'Address',
+                    defaultValue:''
+                },
+                phone:{
+                    field: 'Phone',
+                    defaultValue:''
+                }    
             }
         };
         var placesDataSource = new kendo.data.DataSource({
@@ -90,7 +107,9 @@ app.Places = (function () {
             hideSearch: false,
             products: viewModelSearch.products,
             selectedProduct: viewModelSearch.selectedProduct,
-            locatedAtFormatted: function (marker, text) {
+            locatedAtFormatted: function (marker, text, html, address, name, url, phone, icon) {
+                var htmlString = HEAD.replace('text', text).replace('WebSite', url).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
+                htmlString = htmlString.replace('Phone', phone);
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
                 marker.Mark = new google.maps.Marker({
                     map: map,
@@ -105,7 +124,11 @@ app.Places = (function () {
 
                 });
                 google.maps.event.addListener(marker.Mark, 'click', function () {
-                    infoWindow.setContent(text);
+                    if (html === '' || html===undefined) {
+                        infoWindow.setContent(text);
+                    } else {
+                        infoWindow.setContent(htmlString);
+                    }
                         infoWindow.open(map, marker.Mark);                    
                 });
                 return (marker.latitude + "/" + marker.longitude);
@@ -263,6 +286,7 @@ app.Places = (function () {
                                 console.error(status);
                                 return;
                             }
+                            var stringText = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'' + result.name + '\')"><u>' + result.name + '</u></div><img src="' + result.website + '" alt="Logo" height="80" width="80"><p>' + result.text + '</p><div class="iw-subTitle"><a href="tel:' + result.formatted_phone_number + '"><small>Call Us Now (' + result.formatted_phone_number + ')</small></a><br/>' + result.formatted_address + '</div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Add a Comment</a></td></tr></table><div class="iw-bottom-gradient"></div>';
                             if (result.reviews === undefined || result.reviews === undefined) {
                                 infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" data-bind="click: memorize" class="btn-register">Endorse</a></td><td style="width:33%"><a data-role="button" data-click="memorize" class="btn-login km-widget km-button">Memorize</a></td><td style="width:33%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Comment</a></td></tr></table></div>');
                                 infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
