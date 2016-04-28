@@ -604,6 +604,7 @@ var app = (function (win) {
 	}
 	*/
     return {
+        data:{},
         showAlert: showAlert,
         showError: showError,
         showConfirm: showConfirm,

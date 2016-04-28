@@ -33,9 +33,14 @@
     <Content Include="components\Notifications\details.html" />
     <Content Include="components\Notifications\index.js" />
     <Content Include="components\Notifications\view.html" />
+    <Content Include="components\partners\add.html" />
+    <Content Include="components\partners\details.html" />
+    <Content Include="components\partners\index.js" />
+    <Content Include="components\partners\view.html" />
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
+    <Content Include="dataProviders\defender.js" />
     <Content Include="Errors.html" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
@@ -224,6 +229,7 @@
     <Folder Include="bower_components\everlive\min\" />
     <Folder Include="bower_components\everlive\src\" />
     <Folder Include="components\aboutView\" />
+    <Folder Include="components\partners\" />
     <Folder Include="components\Notifications\" />
     <Folder Include="kendo\" />
     <Folder Include="kendo\js\" />
@@ -231,6 +237,7 @@
     <Folder Include="kendo\styles\images\" />
     <Folder Include="kendo\typescript\" />
     <Folder Include="components\" />
+    <Folder Include="dataProviders\" />
     <Folder Include="resources\" />
     <Folder Include="Plugins\" />
     <Folder Include="scripts\" />

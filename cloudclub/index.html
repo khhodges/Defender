@@ -15,6 +15,7 @@
     <script src="scripts/app/identity-provider.js"></script>
     <script src="scripts/app/settings.js"></script>
     <script src="scripts/app/app.js"></script>
+    <script src="dataProviders/defender.js"></script>
     <script src="scripts/app/common.js"></script>
     <script src="scripts/app/social.js"></script>
     <script src="scripts/app/analytics-monitor.js"></script>
@@ -27,6 +28,8 @@
     <script src="scripts/app/activity.js"></script>
     <script src="scripts/app/comments.js"></script>
     <script src="components/aboutView/index.js"></script>
+    <script src="components/notifications/index.js"></script>
+    <script src="components/partners/index.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
     <link href="styles/main1.css" rel="stylesheet">
@@ -127,7 +130,7 @@
             </header>
             <ul id="navigation-container" data-role="listview">
                 <li>
-                    <a href="views/activitiesView.html" data-icon="home" style="color: black">Local Activities</a>
+                    <a href="views/activitiesView.html" data-icon="home" style="color: black">Recent Updates</a>
                 </li>
                 <li>
                     <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places</a>
@@ -145,7 +148,13 @@
                     <a href="views/updateView.html" data-icon="settings" style="color: black">Update Settings</a>
                 </li>
                 <li>
-                    <a hidden href="components/aboutView/view.html" data-icon="action" style="color: black">About On2T</a>
+                    <a href="components/partners/view.html" data-icon="partners-button" style="color: black">Find Partners</a>
+                </li>
+                <li>
+                    <a href="components/notifications/view.html" data-icon="flash-button" style="color: black">Local Events</a>
+                </li>
+                <li>
+                    <a href="components/aboutView/view.html" data-icon="action" style="color: black">About On2T</a>
                 </li>
             </ul>
         </div>

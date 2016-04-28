@@ -57,6 +57,16 @@
     content: '\e077';
 }
 
+.km-flash-button:after,
+.km-flash-button:before {
+    content: '\e0c1';
+}
+
+.km-partners-button:after,
+.km-partners-button:before {
+    content: '\e077';
+}
+
 form .form-content li p {
     margin: 0;
     padding: 0;
