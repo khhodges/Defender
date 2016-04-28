@@ -1,0 +1,49 @@
+<div data-role="layout" data-id="main">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+        </div>
+    </header>
+</div>
+
+<div data-role="layout" data-id="main-nonav">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+        </div>
+    </header>
+</div>
+<div data-role="view" data-title="About On2T" data-layout="main" data-model="app.aboutView" data-show="app.aboutView.onShow" data-after-show="app.aboutView.afterShow">
+    <div class="about-view" data-bind="invisible:error">
+        <div class="icon-group">
+
+            <div class="app-icon">
+                <img src="resources/icon.png">
+            </div>
+
+
+            <div class="app-details">
+                <h2>On2T Community Notification Services</h2>
+                <h4>April 2016 Version</h4>
+            </div>
+        </div>
+
+        <p><small>Registered members can use local notification services based on geographic location services that contact clients on the move. This intimate contact between clients and local business, school and government organizations improves business, eduation and administration services in every way. See with what others say, join or start a group conversation about some local concern. Find other interested neighbors, stay in contact with teachers and trainers, provide feedback, place orders, get reminded, see confirmations, avoid delay and smooth busy times. Never miss an opportunity or an events. Manage your time and review activities whenever and wherever you want. The community, content and usage is a shared responsibility that is guatanteed by the group activity.</small></p>
+
+        <div class="button-group button-group-vertical">
+            <a data-role="button" data-rel="external" href="mailto:support@on2t.com">Contact us</a>
+            <a data-role="button" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://www.facebook.com/on2t');">Like us on Facebook</a>
+            <a data-role="button" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://twitter.com/on2t');">Follow us on Twitter</a>
+        </div>
+        <!-- START_CUSTOM_CODE_aboutViewModel -->
+        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+
+        <!-- END_CUSTOM_CODE_aboutViewModel -->
+    </div>
+
+    <!-- START_CUSTOM_CODE_aboutView -->
+    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+
+    <!-- END_CUSTOM_CODE_aboutView -->
+</div>

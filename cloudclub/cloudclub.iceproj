@@ -28,6 +28,8 @@
     <Content Include="bower_components\everlive\min\everlive.all.map" />
     <Content Include="bower_components\everlive\min\everlive.all.min.js" />
     <Content Include="bower_components\everlive\src\everlive.all.js" />
+    <Content Include="components\aboutView\index.js" />
+    <Content Include="components\aboutView\view.html" />
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
@@ -44,6 +46,7 @@
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
     <Content Include="kendo\typescript\jquery.d.ts" />
     <Content Include="kendo\typescript\kendo.mobile.d.ts" />
+    <Content Include="resources\icon.png" />
     <Content Include="scripts\app\activities.js" />
     <Content Include="scripts\app\activity.js" />
     <Content Include="scripts\app\analytics-monitor.js" />
@@ -107,6 +110,8 @@
     <Content Include="styles\images\search_active2x.png" />
     <Content Include="styles\images\share.png" />
     <Content Include="styles\main.css" />
+    <Content Include="styles\main1.css" />
+    <Content Include="styles\overrides.css" />
     <Content Include="styles\style.css" />
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
@@ -215,11 +220,14 @@
     <Folder Include="bower_components\everlive\" />
     <Folder Include="bower_components\everlive\min\" />
     <Folder Include="bower_components\everlive\src\" />
+    <Folder Include="components\aboutView\" />
     <Folder Include="kendo\" />
     <Folder Include="kendo\js\" />
     <Folder Include="kendo\styles\" />
     <Folder Include="kendo\styles\images\" />
     <Folder Include="kendo\typescript\" />
+    <Folder Include="components\" />
+    <Folder Include="resources\" />
     <Folder Include="Plugins\" />
     <Folder Include="scripts\" />
     <Folder Include="scripts\app\" />
