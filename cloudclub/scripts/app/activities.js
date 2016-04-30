@@ -29,7 +29,7 @@ app.Activities = (function () {
 	};
 	var show = function () {
 	    try {
-	        if (!app.Users.isOnline()) {
+	        if (!app.Users.currentUser.data.Id) {
 	            app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
 	            app.mobileApp.navigate('#welcome');
 	            return;

@@ -7,7 +7,7 @@ var app = app || {};
 app.Places = (function () {
     'use strict'
     var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12, infoContent;
-    var HEAD = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'WebSite\')"><u>Name</u></div><img src="Icon" alt="Logo" height="80" width="80"><p>Text</p><div class="iw-subTitle"><a href="tel:+Phone"><small>Click to Call (+Phone)<br/>Address</small></a></div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" href="views/activitiesView.html" class="btn-continue km-widget km-button">Add a Comment</a></td></tr></table><div class="iw-bottom-gradient"></div>';
+    var HEAD = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'WebSite\')"><u>Name</u></div><img src="Icon" alt="Logo" height="80" width="80"><p>Text</p><div class="iw-subTitle"><a href="tel:+Phone"><small>Click to Call (+Phone)<br/>Address</small></a></div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" class="btn-continue km-widget km-button" href="components/partners/view.html?partner=Name">Add a Comment</a></td></tr></table><div class="iw-bottom-gradient"></div>';
     /**
      * The CenterControl adds a control to the map that recenters the map on
      * current location.
@@ -109,7 +109,17 @@ app.Places = (function () {
             selectedProduct: viewModelSearch.selectedProduct,
             locatedAtFormatted: function (marker, text, html, address, name, url, phone, icon) {
                 var htmlString = HEAD.replace('text', text).replace('WebSite', url).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
-                htmlString = htmlString.replace('Phone', phone);
+                htmlString = htmlString.replace('Phone', phone).replace('Name', name);
+                var filter = {};
+                var params = [];
+                filter.params = params;
+                var field = "name";
+                var operator = "contains";
+                var value = name;
+                var param = { "field": field, "operator": operator, "value": value };
+                filter.params.push(param);
+                var js = JSON.stringify(filter);
+                htmlString = htmlString.replace('Filter', js);
                 var position = new google.maps.LatLng(marker.latitude, marker.longitude);
                 marker.Mark = new google.maps.Marker({
                     map: map,
@@ -418,7 +428,8 @@ app.Places = (function () {
                 //});
             },
             show: function () {
-                if (!app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
+                if (app.isNullOrEmpty(app.Places.locationViewModel) || !app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
+                        app.notify.showShortTop("Please retry!");
                     return;
                 }
                 //resize the map in case the orientation has been changed while showing other tab

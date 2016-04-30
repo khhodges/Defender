@@ -15,12 +15,12 @@
         </div>
     </header>
 
-
     <form class="km-filter-form custom-filter">
         <div class="km-filter-wrap">
-            <input type="search" placeholder="Search..." data-bind="{events:{keyup: homeModel.searchChange}}">
+            <input type="search" placeholder="Search..." data-bind="{events:{keyup: homeModel.searchChange, changed: homeModel.searchChanged}}"  id="MyDetails" data-show="MyDetailsShow">
         </div>
     </form>
+    
     <ul data-role="listview" data-auto-bind="false" data-style="inset" data-template="homeModelTemplate" data-bind="{ source: homeModel.dataSource, events: {click: homeModel.itemClick} }" data-pull-to-refresh="true" data-endless-scroll="false">
     </ul>
     <!-- START_CUSTOM_CODE_homeModel -->

@@ -1,21 +1,18 @@
 'use strict';
 
-app.home = kendo.observable({
-    onShow: function () { },
-    afterShow: function () { }
+app.activities = kendo.observable({
+    onShow: function() {},
+    afterShow: function() {}
 });
 
-// START_CUSTOM_CODE_home
+// START_CUSTOM_CODE_activities
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-	function MyDetailsShow(e) {
-	    MyDetails.value = e.view.params.partner;
-	};
-// END_CUSTOM_CODE_home
-(function (parent) {
+// END_CUSTOM_CODE_activities
+(function(parent) {
     var dataProvider = app.data.defender,
-        fetchFilteredData = function (paramFilter, searchFilter) {
-            var model = parent.get('homeModel'),
+        fetchFilteredData = function(paramFilter, searchFilter) {
+            var model = parent.get('activitiesModel'),
                 dataSource = model.get('dataSource');
 
             if (paramFilter) {
@@ -35,7 +32,7 @@ app.home = kendo.observable({
                 dataSource.filter({});
             }
         },
-        processImage = function (img) {
+        processImage = function(img) {
             if (!img) {
                 var empty1x1png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=';
                 img = 'data:image/png;base64,' + empty1x1png;
@@ -47,9 +44,9 @@ app.home = kendo.observable({
 
             return img;
         },
-        flattenLocationProperties = function (dataItem) {
+        flattenLocationProperties = function(dataItem) {
             var propName, propValue,
-                isLocation = function (value) {
+                isLocation = function(value) {
                     return propValue && typeof propValue === 'object' &&
                         propValue.longitude && propValue.latitude;
                 };
@@ -68,21 +65,24 @@ app.home = kendo.observable({
         dataSourceOptions = {
             type: 'everlive',
             transport: {
-                typeName: 'Places',
+                typeName: 'Activities',
                 dataProvider: dataProvider
             },
-            change: function (e) {
+            group: {
+                field: 'Text'
+            },
+            change: function(e) {
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
 
-                    dataItem['ImageUrl'] =
-                        processImage(dataItem['Image']);
+                    dataItem['PictureUrl'] =
+                        processImage(dataItem['Picture']);
 
                     flattenLocationProperties(dataItem);
                 }
             },
-            error: function (e) {
+            error: function(e) {
                 if (e.xhr) {
                     alert(JSON.stringify(e.xhr));
                 }
@@ -90,20 +90,16 @@ app.home = kendo.observable({
             schema: {
                 model: {
                     fields: {
-                        'Place': {
-                            field: 'Place',
+                        'Text': {
+                            field: 'Text',
                             defaultValue: ''
                         },
-                        'Address': {
-                            field: 'Address',
+                        'Stars': {
+                            field: 'Stars',
                             defaultValue: ''
                         },
-                        'Image': {
-                            field: 'Image',
-                            defaultValue: ''
-                        },
-                        'Id': {
-                            field: 'Id',
+                        'Picture': {
+                            field: 'Picture',
                             defaultValue: ''
                         },
                     }
@@ -112,79 +108,99 @@ app.home = kendo.observable({
             serverFiltering: true,
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
-        homeModel = kendo.observable({
+        activitiesModel = kendo.observable({
             dataSource: dataSource,
-            searchChange: function (e) {
+            searchChange: function(e) {
                 var searchVal = e.target.value,
                     searchFilter;
 
                 if (searchVal) {
                     searchFilter = {
-                        field: 'Place',
+                        field: 'Text',
                         operator: 'contains',
                         value: searchVal
                     };
                 }
-                fetchFilteredData(homeModel.get('paramFilter'), searchFilter);
+                fetchFilteredData(activitiesModel.get('paramFilter'), searchFilter);
             },
-            itemClick: function (e) {
+            itemClick: function(e) {
 
-                app.mobileApp.navigate('#components/partners/details.html?uid=' + e.dataItem.uid);
+                app.mobileApp.navigate('#components/activities/details.html?uid=' + e.dataItem.uid);
 
             },
-            addClick: function () {
-                app.mobileApp.navigate('#components/partners/add.html');
+            addClick: function() {
+                app.mobileApp.navigate('#components/activities/add.html');
             },
             //kjhh
             likeClick: function () {
-                app.notify.memorize(dataSource.Id);
+                app.notify.memorize;            
             },
-            detailsShow: function (e) {
-                var item = e.view.params.uid,
-                    dataSource = homeModel.get('dataSource'),
-                    itemModel = dataSource.getByUid(item);
-                itemModel.ImageUrl = processImage(itemModel.Image);
+            deleteClick: function() {
+                var dataSource = activitiesModel.get('dataSource'),
+                    that = this;
 
-                if (!itemModel.Place) {
-                    itemModel.Place = String.fromCharCode(160);
+                if (!navigator.notification) {
+                    navigator.notification = {
+                        confirm: function(message, callback) {
+                            callback(window.confirm(message) ? 1 : 2);
+                        }
+                    };
                 }
 
-                homeModel.set('currentItem', null);
-                homeModel.set('currentItem', itemModel);
+                navigator.notification.confirm(
+                    "Are you sure you want to delete this item?",
+                    function(index) {
+                        //'OK' is index 1
+                        //'Cancel' - index 2
+                        if (index === 1) {
+                            dataSource.remove(that.currentItem);
+
+                            dataSource.one('sync', function() {
+                                app.mobileApp.navigate('#:back');
+                            });
+
+                            dataSource.one('error', function() {
+                                dataSource.cancelChanges();
+                            });
+
+                            dataSource.sync();
+                        }
+                    },
+                    '', ["OK", "Cancel"]
+                );
+            },
+            detailsShow: function(e) {
+                var item = e.view.params.uid,
+                    dataSource = activitiesModel.get('dataSource'),
+                    itemModel = dataSource.getByUid(item);
+                itemModel.PictureUrl = processImage(itemModel.Picture);
+
+                if (!itemModel.Text) {
+                    itemModel.Text = String.fromCharCode(160);
+                }
+
+                activitiesModel.set('currentItem', null);
+                activitiesModel.set('currentItem', itemModel);
             },
             currentItem: null
         });
 
     parent.set('addItemViewModel', kendo.observable({
-        onShow: function (e) {
+        onShow: function(e) {
             // Reset the form data.
             this.set('addFormData', {
-                email: '',
-                html: '',
-                icon: '',
-                textField: '',
-                address: '',
-                www: '',
-                tel: '',
-                place: '',
+                textField1: '',
             });
         },
-        onSaveClick: function (e) {
+        onSaveClick: function(e) {
             var addFormData = this.get('addFormData'),
-                dataSource = homeModel.get('dataSource');
+                dataSource = activitiesModel.get('dataSource');
 
             dataSource.add({
-                Email: addFormData.email,
-                Html: addFormData.html,
-                Icon: addFormData.icon,
-                Description: addFormData.textField,
-                Address: addFormData.address,
-                Website: addFormData.www,
-                Phone: addFormData.tel,
-                Place: addFormData.place,
+                Title: addFormData.textField1,
             });
 
-            dataSource.one('change', function (e) {
+            dataSource.one('change', function(e) {
                 app.mobileApp.navigate('#:back');
             });
 
@@ -194,20 +210,20 @@ app.home = kendo.observable({
 
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
-            parent.set('homeModel', homeModel);
+            parent.set('activitiesModel', activitiesModel);
         });
     } else {
-        parent.set('homeModel', homeModel);
+        parent.set('activitiesModel', activitiesModel);
     }
 
-    parent.set('onShow', function (e) {
-        var param; // = e.view.params.filter ? JSON.parse(e.view.params.filter) : null;
-        if ((param ===null || param === undefined) && e.view.params.partner) param = { "field": "Place", "operator": "contains", "value": e.view.params.partner };
+    parent.set('onShow', function(e) {
+        var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null;
+
         fetchFilteredData(param);
     });
-})(app.home);
+})(app.activities);
 
-// START_CUSTOM_CODE_homeModel
+// START_CUSTOM_CODE_activitiesModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_homeModel
+// END_CUSTOM_CODE_activitiesModel

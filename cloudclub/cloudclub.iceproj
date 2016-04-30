@@ -30,6 +30,10 @@
     <Content Include="bower_components\everlive\src\everlive.all.js" />
     <Content Include="components\aboutView\index.js" />
     <Content Include="components\aboutView\view.html" />
+    <Content Include="components\activities\add.html" />
+    <Content Include="components\activities\details.html" />
+    <Content Include="components\activities\index.js" />
+    <Content Include="components\activities\view.html" />
     <Content Include="components\Notifications\details.html" />
     <Content Include="components\Notifications\index.js" />
     <Content Include="components\Notifications\view.html" />
@@ -41,7 +45,6 @@
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
     <Content Include="dataProviders\defender.js" />
-    <Content Include="Errors.html" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
@@ -229,6 +232,7 @@
     <Folder Include="bower_components\everlive\min\" />
     <Folder Include="bower_components\everlive\src\" />
     <Folder Include="components\aboutView\" />
+    <Folder Include="components\activities\" />
     <Folder Include="components\partners\" />
     <Folder Include="components\Notifications\" />
     <Folder Include="kendo\" />
