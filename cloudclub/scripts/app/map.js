@@ -6,7 +6,7 @@ var app = app || {};
 
 app.Places = (function () {
     'use strict'
-    var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom=12, infoContent;
+    var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom = 12, infoContent;
     var HEAD = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'WebSite\')"><u>Name</u></div><img src="Icon" alt="Logo" height="80" width="80"><p>Text</p><div class="iw-subTitle"><a href="tel:+Phone"><small>Click to Call (+Phone)<br/>Address</small></a></div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" class="btn-continue km-widget km-button" href="components/partners/view.html?partner=Name">Add a Comment</a></td></tr></table><div class="iw-bottom-gradient"></div>';
     /**
      * The CenterControl adds a control to the map that recenters the map on
@@ -68,18 +68,18 @@ app.Places = (function () {
                     field: 'Description',
                     defaultValue: 'Empty'
                 },
-                html:{
+                html: {
                     field: 'Html',
                     defaultValue: ''
                 },
-                address:{
+                address: {
                     field: 'Address',
-                    defaultValue:''
+                    defaultValue: ''
                 },
-                phone:{
+                phone: {
                     field: 'Phone',
-                    defaultValue:''
-                }    
+                    defaultValue: ''
+                }
             }
         };
         var placesDataSource = new kendo.data.DataSource({
@@ -108,40 +108,42 @@ app.Places = (function () {
             products: viewModelSearch.products,
             selectedProduct: viewModelSearch.selectedProduct,
             locatedAtFormatted: function (marker, text, html, address, name, url, phone, icon) {
-                var htmlString = HEAD.replace('text', text).replace('WebSite', url).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
-                htmlString = htmlString.replace('Phone', phone).replace('Name', name);
-                var filter = {};
-                var params = [];
-                filter.params = params;
-                var field = "name";
-                var operator = "contains";
-                var value = name;
-                var param = { "field": field, "operator": operator, "value": value };
-                filter.params.push(param);
-                var js = JSON.stringify(filter);
-                htmlString = htmlString.replace('Filter', js);
-                var position = new google.maps.LatLng(marker.latitude, marker.longitude);
-                marker.Mark = new google.maps.Marker({
-                    map: map,
-                    position: position,
-                    icon: {
-                        url: 'styles/images/icon.png',
-                        anchor: new google.maps.Point(20, 38),
-                        scaledSize: new google.maps.Size(40, 40),
-                        title:viewModelSearch.selectedProduct
-                    }
-                    //TO DO: add popup
+                if (marker) {
+                    var htmlString = HEAD.replace('text', text).replace('WebSite', url).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
+                    htmlString = htmlString.replace('Phone', phone).replace('Name', name);
+                    var filter = {};
+                    var params = [];
+                    filter.params = params;
+                    var field = "name";
+                    var operator = "contains";
+                    var value = name;
+                    var param = { "field": field, "operator": operator, "value": value };
+                    filter.params.push(param);
+                    var js = JSON.stringify(filter);
+                    htmlString = htmlString.replace('Filter', js);
+                    var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+                    marker.Mark = new google.maps.Marker({
+                        map: map,
+                        position: position,
+                        icon: {
+                            url: 'styles/images/icon.png',
+                            anchor: new google.maps.Point(20, 38),
+                            scaledSize: new google.maps.Size(40, 40),
+                            title: viewModelSearch.selectedProduct
+                        }
+                        //TO DO: add popup
 
-                });
-                google.maps.event.addListener(marker.Mark, 'click', function () {
-                    if (html === '' || html===undefined) {
-                        infoWindow.setContent(text);
-                    } else {
-                        infoWindow.setContent(htmlString);
-                    }
-                        infoWindow.open(map, marker.Mark);                    
-                });
-                return (marker.latitude + "/" + marker.longitude);
+                    });
+                    google.maps.event.addListener(marker.Mark, 'click', function () {
+                        if (html === '' || html === undefined) {
+                            infoWindow.setContent(text);
+                        } else {
+                            infoWindow.setContent(htmlString);
+                        }
+                        infoWindow.open(map, marker.Mark);
+                    });
+                }
+                return ;
             },
             onNavigateHome: function () {
                 //find present location, clear markers and set up members as icons
@@ -217,9 +219,9 @@ app.Places = (function () {
                     keyword: app.Places.locationViewModel.find
                 };
                 service.nearbySearch(request, function (results, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK ) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
                         //if length = 0 offer search by country or search by region
-                        
+
                         //map.panTo(results[0].geometry.location);
                         for (var i = 0; i < results.length; i++) {
                             place = results[i];
@@ -232,7 +234,7 @@ app.Places = (function () {
                                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                                     Math.sin(dLon / 2) * Math.sin(dLon / 2);
                             var c = 2 * Math.asin(Math.sqrt(a));
-                            var d = R * c/1.61; // converted to miles
+                            var d = R * c / 1.61; // converted to miles
                             place.distance = d.toFixed(2);
                             if (app.isNullOrEmpty(place.rating)) {
                                 place.rating = "??";
@@ -248,7 +250,7 @@ app.Places = (function () {
                             app.Places.locationViewModel.details.push(place);
                         }
                     }
-                    else {                        
+                    else {
                         // Do Place search
                         app.notify.showShortTop("Nothing was found in the area shown.");
                     }
@@ -282,8 +284,8 @@ app.Places = (function () {
                             scaledSize: new google.maps.Size(4 * place.rating, 4 * place.rating)
                         }
                     });
-                    
-                    
+
+
                     app.Places.locationViewModel.markers.push(marker);
                     //extend the bounds to include each marker's position
                     allBounds.extend(marker.position);
@@ -297,12 +299,24 @@ app.Places = (function () {
                                 return;
                             }
                             if (result.reviews === undefined || result.reviews === undefined) {
-                                infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href="views/activitiesView.html" class="btn-login km-widget km-button">Endorse this Business</a></td></tr></table></div>');
-                                infoContent ='<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
+                                infoWindow.Content('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href="components/partners/add.html?Name=' + result.name
+                                + '&email=' + result.email
+                                + '&html=' + result.html
+                                + '&icon=' + result.icon + '&address=' + result.formatted_address
+                                + '&textField=' + result.reviews[0].text
+                                + '&www=' + result.website
+                                + '&tel=' + result.formatted_phone_number + '" class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>');
+                                infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
               'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>No reviews or stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div>';
                             }
                             else {
-                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href="views/activitiesView.html" class="btn-login km-widget km-button">Endorse this Business</a></td></tr></table></div>');
+                                infoWindow.setContent('<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href="components/partners/add.html?Name=' + result.name
+                                + '&email=' + result.email
+                                + '&html=' + result.html
+                                + '&icon=' + result.icon + '&address=' + result.formatted_address
+                                + '&textField=' + result.reviews[0].text
+                                + '&www=' + result.website
+                                + '&tel=' + result.formatted_phone_number + '" class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>');
                                 infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' +
               'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars. <a href="tel:' + result.formatted_phone_number + '"><strong>Call Now</strong></span></div>';
                             }
@@ -429,7 +443,9 @@ app.Places = (function () {
             },
             show: function () {
                 if (app.isNullOrEmpty(app.Places.locationViewModel) || !app.Places.locationViewModel.get("isGoogleMapsInitialized")) {
-                        app.notify.showShortTop("Please retry!");
+                    app.Places.locationViewModel = new LocationViewModel();
+                    //TO DO: Clean up map locations
+                    app.notify.showShortTop("Map reload!");
                     return;
                 }
                 //resize the map in case the orientation has been changed while showing other tab
@@ -456,7 +472,7 @@ app.Places = (function () {
                 e.dataItem.set("isSelected", newState);
                 if (newState === true) {
                     e.dataItem.set("isSelectedClass", "listview-selected");
-                    e.dataItem.set("visibility","visible")
+                    e.dataItem.set("visibility", "visible")
                 } else {
                     e.dataItem.set("isSelectedClass", "");
                     e.dataItem.set("visibility", "hidden")

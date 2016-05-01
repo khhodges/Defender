@@ -152,6 +152,9 @@ app.home = kendo.observable({
                 homeModel.set('currentItem', null);
                 homeModel.set('currentItem', itemModel);
             },
+            addShow: function(e){
+                document.getElementById("Place").innerText = e.view.params.Name;
+            },
             currentItem: null
         });
 
@@ -159,14 +162,14 @@ app.home = kendo.observable({
         onShow: function (e) {
             // Reset the form data.
             this.set('addFormData', {
-                email: '',
-                html: '',
-                icon: '',
-                textField: '',
-                address: '',
-                www: '',
-                tel: '',
-                place: '',
+                email: e.view.params.email,
+                html: e.view.params.html,
+                icon: e.view.params.icon,
+                textField: e.view.params.textField,
+                address: e.view.params.address,
+                www: e.view.params.www,
+                tel: e.view.params.tel,
+                place: e.view.params.Name,
             });
         },
         onSaveClick: function (e) {
@@ -201,8 +204,8 @@ app.home = kendo.observable({
     }
 
     parent.set('onShow', function (e) {
-        var param; // = e.view.params.filter ? JSON.parse(e.view.params.filter) : null;
-        if ((param ===null || param === undefined) && e.view.params.partner) param = { "field": "Place", "operator": "contains", "value": e.view.params.partner };
+        var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null;
+        //if ((param ===null || param === undefined) && e.view.params.partner) param = { "field": "Place", "operator": "contains", "value": e.view.params.partner };
         fetchFilteredData(param);
     });
 })(app.home);

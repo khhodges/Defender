@@ -310,7 +310,8 @@
 }
 /* form label position */
 .km-flat .form-content .form-content-item .km-label-above {
-  font-size: 0.8em;
+    /*kjhh*/
+  font-size: 0.5em;
 }
 .km-flat .form-content .form-content-item .km-label-above input:not([type='checkbox']):not([type='radio']),
 .km-flat .form-content .form-content-item .km-label-above select:not([multiple]),
