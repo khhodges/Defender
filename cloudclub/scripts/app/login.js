@@ -73,11 +73,15 @@ app.Login = (function () {
                 }
                 
                 app.mobileApp.hideLoading();
+                var logonB = document.getElementById("logonButton");
+                var logoffB = document.getElementById("logoffButton");
+                logoffB.style.display = "";
+                logonB.style.display = "none";
                 return app.Users.load();
             })
             .then(function () {
 
-                app.mobileApp.navigate('views/activitiesView.html');
+                app.mobileApp.navigate('components/notifications/view.html');
             })
             .then(null,
                   function (err) {

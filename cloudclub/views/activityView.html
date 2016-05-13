@@ -4,7 +4,7 @@
 		<div data-role="navbar">
 			<a class="nav-button nav-button-icon nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
             <a class="nav-button nav-button-icon nav-button-chat hide-text" data-align="left" data-role="button" data-click="app.Activity.share">Comment</a>
-            <a class="nav-button nav-button-icon nav-button-notify hide-text" data-align="left" data-role="button" data-click="app.notify.broadcast">Notify</a>
+            <a class="nav-button nav-button-icon nav-button-notify hide-text" data-align="left" data-role="button" data-bind="visible: isVisible" data-click="app.notify.broadcast">Notify</a>
 			<a class="nav-button nav-button-icon nav-button-comment hide-text" data-align="right" data-role="button" data-click="app.Activity.addComment">Comment</a>
 			<a class="nav-button nav-button-icon nav-button-delete hide-text" data-align="right" data-role="button" data-bind="visible: isVisible" data-click="app.Activity.remove">Delete</a>
 		</div>

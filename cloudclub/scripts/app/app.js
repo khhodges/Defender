@@ -70,8 +70,12 @@ var app = (function (win) {
         var openExternalInAppBrowser = document.getElementById("openExternalInAppBrowser");
         openExternalInAppBrowser.addEventListener("click", app.helper.openExternalInAppBrowser);
 
+        var activityRoute = document.getElementById("activityRoute");
+        activityRoute.addEventListener("click", app.helper.activityRoute);
+
         navigator.splashscreen.hide();
 
+        app.mobileApp.navigate("views/mapView.html");
 
         if (analytics.isAnalytics()) {
             analytics.Start();
@@ -154,6 +158,7 @@ var app = (function (win) {
     };
 
     var AppHelper = {
+		
         // Logout user
         logout: function () {
             app.helper.doLogout()
@@ -161,12 +166,28 @@ var app = (function (win) {
 				    app.notify.showShortTop("You are logged out.");
 				    app.Users.currentUser.data = null;
 				    app.helper.navigateHome();
+				    var logonB = document.getElementById("logonButton");
+				    var logoffB = document.getElementById("logoffButton");
+				    logoffB.style.display = "none";
+				    logonB.style.display = "";
 				},
                 function (err) {
                     app.notify.showShortTop("You are not loggon on: " + err.message);
                     app.Users.currentUser.data = null;
-				    app.helper.navigateHome();
+                    app.helper.navigateHome();
+                    var logonB = document.getElementById("logonButton");
+                    var logoffB = document.getElementById("logoffButton");
+                    logoffB.style.display = "none";
+                    logonB.style.display = "";
 				});
+        },
+        activityRoute: function () {
+            if (app.isOnline()) {
+                app.mobileApp.navigate('views/activitiesView.html');
+            } else {
+                app.mobileApp.navigate('components/activities/view.html');
+            }
+
         },
          //Current user logout
         doLogout: function () {
@@ -307,6 +328,32 @@ var app = (function (win) {
 
     var NotifyHelper = {
 
+        addNotify: function (PartnerId, ActivityId) {
+            if (app.Users.currentUser.data) {
+                //use everlive
+                var data = app.everlive.data('Places');
+
+                var attributes = {
+                    "$push": {
+                        "AlertList": ActivityId //notiification id
+                    }
+                };
+
+                var filter = {
+                    'Id': PartnerId// TO DO! replace this with the current place, if the place does not exist that register the place
+                };
+
+                data.rawUpdate(attributes, filter, function (data) {
+                    app.notify.showShortTop("You have sucesfully linked the new notification.");
+                }, function (err) {
+                    app.notify.showShortTop("Notification failed, please try again.");
+                });
+            } else {
+                app.notify.showShortTop('User.Redirection. You must register and login to access these features.');
+                app.mobileApp.navigate('#welcome');
+            }
+        },
+
         memorize: function (PartnerId) {
             if (app.Users.currentUser.data) {
                 //use everlive
@@ -444,6 +491,25 @@ var app = (function (win) {
                     console.log('scheduled')
                 });
             }
+        },
+
+        getLocation: function(){
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    lat1 = position.lat();
+                    lng1 = position.lng();
+                    return position;
+                },
+                function (error) {
+                    position = new google.maps.LatLng(0, -20);
+                    app.notify.showShortTop("Map.Unable to determine current location. Cannot connect to GPS satellite.");
+                    return position;
+                }, {
+                    timeout: 30000,
+                    enableHighAccuracy: true
+                }
+            );
         },
 
         getNowPlus10Seconds: function () {

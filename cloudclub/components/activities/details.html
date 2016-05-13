@@ -1,9 +1,8 @@
 <div data-role="view" data-title="Details" data-model="app.activities.activitiesModel" data-bind="events: { show: detailsShow }" id="activitiesModelDetailsView">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
-            <a data-role="backbutton" data-align="left">Back</a>
-            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Detail</span>
-            <a data-role="button" data-align="right" data-bind="events: { click: deleteClick }"><i class="km-icon km-delete"></i></a>
+            <a data-role="backbutton" data-align="left">Back</a><span data-bind="text: currentItem.Date" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 80px; margin-right: 80px;"></span>
+            <a data-role="button" data-align="right" data-bind="events: { click: likeClick }">Like</a>
         </div>
     </header>
     <div class="details-content">
@@ -13,6 +12,5 @@
     </div>
     <!-- START_CUSTOM_CODE_activitiesModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_activitiesModel -->
 </div>

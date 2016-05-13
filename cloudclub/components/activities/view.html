@@ -11,7 +11,7 @@
 
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
 
-            <a data-role="button" data-align="right" data-bind="events: { click: activitiesModel.addClick }">Add</a>
+            <!--<a data-role="button" data-align="right" data-bind="visible: isVisible; events: { click: activitiesModel.commentClick }">Comment</a>-->
         </div>
     </header>
 
@@ -31,7 +31,7 @@
         <div class="image-with-text">
             <img src="#: data['PictureUrl'] #" width="30%" height="30%">
             <h3>#: data['Text'] #</h3>
-            <p>#: data['Stars'] #</p>
+            <p>#: data['Date'] #</p>
         </div>
     </script>
 </div>

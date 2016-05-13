@@ -34,6 +34,10 @@
     <Content Include="components\activities\details.html" />
     <Content Include="components\activities\index.js" />
     <Content Include="components\activities\view.html" />
+    <Content Include="components\comments\add.html" />
+    <Content Include="components\comments\details.html" />
+    <Content Include="components\comments\index.js" />
+    <Content Include="components\comments\view.html" />
     <Content Include="components\Notifications\details.html" />
     <Content Include="components\Notifications\index.js" />
     <Content Include="components\Notifications\view.html" />
@@ -233,6 +237,7 @@
     <Folder Include="bower_components\everlive\src\" />
     <Folder Include="components\aboutView\" />
     <Folder Include="components\activities\" />
+    <Folder Include="components\comments\" />
     <Folder Include="components\partners\" />
     <Folder Include="components\Notifications\" />
     <Folder Include="kendo\" />

@@ -3,6 +3,7 @@
         <div data-role="navbar">
             <span data-role="view-title"></span>
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+			<a data-role="button" data-align="right" href="components/partners/view.html">Partners</a>
         </div>
     </header>
 </div>
@@ -14,7 +15,7 @@
         </div>
     </header>
 </div>
-<div data-role="view" data-title="Local Events" data-layout="main" data-model="app.notifications" data-show="app.notifications.onShow" data-after-show="app.notifications.afterShow">
+<div data-role="view" data-title="Alerts" data-layout="main" data-model="app.notifications" data-show="app.notifications.onShow" data-after-show="app.notifications.afterShow">
 
     <!-- START_CUSTOM_CODE_notifications -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
@@ -31,6 +32,6 @@
             <h3>#: data['Reference'] #</h3>
 
         </div>
-        <p class="editableListItem"><span>Status</span><span>#: data['Status'] #</span></p>
+        <!--p class="editableListItem"><span>Status</span><span>#: data['Status'] #</span></p-->
     </script>
 </div>

@@ -90,7 +90,7 @@
                         <a data-role="button" href="views/signupView.html" class="btn-register">Register</a>
                     </td>
                     <td style="width:50%">
-                        <a data-role="button" href="views/mapView.html" class="btn-continue km-widget km-button">Continue</a>
+                        <a data-role="button" href="components/notifications/view.html" class="btn-continue km-widget km-button">Continue</a>
                     </td>
                 </tr>
             </table><br />
@@ -98,7 +98,7 @@
 
             <br />
             <a href="#password">Forgot password?</a><br/>
-            <span>OFA version 1.4.6 - 4/30/2016</span><br />
+            <span>OFA version 1.4.5 - 5/11/2016</span><br />
             <a href="tel:+19548398525">Call us on +1.954-839-8525</a>
 
         </div>
@@ -126,39 +126,31 @@
             <header data-role="header">
                 <div data-role="navbar">
                     <span data-role="view-title"></span>
-                    <a class="nav-button" data-align="left" data-role="button" data-click="app.helper.logout" >Logout</a>
-                </div>
+                    
+                        <a id="logonButton" style="display:" data-role="button" href="#welcome" data-align="left" >Logon</a>
+                    
+                        <a id="logoffButton" style="display:none" data-role="button" data-click="app.helper.logout" data-align="left">Logout</a>
+                    
+                    </div>
             </header>
             <ul id="navigation-container" data-role="listview">
-                <li>
-                    <a href="views/activitiesView.html" data-icon="home" style="color: black">Recent Updates</a>
-                </li>
-                <li>
-                    <a href="views/mapView.html" data-icon="globe" style="color: black">Find Places</a>
-                </li>
                 <!--<li>
-                    <a href="views/on2tView.html" data-icon="globe" style="color: black">Endorsed Places</a>
+                    <a href="components/notifications/view.html" data-icon="flash-button" style="color: black">Find Alerts</a>
                 </li>-->
-                <!--<li>
-                    <a href="views/tripView.html" data-icon="globe" style="color: black">Create Trip</a>
-                </li>-->
-                <!--<li>
-                    <a href="views/listView.html" data-icon="favorites" style="color: black">Favorite Places</a>
-                </li-->
                 <li>
-                    <a href="views/updateView.html" data-icon="settings" style="color: black">Update Settings</a>
+                    <a href="views/mapView.html" data-icon="globe" style="color: black">Hot Spots</a>
                 </li>
                 <li>
-                    <a href="components/activities/view.html" data-icon="mostrecent" style="color: black">Find Activity</a>
+                    <a id="activityRoute" data-icon="home" style="color: black">Activity</a>
                 </li>
                 <li>
-                    <a href="components/partners/view.html" data-icon="partners-button" style="color: black">Find Partners</a>
+                    <a href="components/partners/view.html" data-icon="partners-button" style="color: black">Community</a>
                 </li>
                 <li>
-                    <a href="components/notifications/view.html" data-icon="flash-button" style="color: black">Local Events</a>
+                    <a href="views/updateView.html" data-icon="settings" style="color: black">Customize</a>
                 </li>
                 <li>
-                    <a href="components/aboutView/view.html" data-icon="action" style="color: black">About On2T</a>
+                    <a href="components/aboutView/view.html" data-icon="action" style="color: black">Help</a>
                 </li>
             </ul>
         </div>

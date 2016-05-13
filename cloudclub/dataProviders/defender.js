@@ -1,10 +1,12 @@
 'use strict';
 
 (function() {
-    var provider = app.data.defender = new Everlive({
+	var scheme = 'http';
+		if(window.navigator.simulator) scheme = 'http';
+    var provider = app.data.defender = new Everlive({		
             offlineStorage: true,
             appId: '3t5oa8il0d0y02eq',
-            scheme: 'http',
+            scheme: scheme,
             authentication: {
                 persist: true
             }
