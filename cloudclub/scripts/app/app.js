@@ -67,8 +67,8 @@ var app = (function (win) {
         // Handle "backbutton" event
         document.addEventListener('backbutton', onBackKeyDown, false);
 
-        var openExternalInAppBrowser = document.getElementById("openExternalInAppBrowser");
-        openExternalInAppBrowser.addEventListener("click", app.helper.openExternalInAppBrowser);
+        //var openExternalInAppBrowser = document.getElementById("openExternalInAppBrowser");
+        //openExternalInAppBrowser.addEventListener("click", app.helper.openExternalInAppBrowser);
 
         var activityRoute = document.getElementById("activityRoute");
         activityRoute.addEventListener("click", app.helper.activityRoute);

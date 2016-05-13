@@ -2,7 +2,8 @@
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
-            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            <a data-role="backbutton" data-align="left">Back</a>
+            <!--<a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>-->
         </div>
     </header>
 </div>
@@ -28,14 +29,40 @@
                 <h4>May 2016 Version</h4>
             </div>
         </div>
-
-        <p><small>Registered members can use local notification services based on geographic location services that contact clients on the move. This intimate contact between clients and local business, school and government organizations improves business, eduation and administration services in every way. See with what others say, join or start a group conversation about some local concern. Find other interested neighbors, stay in contact with teachers and trainers, provide feedback, place orders, get reminded, see confirmations, avoid delay and smooth busy times. Never miss an opportunity or an events. Manage your time and review activities whenever and wherever you want. The community, content and usage is a shared responsibility that is guatanteed by the group activity.</small></p>
-
-        <div class="button-group button-group-vertical">
-            <a data-role="button" data-rel="external" href="mailto:support@on2t.com">Contact us</a>
-            <a data-role="button" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://www.facebook.com/On2T-Community-581056891909769/');">Like us on Facebook</a>
-            <a data-role="button" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://twitter.com/on2_T');">Follow us on Twitter</a>
+        <div class="button-group button-group-horizontal">
+            <a data-role="button" class="btn btn-facebook" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://www.on2t.com/mobile');">Visit our<br />Web  Site</a>
+            <a data-role="button" class="btn btn-facebook" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://www.facebook.com/On2T-Community-581056891909769/');">Like us on<br />Facebook</a>
+            <a data-role="button" class="btn btn-facebook" data-rel="external" href="#" onclick="app.aboutView.aboutViewModel.openLink('https://twitter.com/on2_T');">Follow us on<br />Twitter</a>
         </div>
+        <table align="center">
+            <tr>
+                <td>
+                    <div id="collapsible" data-style="inset" data-role="collapsible" data-animation="false">
+                        <h2 data-style="inset">Advantages</h2>
+                        <p><ul>
+                               <li>Community oriented social network</li>
+                               <li>Individual centered sharing </li>
+                               <li>Private history log</li>
+                               <li>Daily service offering alerts</li>
+                               <li>Simplified security and privacy</li>
+                            </ul></p>
+                    </div>
+                    <div id="collapsible" data-style="inset" data-role="collapsible" data-animation="false">
+                        <h2 data-style="inset">Club Notes</h2>
+                        <p>Add your home Zip Code to register for notifications and use location services while on the move. See local activities and local discounts with what others say. Join or start a conversation about local business concern. Find offers, contact school, provide feedback, order ahead, get reminded, see confirmations, avoid delay and busy times, earn discounts and never miss an events. Manage your time and review your activities whenever and wherever you want. As a community, content and usage is a shared responsibility that cannot be guatanteed by any single party.</p>
+                        <p>                    <input type="checkbox" id="approve" value="true" required>I agree.<p />
+                    </div>
+               
+                    <div id="collapsible" data-style="inset" data-role="collapsible" data-animation="false">
+                        <h2 data-style="inset">Background</h2>
+                        <p><small>Registered members can use local notification services based on geographic location services that contact clients on the move. This intimate contact between clients and local business, school and government organizations improves business, eduation and administration services in every way. See with what others say, join or start a group conversation about some local concern. Find other interested neighbors, stay in contact with teachers and trainers, provide feedback, place orders, get reminded, see confirmations, avoid delay and smooth busy times. Never miss an opportunity or an events. Manage your time and review activities whenever and wherever you want. The community, content and usage is a shared responsibility that is guatanteed by the group activity.</small></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+
         <!-- START_CUSTOM_CODE_aboutViewModel -->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
 
@@ -44,6 +71,5 @@
 
     <!-- START_CUSTOM_CODE_aboutView -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_aboutView -->
 </div>

@@ -83,6 +83,10 @@ app.notifications = kendo.observable({
                             field: 'Reference.Text',
                             defaultValue: 'xxxxx'
                         },
+                        'Date': {
+                            field: 'CreatedAt',
+                            defaultValue: 'xxxxx'
+                        },
                     }
                 }
             },

@@ -3,7 +3,7 @@
         <div data-role="navbar">
             <span data-role="view-title"></span>
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-			<a data-role="button" data-align="right" href="components/partners/view.html">Partners</a>
+			<a data-role="button" data-align="right" href="views/mapView.html">Hot Spots</a>
         </div>
     </header>
 </div>
@@ -30,6 +30,7 @@
     <script type="text/x-kendo-template" id="notificationsModelTemplate">
         <div class="image-with-text">
             <h3>#: data['Reference'] #</h3>
+			<p>#: data['Date'] #</p>
 
         </div>
         <!--p class="editableListItem"><span>Status</span><span>#: data['Status'] #</span></p-->

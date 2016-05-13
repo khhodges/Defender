@@ -554,37 +554,37 @@ input[type='week']
 	font-weight: 400;
 	font-size: 1.15rem;
 }
-#friendsApp .welcome-scrn .group-wrp
+.group-wrp
 {
 	margin: 0 2em;
 	padding: 0;
 	text-align: center;
 	list-style-type: none;
 }
-#friendsApp .welcome-scrn .group-wrp li
+.welcome-scrn .group-wrp li
 {
 	margin: 1.5em 0 0;
 }
-#friendsApp .welcome-scrn .group-wrp li:first-child
+.welcome-scrn .group-wrp li:first-child
 {
 	margin-top: 0;
 }
-#friendsApp .welcome-scrn .group-wrp .btn
+.welcome-scrn .group-wrp .btn
 {
 	display: block;
 }
-#friendsApp .welcome-scrn .group-wrp .oauth
+.welcome-scrn .group-wrp .oauth
 {
 	margin-right: -1%;
 	margin-left: -1%;
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .oauth-item
+.group-wrp .oauth .oauth-item
 {
 	float: left;
 	width: 23%;
 	margin: 0 1%;
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn
+.group-wrp .oauth .btn
 {
 	height: 45px;
 	padding-top: 1.1em;
@@ -592,31 +592,31 @@ input[type='week']
 	background-repeat: no-repeat;
 	overflow: hidden;
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn-facebook
+#friendsApp  .group-wrp .oauth .btn-facebook
 {
 	background-image: url(images/logo-facebook.png);
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn-google
+.group-wrp .oauth .btn-google
 {
 	background-image: url(images/logo-google.png);
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn-windows
+.group-wrp .oauth .btn-windows
 {
 	background-image: url(images/logo-windows.png);
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn-adfs
+.group-wrp .oauth .btn-adfs
 {
 	background-image: url(images/logo-adfs.png);
 }
-#friendsApp .welcome-scrn .group-wrp .oauth .btn span,
-#friendsApp .welcome-scrn .group-wrp .btn-signup span,
-#friendsApp .welcome-scrn .group-wrp .btn-update span
+.group-wrp .oauth .btn span,
+.group-wrp .btn-signup span,
+.group-wrp .btn-update span
 {
 	font-weight: 500;
 	font-size: 1rem;
 }
-#friendsApp .welcome-scrn .group-wrp .btn-signup,
-#friendsApp .welcome-scrn .group-wrp .btn-update
+.group-wrp .btn-signup,
+.group-wrp .btn-update
 {
 	border: 0 none;
 	background-color: transparent;

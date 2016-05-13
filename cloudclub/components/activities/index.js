@@ -168,8 +168,24 @@ app.activities = kendo.observable({
 			        });
 			    }
 			    else {
-			        app.notify.showShortTop("If you register and login all many extended community features are available.");
-			        app.mobileApp.navigate('views/signupView.html');
+			        function onPrompt(results) {
+			            //alert("You selected button number " + results.buttonIndex + " and entered " + results.input1);
+			            if (results.buttonIndex === 1) {
+			                app.notify.showShortTop("If you register and login all many extended community features are available.");
+			                app.mobileApp.navigate('views/signupView.html');
+			            }
+			            else {
+			                app.notify.showShortTop("Please sign in.");
+			                app.mobileApp.navigate('#welcome');
+			            }
+			        }
+			        navigator.notification.prompt(
+                        'Please enter your email',  // message
+                        onPrompt,                  // callback to invoke
+                        'Registration Check',            // title
+                        ['Register', 'Logon'],             // buttonLabels
+                        'email address ...'                 // defaultText
+                    );
 			    }
 
 			},
