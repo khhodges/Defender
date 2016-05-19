@@ -3,14 +3,17 @@
 (function() {
 	var scheme = 'http';
 		if(window.navigator.simulator) scheme = 'http';
-    var provider = app.data.defender = new Everlive({		
+		var provider = app.data.defender = //app.everlive
+        new Everlive({
             offlineStorage: true,
             appId: '3t5oa8il0d0y02eq',
             scheme: scheme,
             authentication: {
                 persist: true
             }
-        }),
+        }
+        )
+        ,
         accessTokenCacheKey = 'defender_access_token',
         providerAuthentication = provider.authentication,
         providerLogin = provider.Users.login,

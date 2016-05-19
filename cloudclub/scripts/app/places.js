@@ -7,8 +7,6 @@ var app = app || {};
 app.Places = (function () {
     'use strict'
 
-    //var everlive = new Everlive(appSettings.everlive.appId);
-
     var placesDataSource = new kendo.data.DataSource({
         type:'everlive',
         typeName: 'Places',

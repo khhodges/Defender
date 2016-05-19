@@ -6,9 +6,16 @@ var app = app || {};
 
 app.Places = (function () {
 	'use strict'
-	var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, theZoom = 12,
+	var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, near, theZoom = 12,
 		infoContent;
 	var HEAD = '<div class="iw-title"></div><div class="iw-content"><div class="iw-subTitle" onclick="test(\'WebSite\')"><u>Name</u></div><img src="Icon" alt="Logo" height="80" width="80"><p>Text</p><div class="iw-subTitle"><small><a href="tel:+Phone">Click to Call (+Phone)</a></small></div></div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" class="btn-continue km-widget km-button" href="components/activities/view.html?partner=Name">See the Details</a></td></tr></table><div class="iw-bottom-gradient"></div>';
+    //https://www.google.com/maps/place/Bocas+Best+Pizza+Bar
+    //http://www.yelp.com/biz/bocas-best-pizza-bar-boca-raton
+    //https://www.facebook.com/thewhalesribrawbar/?fref=ts
+    //https://twitter.com/search?q=Nick%27s%20Pizza%20Deerfield%20Beach&src=typd&lang=en
+    //https://www.youtube.com/watch?v=oO4IZaujgrM
+
+	//
 	/**
 	 * The CenterControl adds a control to the map that recenters the map on
 	 * current location.
@@ -110,8 +117,19 @@ app.Places = (function () {
 			products: viewModelSearch.products,
 			selectedProduct: viewModelSearch.selectedProduct,
 			locatedAtFormatted: function (marker, text, html, address, name, url, phone, icon) {
+			    // test for geopoint and convert
+			    if (marker.length != undefined) {
+			        if (marker.length > 15) {
+			            var lat = parseFloat(marker.split(',')[0].split(':')[1].trim());
+			            var lng = parseFloat(marker.split(',')[1].split(':')[1].trim());
+			            marker = {
+			                latitude: lat,
+			                longitude: lng
+			            };
+			        }
+			    }
 				if (marker) {
-					var htmlString = HEAD.replace('text', text).replace('WebSite', url).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
+					var htmlString = HEAD.replace('text', text).replace('WebSite', html).replace('Icon', icon).replace('Text', text).replace('Phone', phone).replace('Name', name).replace('Address', address);
 					htmlString = htmlString.replace('Phone', phone).replace('Name', name);
 					var filter = {};
 					var params = [];
@@ -128,6 +146,7 @@ app.Places = (function () {
 					var js = JSON.stringify(filter);
 					htmlString = htmlString.replace('Filter', js);
 					var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+				    try {
 					marker.Mark = new google.maps.Marker({
 						map: map,
 						position: position,
@@ -148,6 +167,10 @@ app.Places = (function () {
 						}
 						infoWindow.open(map, marker.Mark);
 					});
+
+				    } catch (e) {
+				        app.showAlert("Error "+JSON.stringify(e));
+				    }
 				}
 				return;
 			},
@@ -313,7 +336,13 @@ app.Places = (function () {
 							if (result.reviews === undefined || result.reviews === undefined) {
 								place.starString = '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars';
 							} else {
-								place.infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address + place.starString + '<br/>Distance (about) ' + place.distance + ' miles (ATCF). <br/>' + place.priceString + place.openString + '</span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href="components/partners/add.html?Name=' + result.name + '&email=newpartner@on2t.com' + '&longitude=' + place.geometry.location.lng() + '&latitude=' + place.geometry.location.lat() + '&html=hhhhh' + '&icon=iiiii' + '&address=' + result.formatted_address + '&textField=' + result.reviews[0].text + '&www=' + result.website + '&tel=' + result.formatted_phone_number + '" class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>';
+							    if(place.name) place.name = place.name.replace("&", "%26").replace("&", "%26");
+							    if (place.text) { place.text = place.text.replace("&", "%26").replace("&", "%26"); }
+							    else { place.text = "Not Available" };
+							    var url = encodeURI('components/partners/add.html?Name=' + place.name + '&email=newpartner@on2t.com' + '&longitude=' + place.geometry.location.lng() + '&latitude=' + place.geometry.location.lat() + '&html=hhhhh' + '&icon=styles/images/icon.png' + '&address=' + result.formatted_address.replace('#', '') + '&textField=' + result.reviews[0].text + '&www=' + result.website + '&tel=' + result.formatted_phone_number);
+							    place.infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address.replace('#','') + place.starString + '<br/>Distance (about) ' + place.distance + ' miles (ATCF). <br/>' + place.priceString + place.openString + '</span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href='
+							    + url
+                                + ' class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>';
 							}
 							infoWindow.setContent(place.infoContent);
 							infoWindow.open(map, marker);
@@ -367,9 +396,6 @@ app.Places = (function () {
 				});
 			},
 			places: placesDataSource,
-			homeLocation: function () {
-			    navigator.geolocation.getCurrentPosition();
-			}
 		});
 		return {
 			initLocation: function () {
@@ -476,6 +502,9 @@ app.Places = (function () {
 			},
 			memorize: function () {
 				app.notify.memorize();
+			},
+			near: function (callBack) {
+			    app.notify.getLocation(function (x) { callBack(x) });
 			}
 		};
 	}());

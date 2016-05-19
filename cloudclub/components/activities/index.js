@@ -170,7 +170,7 @@ app.activities = kendo.observable({
 			    else {
 			        function onPrompt(results) {
 			            //alert("You selected button number " + results.buttonIndex + " and entered " + results.input1);
-			            if (results.buttonIndex === 1) {
+			            if (results === 2) {
 			                app.notify.showShortTop("If you register and login all many extended community features are available.");
 			                app.mobileApp.navigate('views/signupView.html');
 			            }
@@ -179,12 +179,12 @@ app.activities = kendo.observable({
 			                app.mobileApp.navigate('#welcome');
 			            }
 			        }
-			        navigator.notification.prompt(
-                        'Please enter your email',  // message
+			        navigator.notification.confirm(
+                        'First Register or Logon.',  // message
                         onPrompt,                  // callback to invoke
-                        'Registration Check',            // title
-                        ['Register', 'Logon'],             // buttonLabels
-                        'email address ...'                 // defaultText
+                        'Authentication Required',            // title
+                        ['Login', 'Register']             // buttonLabels
+                        //'User Name address ...'                 // defaultText
                     );
 			    }
 

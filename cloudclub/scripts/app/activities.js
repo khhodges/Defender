@@ -19,7 +19,6 @@ app.Activities = (function () {
     var show = function () {
         if (!app.isOnline()) {
             app.mobileApp.navigate('#welcome');
-
         }
     };
     // Activities model

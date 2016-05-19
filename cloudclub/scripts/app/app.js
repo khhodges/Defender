@@ -93,12 +93,12 @@ var app = (function (win) {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
 
-        //register for device notifications
-        el.push.register(devicePushSettings, function () {
-            app.notify.showShortTop("User.Successful registration in on2t platform. You are ready to receive push notifications.");
-        }, function (err) {
-            alert("Error: " + err.message);
-        })
+        ////register for device notifications
+        //el.push.register(devicePushSettings, function () {
+        //    app.notify.showShortTop("User.Successful registration in on2t platform. You are ready to receive push notifications.");
+        //}, function (err) {
+        //    alert("Error: " + err.message);
+        //})
 
         //for notifications
         if (cordova.plugins) {
@@ -134,8 +134,12 @@ var app = (function (win) {
 
     // Initialize Everlive SDK
     var el = new Everlive({
+        //offlineStorage: true,
         appId: appSettings.everlive.appId,
         scheme: appSettings.everlive.scheme
+        //authentaction: {
+        //    persist:true
+        //}
     });
 
     var emptyGuid = '00000000-0000-0000-0000-000000000000';
@@ -493,23 +497,29 @@ var app = (function (win) {
             }
         },
 
-        getLocation: function(){
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    lat1 = position.lat();
-                    lng1 = position.lng();
-                    return position;
-                },
-                function (error) {
-                    position = new google.maps.LatLng(0, -20);
-                    app.notify.showShortTop("Map.Unable to determine current location. Cannot connect to GPS satellite.");
-                    return position;
-                }, {
-                    timeout: 30000,
-                    enableHighAccuracy: true
-                }
-            );
+        getLocation: function (callBack) {
+            
+            var options = {
+                enableHighAccuracy: false,
+                timeout: 5000,
+                maximumAge: 2000000
+            };
+
+            function success(pos) {
+                var crd = pos.coords;
+                //console.log('Your current position is:');
+                //console.log('Latitude : ' + crd.latitude);
+                //console.log('Longitude: ' + crd.longitude);
+                //console.log('More or less ' + crd.accuracy + ' meters.');
+                callBack(crd);
+            };
+
+            function error(err) {
+                app.showError('ERROR( Location not available ' + err.code + '): ' + err.message);
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+            
         },
 
         getNowPlus10Seconds: function () {
@@ -576,7 +586,7 @@ var app = (function (win) {
         var sx, sy, starterWidth, starterHeight, dx, dy, canvasWidth, canvasHeight;
         var starter = document.getElementById(image);
         var canvas = document.getElementById("canvas");
-        if (starter.naturalWidth > starter.naturalHeight) {
+        if (starter.naturalWidth > starter.naturalHeight || starter.naturalWidth === starter.naturalHeight) {
             sx = (starter.naturalWidth - starter.naturalHeight) / 2;
             starterWidth = starter.naturalHeight;
             starterHeight = starter.naturalHeight;
