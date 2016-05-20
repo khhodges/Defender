@@ -88,6 +88,11 @@
     <Content Include="styles\images\camera.png" />
     <Content Include="styles\images\chat.gif" />
     <Content Include="styles\images\default-image.jpg" />
+    <Content Include="styles\images\facebook2.png" />
+    <Content Include="styles\images\flickr.png" />
+    <Content Include="styles\images\google+.png" />
+    <Content Include="styles\images\googleMap.png" />
+    <Content Include="styles\images\googleYouTube.png" />
     <Content Include="styles\images\icon-arrow.png" />
     <Content Include="styles\images\icon-arrow@2x.png" />
     <Content Include="styles\images\icon-arrow_dark.png" />
@@ -97,6 +102,8 @@
     <Content Include="styles\images\icon-delete.png" />
     <Content Include="styles\images\icon-delete@2x.png" />
     <Content Include="styles\images\icon.png" />
+    <Content Include="styles\images\instagram.png" />
+    <Content Include="styles\images\linkedIn.png" />
     <Content Include="styles\images\location.png" />
     <Content Include="styles\images\location2x.png" />
     <Content Include="styles\images\location_active.png" />
@@ -114,16 +121,24 @@
     <Content Include="styles\images\logo1.jpg" />
     <Content Include="styles\images\logo2.jpg" />
     <Content Include="styles\images\logo3.jpg" />
+    <Content Include="styles\images\myspace.png" />
     <Content Include="styles\images\notify.png">
       <SubType>Content</SubType>
     </Content>
     <Content Include="styles\images\notify-backup.png" />
     <Content Include="styles\images\notify_.png" />
+    <Content Include="styles\images\phone.png" />
+    <Content Include="styles\images\pinterest.png" />
     <Content Include="styles\images\search.png" />
     <Content Include="styles\images\search2x.png" />
     <Content Include="styles\images\search_active.png" />
     <Content Include="styles\images\search_active2x.png" />
     <Content Include="styles\images\share.png" />
+    <Content Include="styles\images\nostar.png" />
+    <Content Include="styles\images\star.png" />
+    <Content Include="styles\images\twitter.png" />
+    <Content Include="styles\images\Yahoo.png" />
+    <Content Include="styles\images\yelp_64.png" />
     <Content Include="styles\main.css" />
     <Content Include="styles\main1.css" />
     <Content Include="styles\overrides.css" />
@@ -131,6 +146,7 @@
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
     <Content Include="views\eventsView.html" />
+    <Content Include="views\HtmlPage1.html" />
     <Content Include="views\on2tView.html" />
     <Content Include="views\tripView.html" />
     <Content Include="views\localView.html" />
