@@ -13,7 +13,7 @@ app.Places = (function () {
     var NOSTRING = NOSTAR + NOSTAR + NOSTAR + NOSTAR + NOSTAR;
     var HEAD = '<div class="iw-title"></div>'
         + '<div class="iw-content"><div class="iw-subTitle">Name</div>'
-        + '</div>'
+        + 'Address</div>'
         + '<div class="button-group button-group-horizontal">'
         + '<a data-role="button" class="butn" data-rel="external" href="tel:+Phone"><img src="styles/images/phone.png" alt="phone" height="auto" width="30%"></a>';
     var END = '<div class="button-group button-group-horizontal">'
@@ -154,7 +154,7 @@ app.Places = (function () {
                         MYSTRING = MYSTRING.replace('nostar', 'star');
                     }
                     var htmlString = HEAD + MYSTRING + END;
-                    htmlString = htmlString.replace('WebSite', url).replace('Icon', icon).replace('Phone', phone).replace('Name', name);
+                    htmlString = htmlString.replace('WebSite', url).replace('Icon', icon).replace('Phone', phone).replace('Name', name).replace("Address",address);
                     htmlString = htmlString.replace('Phone', phone).replace('Name', name);
                     var stringResult, find, replace;
                     //Twitter Change//https://twitter.com/search?q=Nick%27s%20Pizza%20Deerfield%20Beach&src=typd&lang=en
@@ -170,13 +170,16 @@ app.Places = (function () {
                     stringResult = resolveString(name, find, replace);
                     //Facebook//https://www.facebook.com/thewhalesribrawbar/?fref=ts
                     find = ' '; // space change same remove replace
+                    replace = '-';
                     htmlString = htmlString.replace('Facebook', resolveString(stringResult, find, replace));
                     //Google//https://www.google.com/maps/place/Bocas+Best+Pizza+Bar
                     replace ='+';
                     htmlString = htmlString.replace('Google', resolveString(stringResult, find, replace));
                     //Yelp//http://www.yelp.com/biz/bocas-best-pizza-bar-boca-raton
                     replace = '-';
-                    htmlString = htmlString.replace('Yelp', resolveString(stringResult, find, replace)+"-boca-raton");
+                    var city = "-" + address.split(',')[(address.split(',').length - 2)].trim().replace(' ', '-');
+                    if(city.split('-')[3]===undefined)city = "-" + address.split(',')[(address.split(',').length - 3)].trim().replace(' ', '-');
+                    htmlString = htmlString.replace('Yelp', resolveString(stringResult, find, replace) + city);
                     //https://www.youtube.com/watch?v=oO4IZaujgrM
                     var filter = {};
                     var params = [];

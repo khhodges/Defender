@@ -14,9 +14,9 @@ var app = (function (win) {
         showAlert(message, 'Error occured');
     };
 
-    /*	window.onerror = function (message, file, line) {
+    window.onerror = function (message, file, line) {
 	alert("Error: " + message + ", File: " + file + ", Line: " + line);
-	}*/
+	}
 
 
 
@@ -67,13 +67,19 @@ var app = (function (win) {
         // Handle "backbutton" event
         document.addEventListener('backbutton', onBackKeyDown, false);
 
+        if (device.platform === 'iOS' && parseFloat(device.version) >= 7.0) {
+            $('.ui-header > *').css('margin-top', function (index, curValue) {
+                return parseInt(curValue, 10) + 0 + 'px';
+            });
+        }
         //var openExternalInAppBrowser = document.getElementById("openExternalInAppBrowser");
         //openExternalInAppBrowser.addEventListener("click", app.helper.openExternalInAppBrowser);
 
         var activityRoute = document.getElementById("activityRoute");
         activityRoute.addEventListener("click", app.helper.activityRoute);
 
-        navigator.splashscreen.hide();
+        //navigator.splashscreen.hide();
+        StatusBar.overlaysWebView(false); //Turns off web view overlay.
 
         app.mobileApp.navigate("views/mapView.html");
 
@@ -186,9 +192,13 @@ var app = (function (win) {
 				});
         },
         activityRoute: function () {
+            app.showAlert("1 " + app.isOnline());
             if (app.isOnline()) {
+                app.showAlert("2");
+
                 app.mobileApp.navigate('views/activitiesView.html');
             } else {
+                app.showAlert("3");
                 app.mobileApp.navigate('components/activities/view.html');
             }
 

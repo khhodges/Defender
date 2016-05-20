@@ -146,7 +146,6 @@
     <Content Include="views\activitiesView.html" />
     <Content Include="views\activityView.html" />
     <Content Include="views\eventsView.html" />
-    <Content Include="views\HtmlPage1.html" />
     <Content Include="views\on2tView.html" />
     <Content Include="views\tripView.html" />
     <Content Include="views\localView.html" />

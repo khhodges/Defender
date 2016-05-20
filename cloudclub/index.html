@@ -47,6 +47,19 @@
         <!--View content will render here-->
     </div>
     <!--WELCOME VIEW -->
+    <div data-role="view" id="blank">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+
+                <a id="logonButton" style="display:" data-role="button" href="#welcome" data-align="left">Logon</a>
+
+                <a id="logoffButton" style="display:none" data-role="button" data-click="app.helper.logout" data-align="left">Logout</a>
+
+            </div>
+        </header>
+        <img src="styles/images/icon.png" style="width: 100%; height: 100%" />
+    </div>
     <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.Login" data-init="app.Login.init" data-show="app.Login.show">
         <div data-role="header"></div>
         <h2 class="app-name">
@@ -90,7 +103,7 @@
                         <a data-role="button" href="views/signupView.html" class="btn-register">&nbsp; Join In &nbsp; </a>
                     </td>
                     <td style="width:50%">
-                        <a data-role="button" href="components/notifications/view.html" class="btn-continue km-widget km-button">What's Up?</a>
+                        <a data-role="button" href="components/notifications/view.html" class="btn-continue km-widget km-button">Hot Spots</a>
                     </td>
                 </tr>
             </table><br />
@@ -99,7 +112,7 @@
 
             <br />
             <a href="#password">Forgot password?</a><br/>
-            <span>OFA version 1.4.8 - 5/18/2016</span><br />
+            <span>OFA version 1.4.9 - 5/20/2016</span><br />
             <!--<a href="tel:+19548398525">Call us on +1.954-839-8525</a>-->
 
         </div>

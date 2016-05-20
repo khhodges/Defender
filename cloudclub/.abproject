@@ -23,6 +23,7 @@
     "org.apache.cordova.keyboard",
     "org.apache.cordova.media-capture",
     "org.apache.cordova.splashscreen",
+    "org.apache.cordova.statusbar",
     "org.apache.cordova.vibration"
   ],
   "DeviceOrientations": [

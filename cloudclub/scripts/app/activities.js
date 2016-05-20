@@ -16,11 +16,11 @@ app.Activities = (function () {
         validator.hideMessages();
         $(document.body).css("visibility", "visible");
     };
-    var show = function () {
-        if (!app.isOnline()) {
-            app.mobileApp.navigate('#welcome');
-        }
-    };
+    //var show = function () {
+    //    if (!app.isOnline()) {
+    //        app.mobileApp.navigate('#welcome');
+    //    }
+    //};
     // Activities model
     var activitiesModel = (function () {
         var activityModel = {
@@ -337,7 +337,7 @@ app.Activities = (function () {
             activitySelected: activitySelected,
             addActivity: pickImage,
             saveActivity: saveImageActivity,
-            show: show,
+            //show: show,
             crop: crop
         };
     }());

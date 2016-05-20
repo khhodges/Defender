@@ -1,14 +1,1 @@
-{
-  "CordovaPluginVariables": {
-    "com.telerik.feedback": {
-      "API_KEY": "3t5oa8il0d0y02eq",
-      "API_URL": "https://platform.telerik.com/feedback/api/v1",
-      "ENABLE_SHAKE": "True"
-    },
-    "com.telerik.plugin.telerikanalytics": {
-      "PRODUCT_ID": "3d777b61e0be40f5b61964bb1b05cbbb",
-      "AUTO_TRACK_KENDO_EVENTS": "True",
-      "AUTO_TRACK_EXCEPTIONS": "True"
-    }
-  }
-}
+{}
