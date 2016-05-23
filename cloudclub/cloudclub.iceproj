@@ -93,6 +93,7 @@
     <Content Include="styles\images\google+.png" />
     <Content Include="styles\images\googleMap.png" />
     <Content Include="styles\images\googleYouTube.png" />
+    <Content Include="styles\images\groupon.png" />
     <Content Include="styles\images\icon-arrow.png" />
     <Content Include="styles\images\icon-arrow@2x.png" />
     <Content Include="styles\images\icon-arrow_dark.png" />
@@ -127,7 +128,7 @@
     </Content>
     <Content Include="styles\images\notify-backup.png" />
     <Content Include="styles\images\notify_.png" />
-    <Content Include="styles\images\phone.png" />
+    <Content Include="styles\images\phone2.png" />
     <Content Include="styles\images\pinterest.png" />
     <Content Include="styles\images\search.png" />
     <Content Include="styles\images\search2x.png" />
@@ -135,7 +136,11 @@
     <Content Include="styles\images\search_active2x.png" />
     <Content Include="styles\images\share.png" />
     <Content Include="styles\images\nostar.png" />
-    <Content Include="styles\images\star.png" />
+    <Content Include="styles\images\star4.png" />
+    <Content Include="styles\images\star3.png" />
+    <Content Include="styles\images\star2.png" />
+    <Content Include="styles\images\star1.png" />
+    <Content Include="styles\images\star5.png" />
     <Content Include="styles\images\twitter.png" />
     <Content Include="styles\images\Yahoo.png" />
     <Content Include="styles\images\yelp_64.png" />

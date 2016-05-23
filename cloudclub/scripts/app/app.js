@@ -14,9 +14,9 @@ var app = (function (win) {
         showAlert(message, 'Error occured');
     };
 
-    window.onerror = function (message, file, line) {
-	alert("Error: " + message + ", File: " + file + ", Line: " + line);
-	}
+    //window.onerror = function (message, file, line) {
+	//alert("Error: " + message + ", File: " + file + ", Line: " + line);
+	//}
 
 
 
@@ -192,13 +192,13 @@ var app = (function (win) {
 				});
         },
         activityRoute: function () {
-            app.showAlert("1 " + app.isOnline());
+            //app.showAlert("1 " + app.isOnline());
             if (app.isOnline()) {
-                app.showAlert("2");
+                //app.showAlert("2");
 
                 app.mobileApp.navigate('views/activitiesView.html');
             } else {
-                app.showAlert("3");
+                //app.showAlert("3");
                 app.mobileApp.navigate('components/activities/view.html');
             }
 

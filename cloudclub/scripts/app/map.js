@@ -8,28 +8,28 @@ app.Places = (function () {
     'use strict'
     var infoWindow, markers, place, result, service, here, request, lat1, lng1, allBounds, near, theZoom = 12,
 		infoContent;
-    var STAR = '<img src="styles/images/star.png" alt="Star" height="auto" width="12%">';
-    var NOSTAR = '<img src="styles/images/nostar.png" alt="Star" height="auto" width="12%">';
-    var NOSTRING = NOSTAR + NOSTAR + NOSTAR + NOSTAR + NOSTAR;
+    //Location PopUp Html
     var HEAD = '<div class="iw-title"></div>'
-        + '<div class="iw-content"><div class="iw-subTitle">Name</div>'
-        + 'Address</div>'
-        + '<div class="button-group button-group-horizontal">'
-        + '<a data-role="button" class="butn" data-rel="external" href="tel:+Phone"><img src="styles/images/phone.png" alt="phone" height="auto" width="30%"></a>';
-    var END = '<div class="button-group button-group-horizontal">'
-        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'WebSite\')"><img src="Icon" alt="Logo" height="auto" width="30%"></a>'
-        + '<a data-role="button" class="butn" href="components/activities/view.html?partner=Name");"><img src="styles/images/icon.png" alt="On2See" height="auto" width="30%"></a>'
-        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://twitter.com/search?q=Twitter\');"><img src="styles/images/twitter.png" alt="Twitter" height="auto" width="30%"></a></div>'
-        + '<div class="button-group button-group-horizontal">'
-        + '<a data-role="button" class="butn" onclick="test(\'https://www.google.com/maps/place/Google\');");"><img src="styles/images/googleMap.png" alt="Google" height="auto" width="30%"></a>'
-        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://www.facebook.com/Facebook\');"><img src="styles/images/facebook2.png" alt="Facebook" height="auto" width="30%"></a>'
-        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://www.yelp.com/biz/Yelp\');"><img src="styles/images/yelp_64.png" alt="Yelp" height="auto" width="30%"></a></div>'
-    //+ '<div class="iw-bottom-gradient"></div>';
-    //<table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" class="btn-continue km-widget km-button" href="components/activities/view.html?partner=Name">See the Details</a></td></tr></table>
-    /**
-	 * The CenterControl adds a control to the map that recenters the map on
-	 * current location.
-	 */
+        + '<div class="iw-content"><div class="iw-subTitle">%Name%</div>'
+        + '<div><a data-role="button" class="butn" data-rel="external" href="tel:Phone">'
+        + '<img src="styles/images/phone2.png" alt="phone" height="auto" width="15%"></a><small>'
+        + 'Address, Open Stars</div>'
+        + '<div ><br/>'
+        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'WebSite\')"><img src="Icon" alt="Logo" height="auto" width="15%"></a>'
+        + '<a data-role="button" class="butn" href="components/activities/view.html?partner=%Name%");"><img src="styles/images/icon.png" alt="On2See" height="auto" width="15%"></a>'
+        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://twitter.com/search?q=Twitter\');"><img src="styles/images/twitter.png" alt="Twitter" height="auto" width="15%"></a>'
+        + '<a data-role="button" class="butn" onclick="test(\'https://www.google.com/maps/place/Google\');");"><img src="styles/images/googleMap.png" alt="Google" height="auto" width="15%"></a>'
+        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://www.yelp.com/biz/Yelp\');"><img src="styles/images/yelp_64.png" alt="Yelp" height="auto" width="15%"></a>'
+        + '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://www.facebook.com/Facebook\');"><img src="styles/images/facebook2.png" alt="Facebook" height="auto" width="15%"></a>'
+        + '</div>';
+        //+ '<div class="button-group button-group-horizontal">'
+        //+ '<a data-role="button" class="butn" data-rel="external" onclick="test(\'https://www.groupon.com/browse?lat=26.44&lng=-80.07\');"><img src="styles/images/groupon.png" alt="groupon" height="auto" width="15%"></a><img src="styles/images/star3.png" alt="Star3" height="auto" width="15%"></div>';
+        //+ '<div class="iw-bottom-gradient"></div>';
+        //<table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:50%"><a data-role="button" class="btn-continue km-widget km-button" href="components/activities/view.html?partner=Name">See the Details</a></td></tr></table>
+        /**
+	     * The Google Map CenterControl adds a control to the map that recenters the map on
+	     * current location.
+	     */
     function CenterControl(controlDiv, map) {
         // Set CSS for the control border.
         var controlUI = document.createElement('div');
@@ -62,6 +62,8 @@ app.Places = (function () {
             app.mobileApp.navigate('views/listView.html');
         });
     }
+    //Places Model loads the known places 
+    //TO DO: Filter by 70 mile region and refresh when locatio changes
     var placesViewModel = (function () {
         var map, geocoder, locality, home
         var placeModel = {
@@ -148,39 +150,7 @@ app.Places = (function () {
                     }
                 }
                 if (marker) {
-                    var Stars = 3;
-                    var MYSTRING = NOSTRING;
-                    for (var i = 0; i < Stars; i++) {
-                        MYSTRING = MYSTRING.replace('nostar', 'star');
-                    }
-                    var htmlString = HEAD + MYSTRING + END;
-                    htmlString = htmlString.replace('WebSite', url).replace('Icon', icon).replace('Phone', phone).replace('Name', name).replace("Address",address);
-                    htmlString = htmlString.replace('Phone', phone).replace('Name', name);
-                    var stringResult, find, replace;
-                    //Twitter Change//https://twitter.com/search?q=Nick%27s%20Pizza%20Deerfield%20Beach&src=typd&lang=en
-                    find = '\'';
-                    replace = '%27';
-                    stringResult = resolveString(name, find, replace);
-                    find = ' '; // space change
-                    replace = '%20';
-                    htmlString = htmlString.replace('Twitter', resolveString(stringResult, find, replace));
-                    //Rest
-                    find = '\'';
-                    replace = '';//Remove (reused in part)
-                    stringResult = resolveString(name, find, replace);
-                    //Facebook//https://www.facebook.com/thewhalesribrawbar/?fref=ts
-                    find = ' '; // space change same remove replace
-                    replace = '-';
-                    htmlString = htmlString.replace('Facebook', resolveString(stringResult, find, replace));
-                    //Google//https://www.google.com/maps/place/Bocas+Best+Pizza+Bar
-                    replace ='+';
-                    htmlString = htmlString.replace('Google', resolveString(stringResult, find, replace));
-                    //Yelp//http://www.yelp.com/biz/bocas-best-pizza-bar-boca-raton
-                    replace = '-';
-                    var city = "-" + address.split(',')[(address.split(',').length - 2)].trim().replace(' ', '-');
-                    if(city.split('-')[3]===undefined)city = "-" + address.split(',')[(address.split(',').length - 3)].trim().replace(' ', '-');
-                    htmlString = htmlString.replace('Yelp', resolveString(stringResult, find, replace) + city);
-                    //https://www.youtube.com/watch?v=oO4IZaujgrM
+                    var htmlString = app.Places.locationViewModel.getButtons(url, icon, phone, name, address);
                     var filter = {};
                     var params = [];
                     filter.params = params;
@@ -206,8 +176,6 @@ app.Places = (function () {
                                 scaledSize: new google.maps.Size(40, 40),
                                 title: viewModelSearch.selectedProduct
                             }
-                            //TO DO: add popup
-
                         });
                         google.maps.event.addListener(marker.Mark, 'click', function () {
                             if (html === '' || html === undefined) {
@@ -230,6 +198,8 @@ app.Places = (function () {
 					position;
                 that._isLoading = true;
                 that.toggleLoading();
+                if (!app.Places.locationViewModel.markers) { app.Places.locationViewModel.markers = new Array; }
+                if (!app.Places.locationViewModel.details) { app.Places.locationViewModel.details = new Array; }
                 markers = app.Places.locationViewModel.markers;
                 for (var i = 0; i < markers.length; i++) {
                     markers[i].setMap(null);
@@ -257,7 +227,7 @@ app.Places = (function () {
 					    that._isLoading = false;
 					    that.toggleLoading();
 
-					    app.notify.showShortTop("Map.Unable to determine current location. Cannot connect to GPS satellite.");
+					    //app.notify.showShortTop("Map.Unable to determine current location. Cannot connect to GPS satellite.");
 					}, {
 					    timeout: 30000,
 					    enableHighAccuracy: true
@@ -376,25 +346,39 @@ app.Places = (function () {
                                 console.error(status);
                                 return;
                             }
-                            place.openString = "";
+                            place.details = result;
+                            place.openString = "Closed, ";
                             if (place.opening_hours) {
                                 if (place.opening_hours.open_now) {
-                                    place.openString = '<a href="tel:' + result.formatted_phone_number + '"><strong> Open - Call Now</strong>';
+                                    place.openString = result.formatted_phone_number + '<strong> Open Now</strong>';
                                 }
                             }
                             place.starString = '<br>No reviews or stars. ';
-                            if (result.reviews === undefined || result.reviews === undefined) {
-                                place.starString = '<br>' + result.reviews[0].text.split(". ")[0] + '  ... ' + result.reviews.length + ' reviews and ' + result.rating + ' stars';
-                            } else {
-                                if (place.name) place.name = place.name.replace("&", "%26").replace("&", "%26");
-                                if (place.text) { place.text = place.text.replace("&", "%26").replace("&", "%26"); }
-                                else { place.text = "Not Available" };
-                                var url = encodeURI('components/partners/add.html?Name=' + place.name + '&email=newpartner@on2t.com' + '&longitude=' + place.geometry.location.lng() + '&latitude=' + place.geometry.location.lat() + '&html=hhhhh' + '&icon=styles/images/icon.png' + '&address=' + result.formatted_address.replace('#', '') + '&textField=' + result.reviews[0].text + '&www=' + result.website + '&tel=' + result.formatted_phone_number);
-                                place.infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address.replace('#', '') + place.starString + '<br/>Distance (about) ' + place.distance + ' miles (ATCF). <br/>' + place.priceString + place.openString + '</span></div><div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href='
-							    + url
-                                + ' class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>';
+                            if (result.reviews === undefined || result.stars === undefined) {
+                                place.starString = '... <strong>' + result.reviews.length + '</strong> reviews and <strong>' + result.rating + '</strong> stars, about <strong>' + place.distance + '</strong> miles (ATCF). <br/>' + place.priceString + '</small>';
                             }
+                            if (!place.name) { place.name = "Unknown Name"; }
+                            if (place.text) { place.text = resolveString(place.text,"&", "and"); }
+                            else { place.text = "Not Available" };
+                            place.addurl = encodeURI('components/partners/add.html?Name=' + place.name
+                                + '&email=newpartner@on2t.com'
+                                + '&longitude=' + place.geometry.location.lng()
+                                + '&latitude=' + place.geometry.location.lat()
+                                + '&html=hhhhh'
+                                + '&icon=styles/images/avatar.png'
+                                + '&address=' + result.formatted_address.replace('#', '')
+                                + '&textField=' + resolveString(result.reviews[0].text, '\'','')
+                                + '&www=' + result.website
+                                + '&tel=' + result.formatted_phone_number);
+                            //    place.infoContent = '<div><span onclick="test(\'' + result.website + '\')\"><strong><u>' + result.name + '</u></a></strong><br>' + 'Phone: ' + result.formatted_phone_number + '<br>' + result.formatted_address.replace('#', '') + place.starString  + place.openString + '</span></div>'
+                            //       + '<div><table ${visibility} style="width:100%; margin-top:15px"><tr style="width:100%"><td style="width:33%"><a data-role="button" href='
+                            //       + url
+                            place.avatar = "styles/images/avatar.png";
+                            place.infoContent = app.Places.locationViewModel.getButtons(place);
+                            //       + ' class="btn-login km-widget km-button">Endorse this Place</a></td></tr></table></div>';
+                            //}
                             infoWindow.setContent(place.infoContent);
+                            //.Places.locationViewModel.getButtons(result.website, "styles/images/avatar.png", result.formatted_phone_number, place.name, result.formatted_address.replace('#', '')));
                             infoWindow.open(map, marker);
                         });
                     });
@@ -446,6 +430,38 @@ app.Places = (function () {
                 });
             },
             places: placesDataSource,
+            getButtons: function (place) {//url,icon,phone,name,address) {
+                var Stars = 3;
+                var htmlString = HEAD;
+                htmlString = htmlString.replace('WebSite', place.details.website).replace('Icon', place.avatar).replace('Phone', place.details.formatted_phone_number).replace('%Name%', place.name).replace("Address", place.details.formatted_address);
+                htmlString = htmlString.replace('Phone', place.details.formatted_phone_number).replace('%Name%', place.name).replace('Open', place.openString).replace('Stars', place.starString);
+                var stringResult, find, replace;
+                //Twitter Change//https://twitter.com/search?q=Nick%27s%20Pizza%20Deerfield%20Beach&src=typd&lang=en
+                find = '\'';
+                replace = '%27';
+                stringResult = resolveString(place.name, find, replace);
+                find = ' '; // space change
+                replace = '%20';
+                htmlString = htmlString.replace('Twitter', resolveString(stringResult, find, replace));
+                //Rest
+                find = '\'';
+                replace = '';//Remove (reused in part)
+                stringResult = resolveString(place.name, find, replace);
+                //Facebook//https://www.facebook.com/thewhalesribrawbar/?fref=ts
+                find = ' '; // space change same remove replace
+                replace = '-';
+                htmlString = htmlString.replace('Facebook', resolveString(stringResult, find, replace));
+                //Google//https://www.google.com/maps/place/Bocas+Best+Pizza+Bar
+                replace = '+';
+                htmlString = htmlString.replace('Google', resolveString(stringResult, find, replace));
+                //Yelp//http://www.yelp.com/biz/bocas-best-pizza-bar-boca-raton
+                replace = '-';
+                var city = "-" + place.details.formatted_address.split(',')[(place.details.formatted_address.split(',').length - 2)].trim().replace(' ', '-');
+                if (city.split('-')[3] === undefined) city = "-" + place.details.formatted_address.split(',')[(place.details.formatted_address.split(',').length - 3)].trim().replace(' ', '-');
+                htmlString = htmlString.replace('Yelp', resolveString(stringResult, find, replace) + city);
+                //https://www.youtube.com/watch?v=oO4IZaujgrM;
+                return htmlString;
+            },
         });
         return {
             initLocation: function () {

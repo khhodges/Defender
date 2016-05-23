@@ -206,6 +206,7 @@ app.home = kendo.observable({
 				});
 
 				dataSource.sync();
+				app.notify.showShortTop("The new location has been added to your Favourites!");
 			}
 		}
 	}));
