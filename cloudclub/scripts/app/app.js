@@ -214,7 +214,7 @@ var app = (function (win) {
         },
 
         openExternalInAppBrowser: function () {
-            var winB = window.open("http://www.on2t.com/mobile", "_blank");
+            var winB = window.open("http://www.on2See.com", "_blank");
             app.notify.showShortTop("url.on2t Click 'Done' or 'X' to return to the App");
             //winB.addEventListener("loadstop", function () {
             //    winB.executeScript({ code: "alert( 'Click the X button to return to the App' );" });
@@ -323,6 +323,7 @@ var app = (function (win) {
 
         convertToDataURL: function convertToDataURLviaCanvas(url, callback, outputFormat) {
             var img = new Image();
+            //cors
             img.crossOrigin = 'Anonymous';
             img.onload = function () {
                 var canvas = document.createElement('CANVAS');

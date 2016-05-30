@@ -1,0 +1,32 @@
+ data-role="layout" data-id="main">
+<header data-role="header">
+    <div data-role="navbar">
+        <span data-role="view-title"></span>
+        <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+        <a data-role="button" data-align="right" href="views/mapView.html">Hot Spots</a>
+    </div>
+</header>
+</div>
+
+<div data-role="layout" data-id="main-nonav">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+        </div>
+    </header>
+</div>
+<div data-role="view" data-title="Alerts" data-layout="main">
+    <!--data-model="app.notifications" data-show="app.notifications.onShow" data-after-show="app.notifications.afterShow">-->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+        }
+    </style>
+
+    <div id="map"></div></div>

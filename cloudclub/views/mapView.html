@@ -22,8 +22,9 @@
         <div data-role="header">
             <div data-role="navbar" id="navbarTitle">
                 <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button" ></a>
-              <input id="map-address" style="margin-right:8px" type="search" data-bind="value: find" data-align="right" placeholder="Search for ..." />
+              <input id="map-address" style="margin-right:0px; padding-left:0px; width:68%" type="search" data-bind="value: find" data-align="right" placeholder="Search for ..." />
                 <a data-role="button" data-align="right" data-icon="search" data-bind="click: onPlaceSearch"></a>
+                <a data-role="button" data-align="right" data-icon="globe" href="views/listView.html"></a>
             </div>
         </div>
 
@@ -33,17 +34,17 @@
             <h3>Location requires internet connection to display the map.</h3>
         </div>
 
-        <div id="map-search-wrap" class="map-tools" data-bind="visible: isGoogleMapsInitialized, invisible: hideSearch">
+        <!--<div id="map-search-wrap" class="map-tools" data-bind="visible: isGoogleMapsInitialized, invisible: hideSearch">
             <div>
-                <ul hidden id="places-listview" data-role="listview" data-template="placesTemplate" data-bind="source: places"></ul>
+                <ul hidden id="places-listview" data-role="listview" data-template="placesTemplate"></ul>
             </div>
-        </div>
+        </div>-->
 </div>
 
 <!-- Places ListView Template -->
-<script type="text/x-kendo-template" id="placesTemplate">
+<!--<script type="text/x-kendo-template" id="placesTemplate">
     <ui hidden>
         <span>#: app.Places.locationViewModel.locatedAtFormatted(marker, text, html, address, name, url, phone, icon) #</span>
     </ui>
 
-</script>
+</script>-->

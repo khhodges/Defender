@@ -38,6 +38,8 @@
     <Content Include="components\comments\details.html" />
     <Content Include="components\comments\index.js" />
     <Content Include="components\comments\view.html" />
+    <Content Include="components\map\mapView.html" />
+    <Content Include="components\map\index.js" />
     <Content Include="components\Notifications\details.html" />
     <Content Include="components\Notifications\index.js" />
     <Content Include="components\Notifications\view.html" />
@@ -87,12 +89,17 @@
     <Content Include="styles\images\background-picture.png" />
     <Content Include="styles\images\camera.png" />
     <Content Include="styles\images\chat.gif" />
+    <Content Include="styles\images\cloud-network-share.png" />
+    <Content Include="styles\images\cloud-question.png" />
+    <Content Include="styles\images\cloud-thumb-up.png" />
+    <Content Include="styles\images\cloud-tools.png" />
     <Content Include="styles\images\default-image.jpg" />
     <Content Include="styles\images\facebook2.png" />
     <Content Include="styles\images\flickr.png" />
     <Content Include="styles\images\google+.png" />
     <Content Include="styles\images\googleMap.png" />
     <Content Include="styles\images\googleYouTube.png" />
+    <Content Include="styles\images\green-share.png" />
     <Content Include="styles\images\groupon.png" />
     <Content Include="styles\images\icon-arrow.png" />
     <Content Include="styles\images\icon-arrow@2x.png" />
@@ -141,6 +148,7 @@
     <Content Include="styles\images\star2.png" />
     <Content Include="styles\images\star1.png" />
     <Content Include="styles\images\star5.png" />
+    <Content Include="styles\images\thumb_up.png" />
     <Content Include="styles\images\twitter.png" />
     <Content Include="styles\images\Yahoo.png" />
     <Content Include="styles\images\yelp_64.png" />
@@ -258,6 +266,7 @@
     <Folder Include="components\aboutView\" />
     <Folder Include="components\activities\" />
     <Folder Include="components\comments\" />
+    <Folder Include="components\map\" />
     <Folder Include="components\partners\" />
     <Folder Include="components\Notifications\" />
     <Folder Include="kendo\" />
