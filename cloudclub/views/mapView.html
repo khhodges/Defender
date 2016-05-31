@@ -10,10 +10,10 @@
         <script>
 
             function test(url) {
-                app.notify.showShortTop("Url.Map Search " + url);
                 if (url === null || url === undefined || url.length < 10) {
                     app.notify.showShortTop(url + " the client data is missing preventing service connection!");
                 } else {
+                    app.notify.showShortTop("Url.Map Search " + url);
                     window.open(url, "_blank");
                 }
             };
